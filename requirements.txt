@@ -1,4 +1,4 @@
-onnxruntime==1.17.1
+onnxruntime>=1.19.0
 numpy==1.26.4
 pydicom==2.4.4
 Flask==3.0.0
