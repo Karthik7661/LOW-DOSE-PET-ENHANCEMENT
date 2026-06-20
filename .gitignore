@@ -5,3 +5,4 @@ __pycache__/
 static/uploads/preview_*
 static/uploads/ref_*
 static/outputs/enhanced_*
+.vercel
