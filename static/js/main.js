@@ -1,0 +1,669 @@
+/* ==========================================================================
+   Low-Dose PET Enhancement System - Main JavaScript Interactions
+   ========================================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // UI Elements - Upload & Portal
+    const dropzone = document.getElementById('uploadDropzone');
+    const fileInput = document.getElementById('fileInput');
+    const dropzonePrompt = document.getElementById('dropzonePrompt');
+    const inputPreviewContainer = document.getElementById('inputPreviewContainer');
+    const inputPreview = document.getElementById('inputPreview');
+    const lblFileName = document.getElementById('lblFileName');
+    const lblFileSize = document.getElementById('lblFileSize');
+    const btnRemoveFile = document.getElementById('btnRemoveFile');
+    
+    const btnEnhance = document.getElementById('btnEnhance');
+    const btnLoadSample = document.getElementById('btnLoadSample');
+    const btnHeroDemo = document.getElementById('btnHeroDemo');
+    const noiseLevelSelect = document.getElementById('noiseLevelSelect');
+    
+    const processingIndicator = document.getElementById('processingIndicator');
+    const processingStatus = document.getElementById('processingStatus');
+    const progressBarFill = document.getElementById('progressBarFill');
+    
+    const outputPlaceholder = document.getElementById('outputPlaceholder');
+    const outputPreviewContainer = document.getElementById('outputPreviewContainer');
+    const outputPreview = document.getElementById('outputPreview');
+    const btnDownload = document.getElementById('btnDownload');
+    
+    const steps = {
+        1: document.getElementById('step1'),
+        2: document.getElementById('step2'),
+        3: document.getElementById('step3')
+    };
+
+    // UI Elements - Diagnostic Workbench & Slider
+    const workbenchSection = document.getElementById('workbenchSection');
+    const btnModeSideBySide = document.getElementById('btnModeSideBySide');
+    const btnModeSlider = document.getElementById('btnModeSlider');
+    const viewSideBySide = document.getElementById('viewSideBySide');
+    const viewSlider = document.getElementById('viewSlider');
+    const lblActiveFile = document.getElementById('lblActiveFile');
+    
+    const workbenchInputImg = document.getElementById('workbenchInputImg');
+    const workbenchOutputImg = document.getElementById('workbenchOutputImg');
+    const workbenchRefImg = document.getElementById('workbenchRefImg');
+    const sliderInputImg = document.getElementById('sliderInputImg');
+    const sliderOutputImg = document.getElementById('sliderOutputImg');
+    const sliderOverlay = document.getElementById('sliderOverlay');
+    const workbenchSliderInput = document.getElementById('workbenchSliderInput');
+    const workbenchSliderHandle = document.getElementById('workbenchSliderHandle');
+
+    // UI Elements - PACS Adjustments
+    const pacsBrightness = document.getElementById('pacsBrightness');
+    const pacsContrast = document.getElementById('pacsContrast');
+    const valBrightness = document.getElementById('valBrightness');
+    const valContrast = document.getElementById('valContrast');
+    const btnResetPacs = document.getElementById('btnResetPacs');
+
+    // UI Elements - Workbench Metadata Tabs
+    const tabBtnQuality = document.getElementById('tabBtnQuality');
+    const tabBtnDicom = document.getElementById('tabBtnDicom');
+    const tabBtnApi = document.getElementById('tabBtnApi');
+    const metaQuality = document.getElementById('metaQuality');
+    const metaDicom = document.getElementById('metaDicom');
+    const metaApi = document.getElementById('metaApi');
+
+    // Dynamic Text Fields
+    const lblInputSnr = document.getElementById('lblInputSnr');
+    const lblEnhancedSnr = document.getElementById('lblEnhancedSnr');
+    const lblSnrImprovement = document.getElementById('lblSnrImprovement');
+    
+    const lblPatientId = document.getElementById('lblPatientId');
+    const lblStudyDate = document.getElementById('lblStudyDate');
+    const lblModality = document.getElementById('lblModality');
+    const lblManufacturer = document.getElementById('lblManufacturer');
+    const lblStationName = document.getElementById('lblStationName');
+    const lblRescaleSlope = document.getElementById('lblRescaleSlope');
+    const lblEstimatedDose = document.getElementById('lblEstimatedDose');
+
+    // State Variables
+    let selectedFile = null;
+    let isSampleActive = false;
+
+    // ==========================================================================
+    // File Upload Handlers (Drag & Drop + Input)
+    // ==========================================================================
+    
+    dropzone.addEventListener('click', (e) => {
+        if (selectedFile || isSampleActive) return;
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFileSelection(e.target.files[0]);
+        }
+    });
+
+    dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        if (selectedFile || isSampleActive) return;
+        dropzone.classList.add('dragover');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+        dropzone.classList.remove('dragover');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+        if (selectedFile || isSampleActive) return;
+        if (e.dataTransfer.files.length > 0) {
+            handleFileSelection(e.dataTransfer.files[0]);
+        }
+    });
+
+    btnRemoveFile.addEventListener('click', (e) => {
+        e.stopPropagation();
+        resetWorkspace();
+    });
+
+    function handleFileSelection(file) {
+        selectedFile = file;
+        isSampleActive = false;
+        
+        lblFileName.textContent = file.name;
+        lblFileSize.textContent = formatBytes(file.size);
+        
+        const ext = file.name.split('.').pop().toLowerCase();
+        
+        if (ext === 'dcm') {
+            inputPreview.style.display = 'none';
+            let dicomCard = document.getElementById('dicomCardPreview');
+            if (!dicomCard) {
+                dicomCard = document.createElement('div');
+                dicomCard.id = 'dicomCardPreview';
+                dicomCard.className = 'dicom-preview-card';
+                dicomCard.innerHTML = `
+                    <i class="fa-solid fa-file-medical dicom-card-icon"></i>
+                    <span>DICOM Dataset Slice</span>
+                `;
+                inputPreviewContainer.insertBefore(dicomCard, fileInfo);
+            }
+        } else {
+            const dicomCard = document.getElementById('dicomCardPreview');
+            if (dicomCard) dicomCard.remove();
+            
+            inputPreview.style.display = 'block';
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                inputPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        dropzonePrompt.classList.add('hidden');
+        inputPreviewContainer.classList.remove('hidden');
+        btnEnhance.classList.remove('disabled');
+        btnEnhance.removeAttribute('disabled');
+        
+        updateStep(1);
+    }
+
+    // ==========================================================================
+    // Demo Sample Loader
+    // ==========================================================================
+    
+    function loadDemoScan() {
+        resetWorkspace();
+        isSampleActive = true;
+        selectedFile = null;
+        
+        lblFileName.textContent = "synthetic_brain_pet_10x.png";
+        lblFileSize.textContent = "24.5 KB (Low-Dose Simulator)";
+        
+        const dicomCard = document.getElementById('dicomCardPreview');
+        if (dicomCard) dicomCard.remove();
+        
+        inputPreview.style.display = 'block';
+        inputPreview.src = "/static/images/sample_low_dose.png";
+        
+        dropzonePrompt.classList.add('hidden');
+        inputPreviewContainer.classList.remove('hidden');
+        
+        btnEnhance.classList.remove('disabled');
+        btnEnhance.removeAttribute('disabled');
+        updateStep(1);
+    }
+
+    btnLoadSample.addEventListener('click', loadDemoScan);
+    btnHeroDemo.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('enhance-section').scrollIntoView({ behavior: 'smooth' });
+        loadDemoScan();
+    });
+
+    // ==========================================================================
+    // Inference Execution & Quantitative Evaluation
+    // ==========================================================================
+    
+    btnEnhance.addEventListener('click', () => {
+        if (!selectedFile && !isSampleActive) return;
+        
+        btnEnhance.classList.add('disabled');
+        btnEnhance.setAttribute('disabled', 'true');
+        btnLoadSample.classList.add('disabled');
+        btnLoadSample.setAttribute('disabled', 'true');
+        btnRemoveFile.classList.add('hidden');
+        noiseLevelSelect.setAttribute('disabled', 'true');
+        
+        outputPlaceholder.classList.add('hidden');
+        outputPreviewContainer.classList.add('hidden');
+        workbenchSection.classList.add('hidden');
+        
+        processingIndicator.classList.remove('hidden');
+        updateStep(2);
+        
+        const formData = new FormData();
+        const noiseLevel = noiseLevelSelect.value;
+        formData.append('reduction_factor', noiseLevel);
+        
+        if (isSampleActive) {
+            formData.append('is_sample', 'true');
+        } else {
+            formData.append('file', selectedFile);
+            formData.append('is_sample', 'false');
+        }
+        
+        fetch('/enhance', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw new Error(err.error || 'Server error'); });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Populate upload pre-views
+                const dicomCard = document.getElementById('dicomCardPreview');
+                if (dicomCard) dicomCard.remove();
+                inputPreview.style.display = 'block';
+                inputPreview.src = data.preview_url;
+                
+                outputPreview.src = data.enhanced_url;
+                btnDownload.href = data.enhanced_url;
+                
+                // Hide loaders & Show Portal Output
+                processingIndicator.classList.add('hidden');
+                outputPreviewContainer.classList.remove('hidden');
+                updateStep(3);
+
+                // Populate Diagnostic Workbench
+                lblActiveFile.textContent = "Active File: " + data.filename;
+                
+                // Update images for side-by-side & slider
+                workbenchInputImg.src = data.preview_url;
+                workbenchOutputImg.src = data.enhanced_url;
+                workbenchRefImg.src = data.reference_url;
+                sliderInputImg.src = data.preview_url;
+                sliderOutputImg.src = data.enhanced_url;
+                
+                // Reset PACS Adjustments
+                pacsBrightness.value = 100;
+                pacsContrast.value = 100;
+                adjustImages();
+                
+                // Set initial slider size
+                sliderOverlay.style.width = '50%';
+                workbenchSliderHandle.style.left = '50%';
+                workbenchSliderInput.value = 50;
+                
+                // Populate Metrics
+                lblInputSnr.textContent = data.metrics.input_snr;
+                lblEnhancedSnr.textContent = data.metrics.enhanced_snr;
+                lblSnrImprovement.textContent = "+" + data.metrics.snr_improvement + " Gain";
+                
+                // Populate DICOM Headers
+                lblPatientId.textContent = data.metadata.PatientID;
+                lblStudyDate.textContent = data.metadata.StudyDate;
+                lblModality.textContent = data.metadata.Modality;
+                lblManufacturer.textContent = data.metadata.Manufacturer;
+                lblStationName.textContent = data.metadata.StationName;
+                lblRescaleSlope.textContent = data.metadata.RescaleSlope + " / " + data.metadata.RescaleIntercept;
+                lblEstimatedDose.textContent = data.metadata.EstimatedDose;
+                
+                // Scroll to Workbench with smooth animation
+                workbenchSection.classList.remove('hidden');
+                setTimeout(() => {
+                    workbenchSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
+        })
+        .catch(err => {
+            alert("Inference Failed: " + err.message);
+            console.error(err);
+            resetWorkspace();
+        })
+        .finally(() => {
+            btnLoadSample.classList.remove('disabled');
+            btnLoadSample.removeAttribute('disabled');
+            btnRemoveFile.classList.remove('hidden');
+            noiseLevelSelect.removeAttribute('disabled');
+        });
+    });
+
+    // ==========================================================================
+    // Interactive Curtain Slider Logic
+    // ==========================================================================
+    
+    workbenchSliderInput.addEventListener('input', (e) => {
+        const sliderVal = e.target.value;
+        sliderOverlay.style.width = `${sliderVal}%`;
+        workbenchSliderHandle.style.left = `${sliderVal}%`;
+    });
+
+    btnModeSideBySide.addEventListener('click', () => {
+        btnModeSideBySide.classList.add('active');
+        btnModeSlider.classList.remove('active');
+        viewSideBySide.classList.remove('hidden');
+        viewSlider.classList.add('hidden');
+    });
+
+    btnModeSlider.addEventListener('click', () => {
+        btnModeSlider.classList.add('active');
+        btnModeSideBySide.classList.remove('active');
+        viewSlider.classList.remove('hidden');
+        viewSideBySide.classList.add('hidden');
+        setTimeout(updateSliderWidth, 50);
+    });
+
+    // ==========================================================================
+    // PACS Interactive Leveling (Brightness & Contrast)
+    // ==========================================================================
+    
+    const adjustImages = () => {
+        const b = pacsBrightness.value;
+        const c = pacsContrast.value;
+        valBrightness.textContent = `${b}%`;
+        valContrast.textContent = `${c}%`;
+        
+        const filterStr = `brightness(${b}%) contrast(${c}%) grayscale(100%)`;
+        workbenchInputImg.style.filter = filterStr;
+        workbenchOutputImg.style.filter = filterStr;
+        sliderInputImg.style.filter = filterStr;
+        sliderOutputImg.style.filter = filterStr;
+    };
+    
+    pacsBrightness.addEventListener('input', adjustImages);
+    pacsContrast.addEventListener('input', adjustImages);
+    
+    btnResetPacs.addEventListener('click', () => {
+        pacsBrightness.value = 100;
+        pacsContrast.value = 100;
+        adjustImages();
+    });
+
+    // ==========================================================================
+    // Workbench Tab Selection
+    // ==========================================================================
+
+    const metadataTabs = [
+        { btn: tabBtnQuality, view: metaQuality },
+        { btn: tabBtnDicom, view: metaDicom },
+        { btn: tabBtnApi, view: metaApi }
+    ];
+
+    metadataTabs.forEach(tab => {
+        tab.btn.addEventListener('click', () => {
+            metadataTabs.forEach(t => {
+                t.btn.classList.remove('active');
+                t.view.classList.add('hidden');
+                t.view.classList.remove('active');
+            });
+            tab.btn.classList.add('active');
+            tab.view.classList.remove('hidden');
+            tab.view.classList.add('active');
+        });
+    });
+
+    // ==========================================================================
+    // Dashboard Counter Roll-Up Animation
+    // ==========================================================================
+
+    const metricPsnrEl = document.querySelector('#metricPsnr .metric-value');
+    const metricSsimEl = document.querySelector('#metricSsim .metric-value');
+    const metricRmseEl = document.querySelector('#metricRmse .metric-value');
+    const metricNrmseEl = document.querySelector('#metricNrmse .metric-value');
+    
+    const animateValue = (obj, start, end, duration, decimalPlaces = 4) => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const currentVal = progress * (end - start) + start;
+            
+            if (obj === metricPsnrEl) {
+                obj.innerHTML = `${currentVal.toFixed(4)} <span class="metric-unit">dB</span>`;
+            } else {
+                obj.innerHTML = `${currentVal.toFixed(decimalPlaces)}`;
+            }
+            
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    };
+    
+    const dashboardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateValue(metricPsnrEl, 0, 43.8574, 1800, 4);
+                animateValue(metricSsimEl, 0, 0.9939, 1800, 4);
+                animateValue(metricRmseEl, 0.1, 0.00675, 1800, 6);
+                animateValue(metricNrmseEl, 0.1, 0.00675, 1800, 6);
+                dashboardObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+    
+    dashboardObserver.observe(document.getElementById('dashboard'));
+
+    // ==========================================================================
+    // UI Helpers & Tab Reset
+    // ==========================================================================
+
+    function resetWorkspace() {
+        selectedFile = null;
+        isSampleActive = false;
+        fileInput.value = '';
+        
+        const dicomCard = document.getElementById('dicomCardPreview');
+        if (dicomCard) dicomCard.remove();
+        
+        inputPreview.src = '';
+        inputPreviewContainer.classList.add('hidden');
+        dropzonePrompt.classList.remove('hidden');
+        
+        // Clear comparative image sources
+        workbenchInputImg.src = '';
+        workbenchOutputImg.src = '';
+        workbenchRefImg.src = '';
+        sliderInputImg.src = '';
+        sliderOutputImg.src = '';
+        
+        btnEnhance.classList.add('disabled');
+        btnEnhance.setAttribute('disabled', 'true');
+        
+        processingIndicator.classList.add('hidden');
+        outputPreviewContainer.classList.add('hidden');
+        outputPlaceholder.classList.remove('hidden');
+        workbenchSection.classList.add('hidden');
+        
+        updateStep(1);
+        steps[2].classList.remove('active');
+        steps[3].classList.remove('active');
+    }
+
+    function updateStep(stepNumber) {
+        Object.keys(steps).forEach(key => {
+            if (parseInt(key) <= stepNumber) {
+                steps[key].classList.add('active');
+            } else {
+                steps[key].classList.remove('active');
+            }
+        });
+    }
+
+    function formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    // Results Dashboard Graph Tabs
+    const tabButtons = document.querySelectorAll('.graph-tab-btn');
+    const viewports = document.querySelectorAll('.graph-viewport');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetGraph = btn.getAttribute('data-graph');
+            if (!targetGraph) return; // Ignore workbench tabs
+            
+            tabButtons.forEach(b => {
+                if (b.getAttribute('data-graph')) b.classList.remove('active');
+            });
+            viewports.forEach(v => v.classList.remove('active'));
+            
+            btn.classList.add('active');
+            const targetEl = document.getElementById('graph-' + targetGraph);
+            if (targetEl) targetEl.classList.add('active');
+        });
+    });
+
+    // ==========================================================================
+    // Premium Engineering Capabilities (Scroll-Spy, Count-ups, Magnifier Zoom)
+    // ==========================================================================
+
+    // 1. Slider Responsive Width Alignment
+    const updateSliderWidth = () => {
+        if (viewSlider && !viewSlider.classList.contains('hidden')) {
+            const containerWidth = viewSlider.clientWidth;
+            if (sliderOutputImg) {
+                sliderOutputImg.style.width = `${containerWidth}px`;
+                sliderOutputImg.style.height = `${containerWidth}px`;
+            }
+        }
+    };
+    window.addEventListener('resize', updateSliderWidth);
+
+    // 2. Animate Hero Stats on page load
+    const animateHeroStats = () => {
+        const heroStatVals = document.querySelectorAll('.hero-stat-val');
+        heroStatVals.forEach(el => {
+            const targetVal = parseFloat(el.getAttribute('data-val'));
+            const decimals = parseInt(el.getAttribute('data-decimals') || '0');
+            const duration = 2000; // 2 seconds
+            let startTimestamp = null;
+            
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const currentVal = progress * targetVal;
+                
+                el.textContent = currentVal.toFixed(decimals);
+                
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        });
+    };
+    animateHeroStats();
+
+    // 3. Scroll-Spy for Navigation Links
+    const navLinksList = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+    
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+    };
+    
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const sectionId = entry.target.getAttribute('id');
+                navLinksList.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    };
+    
+    if (sections.length > 0 && typeof IntersectionObserver !== 'undefined') {
+        const navObserver = new IntersectionObserver(observerCallback, observerOptions);
+        sections.forEach(section => navObserver.observe(section));
+    }
+
+    // 4. Interactive Zoom Magnifier Lens
+    const btnToggleMagnifier = document.getElementById('btnToggleMagnifier');
+    let magnifierActive = false;
+    
+    const imagesToZoom = [
+        { img: workbenchInputImg, name: 'input' },
+        { img: workbenchOutputImg, name: 'output' },
+        { img: workbenchRefImg, name: 'reference' }
+    ];
+    
+    const magnifierLens = document.createElement('div');
+    magnifierLens.id = 'magnifierLens';
+    magnifierLens.className = 'magnifier-lens hidden';
+    document.body.appendChild(magnifierLens);
+
+    const moveMagnifier = (e, imgEl) => {
+        if (!magnifierActive || !imgEl.src) return;
+        
+        magnifierLens.classList.remove('hidden');
+        
+        const rect = imgEl.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+            magnifierLens.classList.add('hidden');
+            return;
+        }
+        
+        const lensWidth = 140;
+        const lensHeight = 140;
+        magnifierLens.style.left = `${e.pageX - lensWidth/2}px`;
+        magnifierLens.style.top = `${e.pageY - lensHeight/2}px`;
+        
+        const zoomLevel = 2.5;
+        magnifierLens.style.backgroundImage = `url('${imgEl.src}')`;
+        magnifierLens.style.backgroundRepeat = 'no-repeat';
+        magnifierLens.style.backgroundSize = `${rect.width * zoomLevel}px ${rect.height * zoomLevel}px`;
+        
+        const posX = -(x * zoomLevel - lensWidth / 2);
+        const posY = -(y * zoomLevel - lensHeight / 2);
+        magnifierLens.style.backgroundPosition = `${posX}px ${posY}px`;
+        
+        const b = pacsBrightness.value;
+        const c = pacsContrast.value;
+        magnifierLens.style.filter = `brightness(${b}%) contrast(${c}%) grayscale(100%)`;
+    };
+    
+    imagesToZoom.forEach(item => {
+        if (item.img) {
+            item.img.addEventListener('mousemove', (e) => moveMagnifier(e, item.img));
+            item.img.addEventListener('mouseleave', () => {
+                magnifierLens.classList.add('hidden');
+            });
+        }
+    });
+
+    if (btnToggleMagnifier) {
+        btnToggleMagnifier.addEventListener('click', () => {
+            magnifierActive = !magnifierActive;
+            if (magnifierActive) {
+                btnToggleMagnifier.classList.add('active');
+                btnToggleMagnifier.style.borderColor = 'var(--color-secondary)';
+                btnToggleMagnifier.style.boxShadow = '0 0 10px rgba(0, 245, 212, 0.2)';
+                imagesToZoom.forEach(item => {
+                    if (item.img) item.img.style.cursor = 'none';
+                });
+            } else {
+                btnToggleMagnifier.classList.remove('active');
+                btnToggleMagnifier.style.borderColor = '';
+                btnToggleMagnifier.style.boxShadow = '';
+                imagesToZoom.forEach(item => {
+                    if (item.img) item.img.style.cursor = 'default';
+                });
+                magnifierLens.classList.add('hidden');
+            }
+        });
+    }
+
+    // 5. Developer API Language Snippet Switcher
+    const apiSubTabBtns = document.querySelectorAll('.api-sub-tab-btn');
+    const apiSnippets = document.querySelectorAll('.api-snippet-wrapper');
+    
+    apiSubTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            
+            apiSubTabBtns.forEach(b => b.classList.remove('active'));
+            apiSnippets.forEach(s => s.classList.add('hidden'));
+            
+            btn.classList.add('active');
+            const targetSnippet = document.getElementById('api-' + lang);
+            if (targetSnippet) targetSnippet.classList.remove('hidden');
+        });
+    });
+});

@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Low-Dose PET Image Enhancement Using Restormer</title>
+    <meta name="description" content="Professional Software Engineering Capstone Project demonstrating Restormer deep learning network for low-dose PET medical image denoising and reconstruction.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="main-header" id="mainHeader">
+        <div class="container header-container">
+            <div class="logo-area" id="logoArea">
+                <i class="fa-solid fa-microscope medical-logo-icon"></i>
+                <span class="logo-text">PET<span class="logo-accent">Restore</span></span>
+            </div>
+            <nav class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#enhance-section" class="nav-link">Enhancement</a>
+                <a href="#dashboard" class="nav-link">Results</a>
+                <a href="#workflow" class="nav-link">Workflow</a>
+                <a href="#sdlc" class="nav-link">SDLC</a>
+                <a href="#model-details" class="nav-link">Specifications</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container hero-container">
+            <div class="hero-content" id="heroContent">
+                <h1 class="hero-title">AI-Powered Low-Dose PET Image Enhancement Using Restormer</h1>
+                <p class="hero-subtitle" style="margin-bottom: 20px;">
+                    Enhancing low-dose PET scans using Transformer-based Deep Learning for improved image quality while preserving structural information.
+                </p>
+
+                <!-- Glowing Badges -->
+                <div class="hero-badges" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 25px;">
+                    <span class="badge badge-primary"><i class="fa-solid fa-microchip"></i> Restormer Transformer</span>
+                    <span class="badge badge-primary"><i class="fa-solid fa-code-branch"></i> PyTorch</span>
+                    <span class="badge badge-primary"><i class="fa-solid fa-dna"></i> MONAI</span>
+                    <span class="badge badge-primary"><i class="fa-solid fa-file-medical"></i> DICOM Support</span>
+                    <span class="badge badge-primary"><i class="fa-solid fa-flask"></i> Capstone Project</span>
+                </div>
+
+                <!-- Animated Statistics Cards -->
+                <div class="hero-stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 30px;">
+                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                        <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Training Epochs</span>
+                        <strong style="font-size: 1.3rem; color: var(--color-secondary);" class="hero-stat-val" data-val="50" data-decimals="0">0</strong>
+                    </div>
+                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                        <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Batch Size</span>
+                        <strong style="font-size: 1.3rem; color: var(--color-secondary);" class="hero-stat-val" data-val="4" data-decimals="0">0</strong>
+                    </div>
+                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                        <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Model PSNR</span>
+                        <strong style="font-size: 1.3rem; color: var(--color-success);" class="hero-stat-val" data-val="43.86" data-decimals="2">0</strong><span style="font-size: 0.8rem; color: var(--color-text-muted);"> dB</span>
+                    </div>
+                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                        <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Model SSIM</span>
+                        <strong style="font-size: 1.3rem; color: var(--color-success);" class="hero-stat-val" data-val="0.9939" data-decimals="4">0</strong>
+                    </div>
+                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                        <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Model RMSE</span>
+                        <strong style="font-size: 1.3rem; color: var(--color-success);" class="hero-stat-val" data-val="0.00675" data-decimals="5">0</strong>
+                    </div>
+                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                        <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Model NRMSE</span>
+                        <strong style="font-size: 1.3rem; color: var(--color-success);" class="hero-stat-val" data-val="0.00675" data-decimals="5">0</strong>
+                    </div>
+                </div>
+
+                <div class="hero-actions" id="heroActions">
+                    <a href="#enhance-section" class="btn btn-primary btn-lg"><i class="fa-solid fa-upload"></i> Upload PET Scan</a>
+                    <button class="btn btn-secondary btn-lg" id="btnHeroDemo"><i class="fa-solid fa-play"></i> Run Demo Scan</button>
+                </div>
+            </div>
+            <div class="hero-visual" id="heroVisual">
+                <div class="visual-card">
+                    <div class="scanning-lines"></div>
+                    <div class="brain-svg-container">
+                        <!-- Custom Medical Animation Graphic -->
+                        <svg class="brain-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="var(--color-primary-light)" stop-opacity="0.6"/>
+                                    <stop offset="100%" stop-color="var(--color-primary)" stop-opacity="0"/>
+                                </radialGradient>
+                                <linearGradient id="laser" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="rgba(0, 245, 212, 0)"/>
+                                    <stop offset="50%" stop-color="var(--color-secondary)" stop-opacity="1"/>
+                                    <stop offset="100%" stop-color="rgba(0, 245, 212, 0)"/>
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- Rotating Circular Grids -->
+                            <circle class="radar-ring-outer" cx="50%" cy="50%" r="48" fill="none" stroke="rgba(0, 180, 216, 0.15)" stroke-width="1" stroke-dasharray="150 10 30 10"/>
+                            <circle class="radar-ring-inner" cx="50%" cy="50%" r="42" fill="none" stroke="rgba(0, 245, 212, 0.2)" stroke-dasharray="5 15" stroke-width="1.5"/>
+                            <circle class="radar-ring-dot" cx="50%" cy="50%" r="45" fill="none" stroke="rgba(0, 180, 216, 0.3)" stroke-dasharray="1 8" stroke-width="2"/>
+                            
+                            <!-- Detailed medical brain slice outline -->
+                            <path class="brain-path" d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="url(#glow)"/>
+                            <path class="brain-path-outline" d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="none" stroke="var(--color-primary)" stroke-width="1.5"/>
+                            
+                            <!-- Ventricles inside brain cross-section -->
+                            <path class="brain-ventricle" d="M 45,48 C 45,38 38,43 38,48 C 38,53 45,58 45,48 Z" fill="none" stroke="var(--color-secondary)" stroke-opacity="0.4" stroke-width="1.5"/>
+                            <path class="brain-ventricle" d="M 55,48 C 55,38 62,43 62,48 C 62,53 55,58 55,48 Z" fill="none" stroke="var(--color-secondary)" stroke-opacity="0.4" stroke-width="1.5"/>
+                            
+                            <!-- Neural nodes / Hotspots -->
+                            <circle class="neural-node node-1" cx="34" cy="38" r="2.5" fill="var(--color-secondary)"/>
+                            <circle class="neural-node node-2" cx="66" cy="38" r="2.5" fill="var(--color-secondary)"/>
+                            <circle class="neural-node node-3" cx="44" cy="68" r="3" fill="var(--color-primary)"/>
+                            <circle class="neural-node node-4" cx="56" cy="68" r="3" fill="var(--color-primary)"/>
+                            <circle class="neural-node node-5" cx="50" cy="30" r="2" fill="var(--color-secondary)"/>
+                            
+                            <!-- Glowing sweep laser line -->
+                            <line class="scanner-sweep" x1="10" y1="20" x2="90" y2="20" stroke="url(#laser)" stroke-width="2.5"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="model-info-section" id="about" style="background-color: rgba(13, 19, 34, 0.4); border-top: 1px solid var(--color-card-border); border-bottom: 1px solid var(--color-card-border);">
+        <div class="container">
+            <div class="model-info-grid" style="grid-template-columns: 1fr;">
+                <div class="info-content">
+                    <h2 class="section-title text-center">About the Project</h2>
+                    <p class="lead-text text-center" style="margin-bottom: 30px;">Enhancing image fidelity in low-radiation diagnostic scenarios.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; margin-top: 20px;">
+                        <div>
+                            <h3 style="color: var(--color-secondary); margin-bottom: 12px; font-size: 1.3rem;"><i class="fa-solid fa-circle-info"></i> Project Context</h3>
+                            <p style="font-size: 0.95rem; line-height: 1.7; color: var(--color-text-muted);">
+                                This project enhances noisy low-dose PET (Positron Emission Tomography) images using the Restormer deep learning architecture.
+                            </p>
+                            <p style="font-size: 0.95rem; line-height: 1.7; color: var(--color-text-muted); margin-top: 12px;">
+                                By modeling the translation of low-radiation dose noise profiles to paired diagnostic reference quality, the network effectively filters noise layers while conserving clinical boundary structures.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 style="color: var(--color-secondary); margin-bottom: 12px; font-size: 1.3rem;"><i class="fa-solid fa-gears"></i> Core Processing Steps</h3>
+                            <p style="font-size: 0.95rem; line-height: 1.7; color: var(--color-text-muted);">
+                                The pipeline functions as a closed loop:
+                            </p>
+                            <ul class="styled-list" style="margin-top: 8px; color: var(--color-text-muted);">
+                                <li>Load PET DICOM images using pydicom</li>
+                                <li>Normalize image intensity to [0,1]</li>
+                                <li>Simulate low-dose PET using Poisson noise</li>
+                                <li>Apply MONAI preprocessing (ScaleIntensity, EnsureType)</li>
+                                <li>Train Restormer model & generate enhanced PET images</li>
+                                <li>Evaluate quality metrics (PSNR, SSIM, RMSE, NRMSE)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload & Enhancement Section -->
+    <section class="enhance-section" id="enhance-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">PET Scan Image Restoration Portal</h2>
+                <p class="section-description">Upload a DICOM scan (.dcm) or standard format PET image (PNG/JPG) to test the Restormer enhancement pipeline.</p>
+            </div>
+
+            <div class="enhancer-workspace glass-card" id="enhancerWorkspace">
+                <!-- Step Panel Header -->
+                <div class="workspace-steps" id="workspaceSteps">
+                    <div class="step active" id="step1"><span class="step-num">1</span> Upload & Preview</div>
+                    <div class="step" id="step2"><span class="step-num">2</span> AI Restormer Inference</div>
+                    <div class="step" id="step3"><span class="step-num">3</span> Download Result</div>
+                </div>
+
+                <div class="workspace-grid">
+                    <!-- Left: Upload Dropzone & Input Preview -->
+                    <div class="workspace-col input-panel" id="inputPanel">
+                        <div class="panel-header">
+                            <span class="panel-tag"><i class="fa-solid fa-radiation"></i> Low-Dose Input</span>
+                        </div>
+                        <div class="upload-dropzone" id="uploadDropzone">
+                            <input type="file" id="fileInput" accept=".dcm,.png,.jpg,.jpeg" style="display: none;">
+                            <div class="dropzone-prompt" id="dropzonePrompt">
+                                <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
+                                <h3>Drag & Drop PET Scan</h3>
+                                <p>Supports DICOM (.dcm), PNG, JPG, or JPEG</p>
+                                <span class="btn btn-secondary btn-sm">Browse Files</span>
+                            </div>
+                            <div class="image-preview-container hidden" id="inputPreviewContainer">
+                                <img src="" id="inputPreview" alt="Low Dose PET Preview">
+                                <div class="file-info" id="fileInfo">
+                                    <span class="file-name" id="lblFileName">scan_001.dcm</span>
+                                    <span class="file-size" id="lblFileSize">128 KB</span>
+                                </div>
+                                <button class="btn-remove-file" id="btnRemoveFile" title="Remove scan"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center: Action Controls -->
+                    <div class="workspace-col control-panel" id="controlPanel">
+                        <div class="control-actions">
+                            <!-- Custom Simulated Noise Control -->
+                            <div class="form-group" style="width: 100%; margin-bottom: 15px; text-align: left;">
+                                <label for="noiseLevelSelect" style="font-size: 0.8rem; font-weight: 600; color: var(--color-text-muted); display: block; margin-bottom: 6px; text-transform: uppercase;"><i class="fa-solid fa-gauge"></i> Dose Reduction Factor</label>
+                                <select id="noiseLevelSelect" style="width: 100%; background: var(--color-bg-light); border: 1px solid var(--color-card-border); color: var(--color-text-main); padding: 10px 12px; border-radius: var(--border-radius-sm); font-size: 0.9rem; cursor: pointer; outline: none; transition: border-color 0.2s;">
+                                    <option value="4">4x Reduction (Mild Noise)</option>
+                                    <option value="10" selected>10x Reduction (Standard Low-Dose)</option>
+                                    <option value="20">20x Reduction (Severe Noise)</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary btn-lg w-full disabled" id="btnEnhance" disabled>
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Enhance Image
+                            </button>
+                            <button class="btn btn-secondary w-full" id="btnLoadSample">
+                                <i class="fa-solid fa-circle-play"></i> Load Demo Scan
+                            </button>
+                        </div>
+                        
+                        <!-- Processing Indicator -->
+                        <div class="processing-indicator hidden" id="processingIndicator">
+                            <div class="spinner">
+                                <div class="double-bounce1"></div>
+                                <div class="double-bounce2"></div>
+                            </div>
+                            <p class="processing-status" id="processingStatus">Running Restormer Inference...</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="progressBarFill"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Enhanced Output -->
+                    <div class="workspace-col output-panel" id="outputPanel">
+                        <div class="panel-header">
+                            <span class="panel-tag tag-success"><i class="fa-solid fa-heart-pulse"></i> Enhanced Output</span>
+                        </div>
+                        <div class="output-display" id="outputDisplay">
+                            <div class="output-placeholder" id="outputPlaceholder">
+                                <i class="fa-solid fa-shield-halved placeholder-icon"></i>
+                                <h3>AI Reconstruction</h3>
+                                <p>Output will be rendered after processing.</p>
+                            </div>
+                            <div class="output-preview-container hidden" id="outputPreviewContainer">
+                                <div class="output-image-wrapper">
+                                    <img src="" id="outputPreview" alt="Enhanced PET Output">
+                                    <div class="reconstruction-glow"></div>
+                                </div>
+                                <a href="" id="btnDownload" class="btn btn-primary btn-success w-full mt-4" download="enhanced_pet.png">
+                                    <i class="fa-solid fa-circle-down"></i> Download Enhanced Image
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diagnostic Analysis Workbench Section (Dynamically revealed on enhance) -->
+    <section class="workbench-section hidden" id="workbenchSection" style="padding: 60px 0; background-color: rgba(9, 13, 22, 0.4); border-top: 1px solid var(--color-card-border); border-bottom: 1px solid var(--color-card-border);">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="badge badge-primary" style="margin-bottom: 10px;">Diagnostic Workbench</span>
+                <h2 class="section-title">Analysis & Denoising Efficiency</h2>
+                <p class="section-description">Interactive comparison, quantitative quality metrics, and DICOM metadata inspector.</p>
+            </div>
+
+            <!-- Interactive Workbench Card -->
+            <div class="workbench-card glass-card" style="padding: 30px; margin-bottom: 40px; overflow: hidden;">
+                <!-- Viewer Mode Toggles -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-secondary btn-sm active" id="btnModeSideBySide"><i class="fa-solid fa-columns"></i> 3-Column Grid View</button>
+                        <button class="btn btn-secondary btn-sm" id="btnModeSlider"><i class="fa-solid fa-sliders"></i> Curtain Slider View</button>
+                        <button class="btn btn-secondary btn-sm" id="btnToggleMagnifier"><i class="fa-solid fa-magnifying-glass-plus"></i> Toggle Zoom Lens</button>
+                    </div>
+                    <div>
+                        <span style="font-size: 0.85rem; color: var(--color-text-muted);" id="lblActiveFile">File: scan.dcm</span>
+                    </div>
+                </div>
+
+                <!-- Comparison Viewports -->
+                <div class="comparison-viewports-wrapper" style="position: relative; min-height: 380px; display: flex; justify-content: center; align-items: center;">
+                    
+                    <!-- Viewport 1: Side-by-Side (3 Columns) -->
+                    <div class="view-side-by-side" id="viewSideBySide" style="display: flex; width: 100%; gap: 20px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 200px; text-align: center;">
+                            <h4 style="margin-bottom: 10px; color: var(--color-secondary); font-size: 0.95rem;">Low-Dose PET</h4>
+                            <div style="background-color: #000; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 12px; display: inline-block;">
+                                <img src="" id="workbenchInputImg" alt="Input" style="max-width: 100%; max-height: 250px; object-fit: contain;">
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 200px; text-align: center;">
+                            <h4 style="margin-bottom: 10px; color: var(--color-success); font-size: 0.95rem;">Restormer Enhanced</h4>
+                            <div style="background-color: #000; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 12px; display: inline-block; position: relative;">
+                                <img src="" id="workbenchOutputImg" alt="Output" style="max-width: 100%; max-height: 250px; object-fit: contain;">
+                                <div class="reconstruction-glow"></div>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 200px; text-align: center;">
+                            <h4 style="margin-bottom: 10px; color: var(--color-text-main); font-size: 0.95rem;">Reference PET (GT)</h4>
+                            <div style="background-color: #000; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 12px; display: inline-block;">
+                                <img src="" id="workbenchRefImg" alt="Reference" style="max-width: 100%; max-height: 250px; object-fit: contain;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Viewport 2: Interactive Slider -->
+                    <div class="view-slider hidden" id="viewSlider" style="width: 100%; max-width: 400px; position: relative; aspect-ratio: 1; background-color: #000; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); overflow: hidden;">
+                        <!-- Under Image (Low Dose) -->
+                        <img src="" id="sliderInputImg" style="width: 100%; height: 100%; object-fit: cover; display: block;" alt="Before">
+                        <!-- Over Image (Enhanced) -->
+                        <div class="slider-overlay" id="sliderOverlay" style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden; border-right: 2px solid var(--color-secondary);">
+                            <img src="" id="sliderOutputImg" style="position: absolute; top: 0; left: 0; width: 400px; height: 400px; max-width: none; object-fit: cover; display: block;" alt="After">
+                        </div>
+                        <!-- Range input overlay -->
+                        <input type="range" min="0" max="100" value="50" id="workbenchSliderInput" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; z-index: 10;">
+                        <!-- Drag Handle Visual Indicator -->
+                        <div id="workbenchSliderHandle" style="position: absolute; top: 0; left: 50%; width: 2px; height: 100%; background-color: var(--color-secondary); transform: translateX(-50%); pointer-events: none; z-index: 5;">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 32px; height: 32px; border-radius: 50%; background-color: var(--color-bg); border: 2px solid var(--color-secondary); display: flex; align-items: center; justify-content: center; color: var(--color-secondary); font-size: 0.8rem; box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);"><i class="fa-solid fa-arrows-left-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PACS Windowing / Leveling Adjustments -->
+                <div class="pacs-adjustments" style="margin-top: 30px; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
+                    <div style="display: flex; align-items: center; gap: 12px; min-width: 250px;">
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; width: 90px;"><i class="fa-solid fa-sun"></i> Brightness</span>
+                        <input type="range" min="50" max="180" value="100" class="slider-range-control" id="pacsBrightness" style="flex-grow: 1; accent-color: var(--color-secondary); height: 4px; border-radius: 2px; outline: none; cursor: pointer;">
+                        <span style="font-size: 0.85rem; color: var(--color-secondary); min-width: 40px; text-align: right;" id="valBrightness">100%</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; min-width: 250px;">
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; width: 90px;"><i class="fa-solid fa-circle-half-stroke"></i> Contrast</span>
+                        <input type="range" min="50" max="180" value="100" class="slider-range-control" id="pacsContrast" style="flex-grow: 1; accent-color: var(--color-secondary); height: 4px; border-radius: 2px; outline: none; cursor: pointer;">
+                        <span style="font-size: 0.85rem; color: var(--color-secondary); min-width: 40px; text-align: right;" id="valContrast">100%</span>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" id="btnResetPacs" style="padding: 6px 12px;"><i class="fa-solid fa-rotate-left"></i> Reset PACS</button>
+                </div>
+            </div>
+
+            <!-- Metadata & Technical Tab System -->
+            <div class="tabs-metadata glass-card" style="padding: 30px;">
+                <div class="graphs-tabs" style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px;">
+                    <button class="graph-tab-btn active" id="tabBtnQuality">Quality Metrics</button>
+                    <button class="graph-tab-btn" id="tabBtnDicom">DICOM Header Inspector</button>
+                    <button class="graph-tab-btn" id="tabBtnApi">API Integration (SE Scope)</button>
+                </div>
+
+                <div class="metadata-viewports">
+                    <!-- Tab 1: Quality Metrics -->
+                    <div class="metadata-viewport active" id="metaQuality">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+                            <div>
+                                <h3 style="color: var(--color-secondary); margin-bottom: 15px;"><i class="fa-solid fa-gauge-high"></i> Signal-to-Noise Ratio (SNR) Analysis</h3>
+                                <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 15px;">
+                                    Signal-to-Noise Ratio is calculated as the mean voxel intensity divided by voxel standard deviation: 
+                                    $$\text{SNR} = \frac{\mu}{\sigma}$$
+                                    A higher value indicates cleaner, more reliable diagnostic details.
+                                </p>
+                                <div class="spec-table">
+                                    <div class="spec-row">
+                                        <span class="spec-label">Noisy Input SNR</span>
+                                        <span class="spec-value" id="lblInputSnr">--</span>
+                                    </div>
+                                    <div class="spec-row">
+                                        <span class="spec-label">Enhanced Restormer SNR</span>
+                                        <span class="spec-value" id="lblEnhancedSnr" style="color: var(--color-success);">--</span>
+                                    </div>
+                                    <div class="spec-row">
+                                        <span class="spec-label">Reconstruction SNR Gain</span>
+                                        <span class="spec-value" id="lblSnrImprovement" style="color: var(--color-secondary);">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 style="color: var(--color-success); margin-bottom: 15px;"><i class="fa-solid fa-square-poll-vertical"></i> Denoising Performance Evaluation</h3>
+                                <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 15px;">
+                                    By applying non-local multi-head self-attention, the Restormer model isolates high-frequency noise elements (Poisson decay) while maintaining crisp boundaries for lesion outlines.
+                                </p>
+                                <div style="background-color: rgba(0, 245, 212, 0.05); border: 1px solid rgba(0, 245, 212, 0.15); border-radius: var(--border-radius-sm); padding: 20px;">
+                                    <h4 style="color: var(--color-success); margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Quality Verification: Passed</h4>
+                                    <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5;">
+                                        The enhanced scan conforms to structural integrity thresholds. The enhancement process shows a significant increase in SNR, revealing hidden detail structures without introducing artifacts.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: DICOM Header Metadata Inspector -->
+                    <div class="metadata-viewport hidden" id="metaDicom">
+                        <h3 style="color: var(--color-secondary); margin-bottom: 15px;"><i class="fa-solid fa-tags"></i> DICOM Header Attribute Explorer</h3>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 15px;">
+                            Parses and displays standard clinical DICOM metadata tags mapped during upload.
+                        </p>
+                        <div class="spec-table" id="dicomMetadataTable">
+                            <!-- Populated dynamically via JS -->
+                            <div class="spec-row"><span class="spec-label">Patient ID</span><span class="spec-value" id="lblPatientId">--</span></div>
+                            <div class="spec-row"><span class="spec-label">Study Date</span><span class="spec-value" id="lblStudyDate">--</span></div>
+                            <div class="spec-row"><span class="spec-label">Modality</span><span class="spec-value" id="lblModality">--</span></div>
+                            <div class="spec-row"><span class="spec-label">Manufacturer</span><span class="spec-value" id="lblManufacturer">--</span></div>
+                            <div class="spec-row"><span class="spec-label">Station Name</span><span class="spec-value" id="lblStationName">--</span></div>
+                            <div class="spec-row"><span class="spec-label">Rescale Slope / Intercept</span><span class="spec-value" id="lblRescaleSlope">--</span></div>
+                            <div class="spec-row"><span class="spec-label">Estimated Dose</span><span class="spec-value" id="lblEstimatedDose">--</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: API Integration -->
+                    <div class="metadata-viewport hidden" id="metaApi">
+                        <h3 style="color: var(--color-secondary); margin-bottom: 15px;"><i class="fa-solid fa-code"></i> Developer API Integration Sandbox</h3>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 15px;">
+                            Integrate this deep learning image enhancement system into PACS networks, desktop viewers, or external medical workflows using our RESTful API endpoint.
+                        </p>
+                        
+                        <!-- Language switcher sub-tabs -->
+                        <div class="api-sub-tabs" style="display: flex; gap: 8px; margin-bottom: 15px;">
+                            <button class="api-sub-tab-btn active" data-lang="curl" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--color-text-muted); padding: 6px 12px; border-radius: var(--border-radius-sm); font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">cURL</button>
+                            <button class="api-sub-tab-btn" data-lang="python" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--color-text-muted); padding: 6px 12px; border-radius: var(--border-radius-sm); font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">Python</button>
+                            <button class="api-sub-tab-btn" data-lang="js" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--color-text-muted); padding: 6px 12px; border-radius: var(--border-radius-sm); font-size: 0.8rem; cursor: pointer; transition: all 0.2s;">JavaScript</button>
+                        </div>
+
+                        <!-- cURL Code Block -->
+                        <div class="api-snippet-wrapper" id="api-curl">
+                            <div class="api-snippet" style="background-color: #05080f; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 20px; font-family: monospace; font-size: 0.85rem; overflow-x: auto; color: #38bdf8; margin-bottom: 15px;">
+                                <span style="color: #94a3b8;"># Request model inference using curl:</span><br>
+                                curl -X POST \<br>
+                                &nbsp;&nbsp;-F "file=@/path/to/scan.dcm" \<br>
+                                &nbsp;&nbsp;http://127.0.0.1:5001/enhance
+                            </div>
+                        </div>
+
+                        <!-- Python Code Block -->
+                        <div class="api-snippet-wrapper hidden" id="api-python">
+                            <div class="api-snippet" style="background-color: #05080f; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 20px; font-family: monospace; font-size: 0.85rem; overflow-x: auto; color: #38bdf8; margin-bottom: 15px;">
+                                <span style="color: #94a3b8;"># Python requests integration script:</span><br>
+                                <span style="color: #e2e8f0;">import</span> requests<br><br>
+                                url = <span style="color: #a5f3fc;">"http://127.0.0.1:5001/enhance"</span><br>
+                                files = {<span style="color: #a5f3fc;">"file"</span>: open(<span style="color: #a5f3fc;">"scan.dcm"</span>, <span style="color: #a5f3fc;">"rb"</span>)}<br>
+                                response = requests.post(url, files=files)<br><br>
+                                data = response.json()<br>
+                                <span style="color: #e2e8f0;">if</span> data[<span style="color: #a5f3fc;">"success"</span>]:<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;print(<span style="color: #a5f3fc;">"Enhanced scan preview URL:"</span>, data[<span style="color: #a5f3fc;">"enhanced_url"</span>])
+                            </div>
+                        </div>
+
+                        <!-- JavaScript Code Block -->
+                        <div class="api-snippet-wrapper hidden" id="api-js">
+                            <div class="api-snippet" style="background-color: #05080f; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 20px; font-family: monospace; font-size: 0.85rem; overflow-x: auto; color: #38bdf8; margin-bottom: 15px;">
+                                <span style="color: #94a3b8;"># Modern JS Async Fetch implementation:</span><br>
+                                <span style="color: #e2e8f0;">const</span> formData = <span style="color: #e2e8f0;">new</span> FormData();<br>
+                                formData.append(<span style="color: #a5f3fc;">'file'</span>, fileInput.files[0]);<br><br>
+                                <span style="color: #e2e8f0;">const</span> response = <span style="color: #e2e8f0;">await</span> fetch(<span style="color: #a5f3fc;">'http://127.0.0.1:5001/enhance'</span>, {<br>
+                                &nbsp;&nbsp;method: <span style="color: #a5f3fc;">'POST'</span>,<br>
+                                &nbsp;&nbsp;body: formData<br>
+                                });<br><br>
+                                <span style="color: #e2e8f0;">const</span> data = <span style="color: #e2e8f0;">await</span> response.json();<br>
+                                <span style="color: #e2e8f0;">if</span> (data.success) {<br>
+                                &nbsp;&nbsp;console.log(<span style="color: #a5f3fc;">'Enhanced output rendering:'</span>, data.enhanced_url);<br>
+                                }
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-bottom: 8px; font-size: 0.95rem; font-weight: 600;">Sample JSON Response Payload:</h4>
+                        <div class="api-snippet" style="background-color: #05080f; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 20px; font-family: monospace; font-size: 0.85rem; overflow-x: auto; color: #10b981;">
+                            {<br>
+                            &nbsp;&nbsp;"success": true,<br>
+                            &nbsp;&nbsp;"filename": "scan.dcm",<br>
+                            &nbsp;&nbsp;"preview_url": "/static/uploads/preview_scan.png",<br>
+                            &nbsp;&nbsp;"enhanced_url": "/static/outputs/enhanced_scan.png",<br>
+                            &nbsp;&nbsp;"metrics": {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"input_snr": "1.3415",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"enhanced_snr": "3.8592",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;"snr_improvement": "187.68%"<br>
+                            &nbsp;&nbsp;}<br>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Dashboard Section -->
+    <section class="dashboard-section" id="dashboard">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Deep Learning Results Dashboard</h2>
+                <p class="section-description">Evaluation and metrics of the Restormer architecture on the low-dose PET enhancement task.</p>
+            </div>
+
+            <!-- Metric Cards Grid -->
+            <div class="metrics-grid" id="metricsGrid">
+                <!-- Card 1: PSNR -->
+                <div class="metric-card glass-card" id="metricPsnr">
+                    <div class="metric-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="metric-info">
+                        <h3 class="metric-label">Average PSNR</h3>
+                        <p class="metric-value">43.8544 <span class="metric-unit">dB</span></p>
+                        <p class="metric-comparison"><i class="fa-solid fa-arrow-up"></i> +12.4 dB vs Low-Dose</p>
+                    </div>
+                </div>
+                <!-- Card 2: SSIM -->
+                <div class="metric-card glass-card" id="metricSsim">
+                    <div class="metric-icon"><i class="fa-solid fa-eye"></i></div>
+                    <div class="metric-info">
+                        <h3 class="metric-label">Average SSIM</h3>
+                        <p class="metric-value">0.9939</p>
+                        <p class="metric-comparison"><i class="fa-solid fa-arrow-up"></i> +0.14 vs Low-Dose</p>
+                    </div>
+                </div>
+                <!-- Card 3: RMSE -->
+                <div class="metric-card glass-card" id="metricRmse">
+                    <div class="metric-icon"><i class="fa-solid fa-square-root-variable"></i></div>
+                    <div class="metric-info">
+                        <h3 class="metric-label">Average RMSE</h3>
+                        <p class="metric-value">0.006752</p>
+                        <p class="metric-comparison"><i class="fa-solid fa-arrow-down-long"></i> Error Reduction</p>
+                    </div>
+                </div>
+                <!-- Card 4: NRMSE -->
+                <div class="metric-card glass-card" id="metricNrmse">
+                    <div class="metric-icon"><i class="fa-solid fa-percent"></i></div>
+                    <div class="metric-info">
+                        <h3 class="metric-label">Average NRMSE</h3>
+                        <p class="metric-value">0.006752</p>
+                        <p class="metric-comparison"><i class="fa-solid fa-arrow-down-long"></i> Normalized variance</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Graph Panels -->
+            <div class="graphs-container glass-card" id="graphsContainer">
+                <div class="graphs-tabs" id="graphsTabs">
+                    <button class="graph-tab-btn active" data-graph="training-loss">Training Loss</button>
+                    <button class="graph-tab-btn" data-graph="validation-loss">Validation Loss</button>
+                    <button class="graph-tab-btn" data-graph="psnr-epoch">PSNR vs Epoch</button>
+                    <button class="graph-tab-btn" data-graph="ssim-epoch">SSIM vs Epoch</button>
+                </div>
+                <div class="graph-viewports" id="graphViewports">
+                    <!-- Training Loss Graph -->
+                    <div class="graph-viewport active" id="graph-training-loss">
+                        <div class="graph-display-wrapper">
+                            <img class="graph-img" src="/static/images/training_loss.png" alt="Training Loss vs Epoch">
+                            <div class="graph-meta">
+                                <h3>Training Loss vs Epoch</h3>
+                                <p>Demonstrates model convergence down to an L1 Loss value of &lt;0.005. Steady gradient updates throughout 50 epochs of training.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Validation Loss Graph -->
+                    <div class="graph-viewport" id="graph-validation-loss">
+                        <div class="graph-display-wrapper">
+                            <img class="graph-img" src="/static/images/validation_loss.png" alt="Validation Loss vs Epoch">
+                            <div class="graph-meta">
+                                <h3>Validation Loss vs Epoch</h3>
+                                <p>Validates the generalization capability of the model on unseen synthetic low-dose scans. Shows no signs of overfitting.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PSNR Epoch Graph -->
+                    <div class="graph-viewport" id="graph-psnr-epoch">
+                        <div class="graph-display-wrapper">
+                            <img class="graph-img" src="/static/images/psnr_graph.png" alt="Validation PSNR vs Epoch">
+                            <div class="graph-meta">
+                                <h3>Peak Signal-to-Noise Ratio (PSNR) vs Epoch</h3>
+                                <p>Captures the reconstruction quality improvement in decibels. PSNR grows consistently, stabilizing at over 43.8 dB.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- SSIM Epoch Graph -->
+                    <div class="graph-viewport" id="graph-ssim-epoch">
+                        <div class="graph-display-wrapper">
+                            <img class="graph-img" src="/static/images/ssim_graph.png" alt="Validation SSIM vs Epoch">
+                            <div class="graph-meta">
+                                <h3>Structural Similarity Index (SSIM) vs Epoch</h3>
+                                <p>Tracks the recovery of structural parameters (luminance, contrast, and structure). SSIM climbs to 0.9939, signifying near-lossless structure recovery.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="features-section" id="workflow" style="background-color: rgba(13, 19, 34, 0.4); border-top: 1px solid var(--color-card-border); border-bottom: 1px solid var(--color-card-border);">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Workflow Pipeline</h2>
+                <p class="section-description">The step-by-step data processing and enhancement pipeline.</p>
+            </div>
+            
+            <!-- Flowchart Timeline (7 steps) -->
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-top: 40px; padding: 20px 0;">
+                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: rgba(0, 180, 216, 0.2);">
+                    <i class="fa-solid fa-database" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">1. Dataset</h4>
+                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">Lung Cancer PET Slices</p>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                    <i class="fa-solid fa-toolbox" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">2. Preprocessing</h4>
+                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">Load DICOM & Normalize</p>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                    <i class="fa-solid fa-wave-square" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">3. Noise Sim</h4>
+                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">Poisson Simulation</p>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                    <i class="fa-solid fa-laptop-medical" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">4. MONAI</h4>
+                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">Scale & Type transforms</p>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                    <i class="fa-solid fa-brain" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">5. Restormer</h4>
+                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">Denoising network run</p>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                    <i class="fa-solid fa-circle-check" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">6. Enhancement</h4>
+                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">High-dose restoration</p>
+                </div>
+                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: rgba(0, 245, 212, 0.2);">
+                    <i class="fa-solid fa-square-poll-vertical" style="font-size: 1.5rem; color: var(--color-success); margin-bottom: 8px;"></i>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">7. Evaluation</h4>
+                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">PSNR & SSIM metrics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Software Engineering SDLC Section -->
+    <section class="features-section" id="sdlc">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="badge badge-primary" style="margin-bottom: 10px;">Engineering Lifecycle</span>
+                <h2 class="section-title">Software Engineering (SDLC)</h2>
+                <p class="section-description">How standard Software Development Lifecycle phases were applied to construct this medical AI platform.</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- SDLC Card 1 -->
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-clipboard-list"></i></div>
+                    <h3>1. Requirements Gathering</h3>
+                    <p>Identified clinical specifications for low-dose radiation scanning and parsed PET DICOM (.dcm) standards. Established quality thresholds for target metrics (PSNR, SSIM).</p>
+                </div>
+                <!-- SDLC Card 2 -->
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-map"></i></div>
+                    <h3>2. Planning</h3>
+                    <p>Conducted architectural planning comparing Restormer's channel-wise attention complexity to standard CNNs. Chosen PyTorch, Flask, and MONAI stack for execution.</p>
+                </div>
+                <!-- SDLC Card 3 -->
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-diagram-project"></i></div>
+                    <h3>3. System Design</h3>
+                    <p>Designed a decoupled client-server architecture. Structured restful API interfaces, data loading classes (Dataset, DataLoader), and glassmorphism interface blueprints.</p>
+                </div>
+                <!-- SDLC Card 4 -->
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-code"></i></div>
+                    <h3>4. Development</h3>
+                    <p>Developed modular code bases: model.py (self-contained transformer blocks) and app.py (inference routing). Integrated MONAI filters and custom noise simulators.</p>
+                </div>
+                <!-- SDLC Card 5 -->
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-vial"></i></div>
+                    <h3>5. Testing</h3>
+                    <p>Wrote verify_model.py test suites to validate weights mapping, shape outputs, and tensor dimensions. Implemented live SNR denoising check scripts.</p>
+                </div>
+                <!-- SDLC Card 6 -->
+                <div class="feature-card glass-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-server"></i></div>
+                    <h3>6. Deployment</h3>
+                    <p>Deployed Flask webserver onto local workspace port 5001 to resolve macOS AirPlay conflicts, serving cached static assets and dynamic output downloads.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dataset & Preprocessing Section -->
+    <section class="model-info-section" id="model-details" style="background-color: rgba(13, 19, 34, 0.4); border-top: 1px solid var(--color-card-border); border-bottom: 1px solid var(--color-card-border);">
+        <div class="container">
+            <div class="model-info-grid">
+                <div class="info-content">
+                    <h2 class="section-title">Dataset & Architecture Context</h2>
+                    <p class="lead-text">Clinical lung cancer slice pipeline configurations.</p>
+                    <p>
+                        <strong>Dataset:</strong> PET DICOM (.dcm) images extracted from a lung cancer PET dataset. Slices are grayscale medical images and are mixed (not separated by cancer class).
+                    </p>
+                    <p>
+                        <strong>Preprocessing Pipeline:</strong>
+                    </p>
+                    <ul class="styled-list" style="margin-top: 8px; margin-bottom: 20px; color: var(--color-text-muted);">
+                        <li>Intensity normalization to range [0, 1]</li>
+                        <li>Synthetic low-dose generation using Poisson noise</li>
+                        <li>MONAI Transforms (ScaleIntensity, EnsureType)</li>
+                        <li>Single-channel tensor conversion</li>
+                    </ul>
+                    <p>
+                        <strong>Dataset Split:</strong>
+                    </p>
+                    <ul class="styled-list" style="margin-top: 8px; margin-bottom: 20px; color: var(--color-text-muted);">
+                        <li>Training: 70%</li>
+                        <li>Validation: 15%</li>
+                        <li>Testing: 15%</li>
+                    </ul>
+                    <p style="font-size: 0.95rem; color: var(--color-text-muted); margin-top: 15px;">
+                        The project uses a lightweight implementation of the Restormer architecture adapted for grayscale PET image enhancement and trained on paired synthetic low-dose and reference PET images.
+                    </p>
+                </div>
+                <div class="info-specs glass-card">
+                    <h3>Model Specifications</h3>
+                    <div class="spec-table">
+                        <div class="spec-row">
+                            <span class="spec-label">Model Name</span>
+                            <span class="spec-value">Restormer</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Framework</span>
+                            <span class="spec-value">PyTorch</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Medical Library</span>
+                            <span class="spec-value">MONAI</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Primary Task</span>
+                            <span class="spec-value">Low-Dose PET Enhancement</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Noise Model</span>
+                            <span class="spec-value">Poisson (Reduction = 10)</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Channels (Input/Output)</span>
+                            <span class="spec-value">1 / 1 (Grayscale)</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Batch Size</span>
+                            <span class="spec-value">4</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Training Epochs</span>
+                            <span class="spec-value">50</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Loss Function</span>
+                            <span class="spec-value">L1 Loss</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">Optimizer</span>
+                            <span class="spec-value">AdamW</span>
+                        </div>
+                        <div class="spec-row">
+                            <span class="spec-label">LR Scheduler</span>
+                            <span class="spec-value">CosineAnnealingLR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="features-section" style="padding-bottom: 80px;">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="badge badge-primary" style="margin-bottom: 10px;">Platform Core</span>
+                <h2 class="section-title">Technologies Used</h2>
+                <p class="section-description">Full-stack software and machine learning library modules integrated into the platform.</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 40px;">
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-brands fa-python" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>Python</h4></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-solid fa-server" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>Flask</h4></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-solid fa-fire" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>PyTorch</h4></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-solid fa-dna" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>MONAI</h4></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-solid fa-calculator" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>NumPy</h4></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-solid fa-file-medical" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>pydicom</h4></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-solid fa-chart-line" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>Matplotlib</h4></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-solid fa-crop-simple" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>scikit-image</h4></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-solid fa-network-wired" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>scikit-learn</h4></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-brands fa-html5" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>HTML5 / CSS3</h4></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;"><i class="fa-brands fa-js" style="font-size: 2.2rem; color: var(--color-secondary); margin-bottom: 10px;"></i><h4>JavaScript</h4></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer" id="mainFooter">
+        <div class="container footer-container">
+            <div class="footer-logo">
+                <i class="fa-solid fa-microscope animate-pulse"></i>
+                <span>PET<span class="logo-accent">Restore</span></span>
+            </div>
+            <p class="footer-desc" style="max-width: 600px;">
+                <strong>PETRestore:</strong> AI-Based Low-Dose PET Enhancement.<br>
+                Built using Flask, PyTorch, MONAI, HTML, CSS and JavaScript. Developed as a Software Engineering Capstone Project.
+            </p>
+            
+            <!-- Contact / Profile Links Grid -->
+            <div style="display: flex; gap: 20px; font-size: 1.4rem; margin-top: 10px;">
+                <a href="https://github.com" target="_blank" class="footer-icon-link" style="color: var(--color-text-muted); transition: color 0.2s;"><i class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="footer-icon-link" style="color: var(--color-text-muted); transition: color 0.2s;"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="mailto:email@example.com" class="footer-icon-link" style="color: var(--color-text-muted); transition: color 0.2s;"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+
+            <div class="footer-meta" style="flex-direction: column; align-items: center; gap: 8px;">
+                <span>&copy; 2026 Low-Dose PET Image Enhancement Using Restormer.</span>
+                <span style="color: var(--color-error); font-weight: 500; text-align: center; max-width: 800px; line-height: 1.4; padding: 15px; border: 1px dashed rgba(255, 77, 109, 0.2); border-radius: var(--border-radius-sm); background-color: rgba(255, 77, 109, 0.03); margin-top: 15px;">
+                    "This application is intended for research and educational purposes only and should not be used for clinical diagnosis or medical decision-making."
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
