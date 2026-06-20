@@ -1,17 +1,20 @@
 import os
 import numpy as np
 import pydicom
-import torch
 import matplotlib
 matplotlib.use('Agg')  # Non-interactive backend
 import matplotlib.pyplot as plt
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from PIL import Image
-from monai.transforms import Compose, ScaleIntensity, EnsureType
 
-# Import Restormer model from model.py
-from model import Restormer
+try:
+    import torch
+    from monai.transforms import Compose, ScaleIntensity, EnsureType
+    from model import Restormer
+    HAS_PYTORCH = True
+except ImportError:
+    HAS_PYTORCH = False
 
 app = Flask(__name__)
 
@@ -33,43 +36,47 @@ os.makedirs(app.config['OUTPUT_FOLDER'], exist_ok=True)
 os.makedirs('static/images', exist_ok=True)
 
 # Device Configuration
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print(f"[*] Utilizing device: {device}")
+device = None
+if HAS_PYTORCH:
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print(f"[*] Utilizing device: {device}")
 
-# Load Restormer model
-print("[*] Initializing Restormer model...")
-model = Restormer(
-    inp_channels=1,
-    out_channels=1,
-    dim=24,
-    num_blocks=[2, 2, 2, 2],
-    num_refinement_blocks=2,
-    heads=[1, 2, 2, 4],
-    ffn_expansion_factor=2.0,
-    bias=False,
-    LayerNorm_type="WithBias",
-    dual_pixel_task=False
-)
+    # Load Restormer model
+    print("[*] Initializing Restormer model...")
+    model = Restormer(
+        inp_channels=1,
+        out_channels=1,
+        dim=24,
+        num_blocks=[2, 2, 2, 2],
+        num_refinement_blocks=2,
+        heads=[1, 2, 2, 4],
+        ffn_expansion_factor=2.0,
+        bias=False,
+        LayerNorm_type="WithBias",
+        dual_pixel_task=False
+    )
 
-model_path = 'best_restormer_pet.pth'
-if os.path.exists(model_path):
-    try:
-        checkpoint = torch.load(model_path, map_location=device)
-        model.load_state_dict(checkpoint)
-        print("[+] Model weights loaded successfully!")
-    except Exception as e:
-        print(f"[-] Error loading model weights: {e}")
+    model_path = 'best_restormer_pet.pth'
+    if os.path.exists(model_path):
+        try:
+            checkpoint = torch.load(model_path, map_location=device)
+            model.load_state_dict(checkpoint)
+            print("[+] Model weights loaded successfully!")
+        except Exception as e:
+            print(f"[-] Error loading model weights: {e}")
+    else:
+        print(f"[-] WARNING: Weights file '{model_path}' not found. Inference will run on random initialization.")
+
+    model.to(device)
+    model.eval()
+
+    # MONAI Preprocessing Transforms
+    monai_transform = Compose([
+        ScaleIntensity(),
+        EnsureType()
+    ])
 else:
-    print(f"[-] WARNING: Weights file '{model_path}' not found. Inference will run on random initialization.")
-
-model.to(device)
-model.eval()
-
-# MONAI Preprocessing Transforms
-monai_transform = Compose([
-    ScaleIntensity(),
-    EnsureType()
-])
+    print("[*] PyTorch is not available. Running on Vercel with ONNX model backend.")
 
 def process_dicom(path):
     """Load DICOM PET image and normalize to [0,1]."""
@@ -274,15 +281,31 @@ def enhance():
         # Calculate Input Image Quality Metric (SNR)
         input_snr = calculate_snr(img_low)
         
-        # Preprocess with MONAI
-        img_tensor = monai_transform(img_low)
-        img_tensor = torch.as_tensor(img_tensor, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device)
-        
-        # Run Restormer inference
-        with torch.no_grad():
-            enhanced_tensor = model(img_tensor)
+        # Run model inference (ONNX or PyTorch)
+        onnx_path = 'best_restormer_pet.onnx'
+        if not HAS_PYTORCH:
+            import onnxruntime as ort
+            # img_low is scaled [0, 1] and shaped (200, 200)
+            input_data = img_low.astype(np.float32)[np.newaxis, np.newaxis, :, :]
             
-        enhanced_np = enhanced_tensor[0, 0].cpu().numpy()
+            # Run ONNX inference
+            sess = ort.InferenceSession(onnx_path, providers=['CPUExecutionProvider'])
+            input_name = sess.get_inputs()[0].name
+            output_name = sess.get_outputs()[0].name
+            
+            ort_outs = sess.run([output_name], {input_name: input_data})
+            enhanced_np = ort_outs[0][0, 0]
+        else:
+            # Preprocess with MONAI
+            img_tensor = monai_transform(img_low)
+            img_tensor = torch.as_tensor(img_tensor, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device)
+            
+            # Run Restormer inference
+            with torch.no_grad():
+                enhanced_tensor = model(img_tensor)
+                
+            enhanced_np = enhanced_tensor[0, 0].cpu().numpy()
+            
         enhanced_np = np.clip(enhanced_np, 0, 1)
         
         # Calculate Output Image Quality Metric (SNR)
