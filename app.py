@@ -1,4 +1,6 @@
 import os
+import io
+import base64
 import numpy as np
 import pydicom
 import matplotlib
@@ -140,6 +142,14 @@ def calculate_snr(img):
     if std_val < 1e-6:
         return 0.0
     return float(mean_val / std_val)
+
+def numpy_to_base64_png(img_np):
+    """Convert float numpy scan array [0,1] to Base64-encoded Data URI."""
+    img_pil = Image.fromarray((img_np * 255.0).clip(0, 255).astype(np.uint8))
+    buffered = io.BytesIO()
+    img_pil.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
+    return f"data:image/png;base64,{img_str}"
 
 def simulate_low_dose(img, reduction_factor=10):
     """Generate synthetic low-dose PET using Poisson noise."""
@@ -321,14 +331,19 @@ def enhance():
         output_path = os.path.join(app.config['OUTPUT_FOLDER'], output_filename)
         plt.imsave(output_path, enhanced_np, cmap='gray')
         
+        # Convert output images to Base64 Data URIs for stateless serverless delivery
+        preview_base64 = numpy_to_base64_png(img_low)
+        ref_base64 = numpy_to_base64_png(img_ref_resized)
+        enhanced_base64 = numpy_to_base64_png(enhanced_np)
+
         # Update metadata description with selected reduction factor
         metadata['EstimatedDose'] = f"{2.0 / (reduction_factor / 10.0):.2f} mSv ({int(reduction_factor)}x Dose Reduction)"
         
         return jsonify({
             'success': True,
-            'preview_url': '/static/uploads/' + preview_filename,
-            'enhanced_url': '/static/outputs/' + output_filename,
-            'reference_url': '/static/uploads/' + ref_filename if not is_sample else '/static/images/sample_high_dose.png',
+            'preview_url': preview_base64,
+            'enhanced_url': enhanced_base64,
+            'reference_url': ref_base64,
             'filename': filename,
             'metadata': metadata,
             'metrics': {
