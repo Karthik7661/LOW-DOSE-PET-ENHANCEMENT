@@ -1,4 +1,4 @@
-# AI-Powered Low-Dose PET Image Enhancement Using Restormer
+# Web-Based Low-Dose PET Image Enhancement System
 
 PETRestore is a premium, Capstone-level AI healthcare web application designed to enhance noisy low-dose PET (Positron Emission Tomography) scans using a Transformer-based deep learning architecture.
 
