@@ -896,4 +896,45 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // 6. Generic Interactive 3D Card Hover Tilt Controller
+    const tiltCards = document.querySelectorAll('.tilt-3d');
+    tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            // Proportional 3D rotation angles
+            const rotateX = -(y / rect.height) * 15;
+            const rotateY = (x / rect.width) * 15;
+            
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            
+            // Pop out children in 3D space
+            const child = card.querySelector('.tilt-3d-child');
+            if (child) {
+                child.style.transform = 'translateZ(25px) scale(1.05)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            card.style.transition = 'transform 0.4s ease';
+            
+            const child = card.querySelector('.tilt-3d-child');
+            if (child) {
+                child.style.transform = 'translateZ(0px) scale(1)';
+                child.style.transition = 'transform 0.4s ease';
+            }
+        });
+
+        card.addEventListener('mouseenter', () => {
+            card.style.transition = 'none';
+            const child = card.querySelector('.tilt-3d-child');
+            if (child) {
+                child.style.transition = 'none';
+            }
+        });
+    });
 });

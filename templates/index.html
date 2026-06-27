@@ -63,29 +63,29 @@
 
                 <!-- Animated Statistics Cards -->
                 <div class="hero-stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 30px;">
-                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                    <div class="glass-card tilt-3d" style="padding: 12px; text-align: center;">
                         <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Training Epochs</span>
-                        <strong style="font-size: 1.3rem; color: var(--color-secondary);" class="hero-stat-val" data-val="50" data-decimals="0">0</strong>
+                        <strong style="font-size: 1.3rem; color: var(--color-primary);" class="hero-stat-val tilt-3d-child" data-val="50" data-decimals="0">0</strong>
                     </div>
-                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                    <div class="glass-card tilt-3d" style="padding: 12px; text-align: center;">
                         <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Batch Size</span>
-                        <strong style="font-size: 1.3rem; color: var(--color-secondary);" class="hero-stat-val" data-val="4" data-decimals="0">0</strong>
+                        <strong style="font-size: 1.3rem; color: var(--color-primary);" class="hero-stat-val tilt-3d-child" data-val="4" data-decimals="0">0</strong>
                     </div>
-                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                    <div class="glass-card tilt-3d" style="padding: 12px; text-align: center;">
                         <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Model PSNR</span>
-                        <strong style="font-size: 1.3rem; color: var(--color-success);" class="hero-stat-val" data-val="43.86" data-decimals="2">0</strong><span style="font-size: 0.8rem; color: var(--color-text-muted);"> dB</span>
+                        <strong style="font-size: 1.3rem; color: var(--color-primary);" class="hero-stat-val tilt-3d-child" data-val="43.86" data-decimals="2">0</strong><span style="font-size: 0.8rem; color: var(--color-text-muted);"> dB</span>
                     </div>
-                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                    <div class="glass-card tilt-3d" style="padding: 12px; text-align: center;">
                         <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Model SSIM</span>
-                        <strong style="font-size: 1.3rem; color: var(--color-success);" class="hero-stat-val" data-val="0.9939" data-decimals="4">0</strong>
+                        <strong style="font-size: 1.3rem; color: var(--color-primary);" class="hero-stat-val tilt-3d-child" data-val="0.9939" data-decimals="4">0</strong>
                     </div>
-                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                    <div class="glass-card tilt-3d" style="padding: 12px; text-align: center;">
                         <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Model RMSE</span>
-                        <strong style="font-size: 1.3rem; color: var(--color-success);" class="hero-stat-val" data-val="0.00675" data-decimals="5">0</strong>
+                        <strong style="font-size: 1.3rem; color: var(--color-primary);" class="hero-stat-val tilt-3d-child" data-val="0.00675" data-decimals="5">0</strong>
                     </div>
-                    <div class="glass-card" style="padding: 12px; text-align: center;">
+                    <div class="glass-card tilt-3d" style="padding: 12px; text-align: center;">
                         <span style="font-size: 0.75rem; color: var(--color-text-muted); display: block; text-transform: uppercase;">Model NRMSE</span>
-                        <strong style="font-size: 1.3rem; color: var(--color-success);" class="hero-stat-val" data-val="0.00675" data-decimals="5">0</strong>
+                        <strong style="font-size: 1.3rem; color: var(--color-primary);" class="hero-stat-val tilt-3d-child" data-val="0.00675" data-decimals="5">0</strong>
                     </div>
                 </div>
 
@@ -106,6 +106,12 @@
                         <div class="hud-telem hud-telem-2" id="hudTelem2">SCAN: STANDBY</div>
                         <div class="hud-telem hud-telem-3" id="hudTelem3">LOAD: 14%</div>
                         <div class="hud-telem hud-telem-4" id="hudTelem4">FPS: 59.9</div>
+                        
+                        <!-- Floating 3D Telemetry Coordinates Particles -->
+                        <div class="floating-particle p-1">X: 41.28</div>
+                        <div class="floating-particle p-2">Y: 53.91</div>
+                        <div class="floating-particle p-3">Z: 64.00</div>
+                        <div class="floating-particle p-4">PACS: ON</div>
                         
                         <!-- PACS Precision Scope Rulers -->
                         <div class="precision-scope-box">
@@ -219,7 +225,7 @@
                         <div class="panel-header">
                             <span class="panel-tag"><i class="fa-solid fa-radiation"></i> Low-Dose Input</span>
                         </div>
-                        <div class="upload-dropzone" id="uploadDropzone">
+                        <div class="upload-dropzone tilt-3d" id="uploadDropzone">
                             <input type="file" id="fileInput" accept=".dcm,.png,.jpg,.jpeg" style="display: none;">
                             <div class="dropzone-prompt" id="dropzonePrompt">
                                 <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
@@ -276,7 +282,7 @@
                         <div class="panel-header">
                             <span class="panel-tag tag-success"><i class="fa-solid fa-heart-pulse"></i> Enhanced Output</span>
                         </div>
-                        <div class="output-display" id="outputDisplay">
+                        <div class="output-display tilt-3d" id="outputDisplay">
                             <div class="output-placeholder" id="outputPlaceholder">
                                 <i class="fa-solid fa-shield-halved placeholder-icon"></i>
                                 <h3>AI Reconstruction</h3>
@@ -646,63 +652,63 @@
             
             <!-- Flowchart Timeline (7 steps) -->
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-top: 40px; padding: 20px 0;">
-                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: var(--color-card-border);">
+                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: var(--color-card-border);">
                     <i class="fa-solid fa-database" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">1. Dataset</h4>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">1. Dataset</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">Lung Cancer PET Slices</p>
                 </div>
                 <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
                     <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
                     <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
                 </svg>
-                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
                     <i class="fa-solid fa-toolbox" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">2. Preprocessing</h4>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">2. Preprocessing</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">Load DICOM & Normalize</p>
                 </div>
                 <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
                     <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
                     <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
                 </svg>
-                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
                     <i class="fa-solid fa-wave-square" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">3. Noise Sim</h4>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">3. Noise Sim</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">Poisson Simulation</p>
                 </div>
                 <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
                     <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
                     <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
                 </svg>
-                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
                     <i class="fa-solid fa-laptop-medical" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">4. MONAI</h4>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">4. MONAI</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">Scale & Type transforms</p>
                 </div>
                 <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
                     <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
                     <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
                 </svg>
-                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
                     <i class="fa-solid fa-brain" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">5. Restormer</h4>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">5. Restormer</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">Denoising network run</p>
                 </div>
                 <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
                     <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
                     <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
                 </svg>
-                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
                     <i class="fa-solid fa-circle-check" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">6. Enhancement</h4>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">6. Enhancement</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">High-dose restoration</p>
                 </div>
                 <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
                     <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
                     <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
                 </svg>
-                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: var(--color-card-border);">
+                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: var(--color-card-border);">
                     <i class="fa-solid fa-square-poll-vertical" style="font-size: 1.5rem; color: var(--color-success); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;">7. Evaluation</h4>
+                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">7. Evaluation</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">PSNR & SSIM metrics</p>
                 </div>
             </div>

@@ -328,6 +328,22 @@ h1, h2, h3, h4 {
     background-position: -200% 0;
 }
 
+/* 3D Card Hover Tilt Utilities */
+.tilt-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.tilt-3d * {
+    transform-style: preserve-3d;
+}
+
+.tilt-3d-child {
+    transform: translateZ(30px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 /* Futuristic Glowing Buttons */
 .btn {
     display: inline-flex;
@@ -538,6 +554,7 @@ h1, h2, h3, h4 {
     justify-content: center;
     overflow: hidden;
     position: relative;
+    transform-style: preserve-3d;
     box-shadow: 
         0 20px 40px -12px rgba(15, 23, 42, 0.12),
         0 0 30px var(--glow-primary);
@@ -606,6 +623,59 @@ h1, h2, h3, h4 {
 .ruler-l { left: 0; border-left: 1px solid rgba(15, 23, 42, 0.15); }
 .ruler-r { right: 0; border-right: 1px solid rgba(15, 23, 42, 0.15); }
 
+/* 3D Holographic Perspective Floor Grid inside scanner */
+.visual-card::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: -10%;
+    width: 120%;
+    height: 120px;
+    background-image: 
+        linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+    transform: perspective(120px) rotateX(80deg);
+    transform-origin: bottom center;
+    opacity: 0.85;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Floating 3D Telemetry Coordinates Particles */
+.floating-particle {
+    position: absolute;
+    font-family: monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 3;
+    animation: drift3D 12s infinite linear alternate;
+}
+
+.p-1 { top: 30%; left: 15%; animation-delay: 0s; }
+.p-2 { top: 60%; right: 15%; animation-delay: -3s; }
+.p-3 { bottom: 35%; left: 20%; animation-delay: -6s; }
+.p-4 { top: 40%; right: 25%; animation-delay: -9s; }
+
+@keyframes drift3D {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 0.15;
+    }
+    50% {
+        transform: translate3d(15px, -20px, 30px) scale(1.15);
+        opacity: 0.45;
+        color: var(--color-secondary);
+    }
+    100% {
+        transform: translate3d(-10px, 15px, -20px) scale(0.9);
+        opacity: 0.2;
+    }
+}
+
 /* Brain SVG container adjustments */
 .brain-svg-container {
     width: 74%;
@@ -614,6 +684,8 @@ h1, h2, h3, h4 {
     display: flex;
     align-items: center;
     justify-content: center;
+    transform: rotateX(20deg) rotateY(-10deg) translateZ(10px);
+    transform-style: preserve-3d;
 }
 
 .brain-svg {
