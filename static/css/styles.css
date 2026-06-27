@@ -676,21 +676,44 @@ h1, h2, h3, h4 {
     }
 }
 
-/* Brain SVG container adjustments */
-.brain-svg-container {
+/* 3D Volumetric Scan Stack classes */
+.slice-stack-container {
     width: 74%;
     height: 74%;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transform: rotateX(20deg) rotateY(-10deg) translateZ(10px);
     transform-style: preserve-3d;
+    z-index: 2;
 }
 
-.brain-svg {
+.slice-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.25s ease-out;
+}
+
+.slice-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* volumetric slice depth translation offsets */
+.slice-layer-back {
+    transform: translateZ(-25px);
+    opacity: 0.45;
+}
+
+.slice-layer-middle {
+    transform: translateZ(0px);
+}
+
+.slice-layer-front {
+    transform: translateZ(30px);
 }
 
 .brain-path-outline {
