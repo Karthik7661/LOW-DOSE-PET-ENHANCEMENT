@@ -812,6 +812,14 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('repEnhancedNrmse').textContent = document.getElementById('lblEnhancedNrmse').textContent;
             document.getElementById('repNrmseImprovement').textContent = document.getElementById('lblNrmseImprovement').textContent;
             
+            // Save original title and set dynamic print filename
+            const originalTitle = document.title;
+            document.title = `PETRestore_Report_${reportId}`;
+            
+            window.addEventListener('afterprint', () => {
+                document.title = originalTitle;
+            }, { once: true });
+
             // Trigger browser print/pdf print view with a slight paint delay to prevent race conditions
             setTimeout(() => {
                 window.print();
