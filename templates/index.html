@@ -723,41 +723,48 @@
                 <p class="section-description">How standard Software Development Lifecycle phases were applied to construct this medical AI platform.</p>
             </div>
             
-            <div class="features-grid">
+            <!-- Waterfall Staggered Step Cascade Grid -->
+            <div class="waterfall-wrapper">
                 <!-- SDLC Card 1 -->
-                <div class="feature-card glass-card">
+                <div class="waterfall-step-card glass-card tilt-3d waterfall-card-pulse">
+                    <div class="waterfall-flow-drop"></div>
                     <div class="feature-icon-wrapper"><i class="fa-solid fa-clipboard-list"></i></div>
-                    <h3>1. Requirements Gathering</h3>
+                    <h3 class="tilt-3d-child">1. Requirements Analysis</h3>
                     <p>Identified clinical specifications for low-dose radiation scanning and parsed PET DICOM (.dcm) standards. Established quality thresholds for target metrics (PSNR, SSIM).</p>
                 </div>
                 <!-- SDLC Card 2 -->
-                <div class="feature-card glass-card">
+                <div class="waterfall-step-card glass-card tilt-3d waterfall-card-pulse">
+                    <div class="waterfall-flow-drop"></div>
                     <div class="feature-icon-wrapper"><i class="fa-solid fa-map"></i></div>
-                    <h3>2. Planning</h3>
+                    <h3 class="tilt-3d-child">2. Planning & Feasibility</h3>
                     <p>Conducted architectural planning comparing Restormer's channel-wise attention complexity to standard CNNs. Chosen PyTorch, Flask, and MONAI stack for execution.</p>
                 </div>
                 <!-- SDLC Card 3 -->
-                <div class="feature-card glass-card">
+                <div class="waterfall-step-card glass-card tilt-3d waterfall-card-pulse">
+                    <div class="waterfall-flow-drop"></div>
                     <div class="feature-icon-wrapper"><i class="fa-solid fa-diagram-project"></i></div>
-                    <h3>3. System Design</h3>
+                    <h3 class="tilt-3d-child">3. System Design</h3>
                     <p>Designed a decoupled client-server architecture. Structured restful API interfaces, data loading classes (Dataset, DataLoader), and glassmorphism interface blueprints.</p>
                 </div>
                 <!-- SDLC Card 4 -->
-                <div class="feature-card glass-card">
+                <div class="waterfall-step-card glass-card tilt-3d waterfall-card-pulse">
+                    <div class="waterfall-flow-drop"></div>
                     <div class="feature-icon-wrapper"><i class="fa-solid fa-code"></i></div>
-                    <h3>4. Development</h3>
+                    <h3 class="tilt-3d-child">4. Implementation & Coding</h3>
                     <p>Developed modular code bases: model.py (self-contained transformer blocks) and app.py (inference routing). Integrated MONAI filters and custom noise simulators.</p>
                 </div>
                 <!-- SDLC Card 5 -->
-                <div class="feature-card glass-card">
+                <div class="waterfall-step-card glass-card tilt-3d waterfall-card-pulse">
+                    <div class="waterfall-flow-drop"></div>
                     <div class="feature-icon-wrapper"><i class="fa-solid fa-vial"></i></div>
-                    <h3>5. Testing</h3>
+                    <h3 class="tilt-3d-child">5. Testing & Verification</h3>
                     <p>Wrote verify_model.py test suites to validate weights mapping, shape outputs, and tensor dimensions. Implemented live SNR denoising check scripts.</p>
                 </div>
                 <!-- SDLC Card 6 -->
-                <div class="feature-card glass-card">
+                <div class="waterfall-step-card glass-card tilt-3d waterfall-card-pulse">
+                    <div class="waterfall-flow-drop"></div>
                     <div class="feature-icon-wrapper"><i class="fa-solid fa-server"></i></div>
-                    <h3>6. Deployment</h3>
+                    <h3 class="tilt-3d-child">6. Deployment & Operations</h3>
                     <p>Deployed Flask webserver onto local workspace port 5001 to resolve macOS AirPlay conflicts, serving cached static assets and dynamic output downloads.</p>
                 </div>
             </div>

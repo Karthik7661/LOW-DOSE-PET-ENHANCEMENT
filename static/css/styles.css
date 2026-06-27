@@ -1802,3 +1802,97 @@ h1, h2, h3, h4 {
 .workflow-card-pulse:hover {
     animation-play-state: paused !important;
 }
+
+/* Waterfall SDLC Model Cascade */
+.waterfall-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 50px;
+    padding-left: 60px;
+}
+
+.waterfall-step-card {
+    position: relative;
+    width: 62%;
+    padding: 24px 30px;
+    transition: all 0.3s ease;
+}
+
+/* Stagger steps on desktop screen */
+@media (min-width: 1024px) {
+    .waterfall-step-card:nth-child(1) { margin-left: 0%; }
+    .waterfall-step-card:nth-child(2) { margin-left: 8%; }
+    .waterfall-step-card:nth-child(3) { margin-left: 16%; }
+    .waterfall-step-card:nth-child(4) { margin-left: 24%; }
+    .waterfall-step-card:nth-child(5) { margin-left: 32%; }
+    .waterfall-step-card:nth-child(6) { margin-left: 40%; }
+}
+
+@media (max-width: 1023px) {
+    .waterfall-wrapper {
+        padding-left: 40px;
+    }
+    .waterfall-step-card {
+        width: 100%;
+    }
+}
+
+/* Falling Water Neon Flow line on left border */
+.waterfall-flow-drop {
+    position: absolute;
+    left: -30px;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, var(--color-primary), var(--color-secondary), transparent);
+    background-size: 100% 250%;
+    animation: fallDrops 1.8s linear infinite;
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--glow-primary);
+}
+
+@keyframes fallDrops {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 0% 250%; }
+}
+
+/* Stepped Waterfall Highlight Cascading Wave */
+@keyframes waterfallHighlight {
+    0%, 100% {
+        border-color: var(--color-card-border);
+        box-shadow: 0 12px 35px -10px rgba(15, 23, 42, 0.06);
+        transform: translateY(0);
+    }
+    10% {
+        border-color: var(--color-primary);
+        box-shadow: 0 20px 40px var(--glow-primary);
+        transform: translateY(-8px) scale(1.02);
+    }
+    20% {
+        border-color: var(--color-secondary);
+        box-shadow: 0 20px 40px var(--glow-secondary);
+        transform: translateY(-4px);
+    }
+    30% {
+        border-color: var(--color-card-border);
+        box-shadow: 0 12px 35px -10px rgba(15, 23, 42, 0.06);
+        transform: translateY(0);
+    }
+}
+
+.waterfall-card-pulse {
+    animation: waterfallHighlight 6s infinite ease-in-out;
+}
+
+.waterfall-card-pulse:nth-child(1) { animation-delay: 0s; }
+.waterfall-card-pulse:nth-child(2) { animation-delay: 1s; }
+.waterfall-card-pulse:nth-child(3) { animation-delay: 2s; }
+.waterfall-card-pulse:nth-child(4) { animation-delay: 3s; }
+.waterfall-card-pulse:nth-child(5) { animation-delay: 4s; }
+.waterfall-card-pulse:nth-child(6) { animation-delay: 5s; }
+
+.waterfall-card-pulse:hover {
+    animation-play-state: paused !important;
+}
