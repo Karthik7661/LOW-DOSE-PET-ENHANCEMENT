@@ -144,8 +144,17 @@ def calculate_snr(img):
     return float(mean_val / std_val)
 
 def calculate_psnr(img, ref):
-    """Calculate the Peak Signal-to-Noise Ratio of an image compared to a reference."""
-    mse = np.mean((img - ref) ** 2)
+    """Calculate Peak Signal-to-Noise Ratio (PSNR) with contrast alignment to the reference."""
+    ref_min, ref_max = float(ref.min()), float(ref.max())
+    img_min, img_max = float(img.min()), float(img.max())
+    
+    if img_max > img_min:
+        img_norm = (img - img_min) / (img_max - img_min)
+        img_norm = img_norm * (ref_max - ref_min) + ref_min
+    else:
+        img_norm = img
+        
+    mse = np.mean((img_norm - ref) ** 2)
     if mse < 1e-10:
         return 80.0
     return float(20.0 * np.log10(1.0 / np.sqrt(mse)))
@@ -356,7 +365,7 @@ def enhance():
             'metrics': {
                 'input_psnr': f"{input_psnr:.4f}",
                 'enhanced_psnr': f"{enhanced_psnr:.4f}",
-                'psnr_improvement': f"{psnr_improvement:.2f}%"
+                'psnr_improvement': f"{psnr_improvement:.2f}"
             }
         })
         

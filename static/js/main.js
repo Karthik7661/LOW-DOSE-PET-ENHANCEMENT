@@ -282,7 +282,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Populate Metrics
                 lblInputPsnr.textContent = data.metrics.input_psnr + " dB";
                 lblEnhancedPsnr.textContent = data.metrics.enhanced_psnr + " dB";
-                lblPsnrImprovement.textContent = "+" + data.metrics.psnr_improvement;
+                
+                const psnrGain = parseFloat(data.metrics.psnr_improvement);
+                if (psnrGain >= 0) {
+                    lblPsnrImprovement.textContent = "+" + psnrGain.toFixed(2) + "% Gain";
+                    lblPsnrImprovement.style.color = "var(--color-success)";
+                } else {
+                    lblPsnrImprovement.textContent = psnrGain.toFixed(2) + "% Loss";
+                    lblPsnrImprovement.style.color = "#ef4444";
+                }
                 
                 // Populate DICOM Headers
                 lblPatientId.textContent = data.metadata.PatientID;
