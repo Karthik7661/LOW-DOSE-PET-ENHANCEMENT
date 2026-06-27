@@ -296,10 +296,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 lblEnhancedPsnr.textContent = parseFloat(data.metrics.enhanced_psnr).toFixed(2) + " dB";
                 const psnrGain = parseFloat(data.metrics.psnr_improvement);
                 if (psnrGain >= 0) {
-                    lblPsnrImprovement.textContent = "+" + psnrGain.toFixed(2) + "% Gain";
+                    lblPsnrImprovement.textContent = "+" + psnrGain.toFixed(2) + "% Improvement";
                     lblPsnrImprovement.style.color = "var(--color-success)";
                 } else {
-                    lblPsnrImprovement.textContent = psnrGain.toFixed(2) + "% Loss";
+                    lblPsnrImprovement.textContent = psnrGain.toFixed(2) + "% Regression";
                     lblPsnrImprovement.style.color = "#ef4444";
                 }
                 
@@ -307,10 +307,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 lblEnhancedSsim.textContent = parseFloat(data.metrics.enhanced_ssim).toFixed(4);
                 const ssimGain = parseFloat(data.metrics.ssim_improvement);
                 if (ssimGain >= 0) {
-                    lblSsimImprovement.textContent = "+" + ssimGain.toFixed(2) + "% Gain";
+                    lblSsimImprovement.textContent = "+" + ssimGain.toFixed(2) + "% Improvement";
                     lblSsimImprovement.style.color = "var(--color-success)";
                 } else {
-                    lblSsimImprovement.textContent = ssimGain.toFixed(2) + "% Loss";
+                    lblSsimImprovement.textContent = ssimGain.toFixed(2) + "% Regression";
                     lblSsimImprovement.style.color = "#ef4444";
                 }
                 
@@ -318,10 +318,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 lblEnhancedRmse.textContent = parseFloat(data.metrics.enhanced_rmse).toFixed(4);
                 const rmseGain = parseFloat(data.metrics.rmse_improvement);
                 if (rmseGain >= 0) {
-                    lblRmseImprovement.textContent = "-" + rmseGain.toFixed(2) + "% Error";
+                    lblRmseImprovement.textContent = rmseGain.toFixed(2) + "% Error Reduction";
                     lblRmseImprovement.style.color = "var(--color-success)";
                 } else {
-                    lblRmseImprovement.textContent = "+" + Math.abs(rmseGain).toFixed(2) + "% Error";
+                    lblRmseImprovement.textContent = "+" + Math.abs(rmseGain).toFixed(2) + "% Error Increase";
                     lblRmseImprovement.style.color = "#ef4444";
                 }
                 
@@ -329,10 +329,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 lblEnhancedNrmse.textContent = parseFloat(data.metrics.enhanced_nrmse).toFixed(4);
                 const nrmseGain = parseFloat(data.metrics.nrmse_improvement);
                 if (nrmseGain >= 0) {
-                    lblNrmseImprovement.textContent = "-" + nrmseGain.toFixed(2) + "% Error";
+                    lblNrmseImprovement.textContent = nrmseGain.toFixed(2) + "% Error Reduction";
                     lblNrmseImprovement.style.color = "var(--color-success)";
                 } else {
-                    lblNrmseImprovement.textContent = "+" + Math.abs(nrmseGain).toFixed(2) + "% Error";
+                    lblNrmseImprovement.textContent = "+" + Math.abs(nrmseGain).toFixed(2) + "% Error Increase";
                     lblNrmseImprovement.style.color = "#ef4444";
                 }
                 
