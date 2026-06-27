@@ -2026,18 +2026,19 @@ h1, h2, h3, h4 {
 }
 
 @media print {
-    /* Hide the web app interactive view entirely */
-    body > *:not(#clinicalReportContainer) {
-        display: none !important;
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
+    /* Hide all body elements visually during print */
+    body > * {
+        visibility: hidden !important;
+    }
+    
+    /* Re-enable visibility specifically for report container and its nested children */
+    #clinicalReportContainer, #clinicalReportContainer * {
+        visibility: visible !important;
     }
     
     #clinicalReportContainer {
         display: block !important;
-        position: relative !important;
+        position: absolute !important;
         left: 0 !important;
         top: 0 !important;
         width: 100% !important;
