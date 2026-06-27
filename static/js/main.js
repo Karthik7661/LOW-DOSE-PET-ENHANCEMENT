@@ -1503,21 +1503,54 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
     </div>
-    <script>
-        window.onload = () => {
-            setTimeout(() => {
-                window.print();
-            }, 600);
-        };
-    </script>
+    </div>
 </body>
 </html>
             `;
             
-            const reportWindow = window.open('', '_blank');
-            reportWindow.document.open();
-            reportWindow.document.write(reportHtml);
-            reportWindow.document.close();
+            // Set loading state on button
+            btnGenerateReport.disabled = true;
+            const originalText = btnGenerateReport.innerHTML;
+            btnGenerateReport.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating...`;
+            
+            // Create a temporary container for rendering
+            const container = document.createElement('div');
+            container.style.position = 'absolute';
+            container.style.left = '-9999px';
+            container.style.top = '0';
+            container.style.width = '800px';
+            container.style.background = '#fff';
+            container.innerHTML = reportHtml;
+            document.body.appendChild(container);
+            
+            // Configure html2pdf options
+            const opt = {
+                margin:       [12, 12, 12, 12],
+                filename:     reportId + '.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true,
+                    logging: false,
+                    allowTaint: true
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            // Generate and save, then clean up DOM
+            html2pdf().set(opt).from(container).save().then(() => {
+                document.body.removeChild(container);
+                btnGenerateReport.disabled = false;
+                btnGenerateReport.innerHTML = originalText;
+            }).catch(err => {
+                console.error(err);
+                if (document.body.contains(container)) {
+                    document.body.removeChild(container);
+                }
+                btnGenerateReport.disabled = false;
+                btnGenerateReport.innerHTML = originalText;
+                alert("Failed to generate PDF. Please try again.");
+            });
         });
     }
 });
