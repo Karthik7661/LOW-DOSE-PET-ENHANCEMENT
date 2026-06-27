@@ -730,7 +730,7 @@
                 
                 <!-- The Desktop stepped waterfall background SVG flow -->
                 <div class="waterfall-vector-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;">
-                    <svg width="100%" height="100%" viewBox="0 0 1000 450" preserveAspectRatio="none" style="overflow: visible;">
+                    <svg width="100%" height="100%" viewBox="0 0 1000 520" preserveAspectRatio="none" style="overflow: visible;">
                         <defs>
                             <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stop-color="var(--color-primary)" />
@@ -746,23 +746,31 @@
                             </filter>
                         </defs>
                         <!-- Layer 1: Outer glowing transparent glass pipe -->
-                        <path d="M 100,50 L 250,50 L 250,125 L 410,125 L 410,200 L 570,200 L 570,275 L 730,275 L 730,350 L 890,350 L 890,425" 
-                              fill="none" stroke="rgba(2, 132, 199, 0.15)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M 130,100 L 130,132.5 L 200,132.5" fill="none" stroke="rgba(2, 132, 199, 0.12)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M 297.5,180 L 297.5,210 L 360,210" fill="none" stroke="rgba(2, 132, 199, 0.12)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M 465,260 L 465,287.5 L 520,287.5" fill="none" stroke="rgba(2, 132, 199, 0.12)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M 632.5,340 L 632.5,365 L 680,365" fill="none" stroke="rgba(2, 132, 199, 0.12)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M 800,420 L 800,442.5 L 840,442.5" fill="none" stroke="rgba(2, 132, 199, 0.12)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
                         
                         <!-- Layer 2: Inner glowing liquid core -->
-                        <path d="M 100,50 L 250,50 L 250,125 L 410,125 L 410,200 L 570,200 L 570,275 L 730,275 L 730,350 L 890,350 L 890,425" 
-                              fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" 
-                              class="water-core" />
+                        <path d="M 130,100 L 130,132.5 L 200,132.5" fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" class="water-core" />
+                        <path d="M 297.5,180 L 297.5,210 L 360,210" fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" class="water-core" />
+                        <path d="M 465,260 L 465,287.5 L 520,287.5" fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" class="water-core" />
+                        <path d="M 632.5,340 L 632.5,365 L 680,365" fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" class="water-core" />
+                        <path d="M 800,420 L 800,442.5 L 840,442.5" fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" class="water-core" />
 
                         <!-- Layer 3: Rushing liquid currents (Bubble stream animation) -->
-                        <path d="M 100,50 L 250,50 L 250,125 L 410,125 L 410,200 L 570,200 L 570,275 L 730,275 L 730,350 L 890,350 L 890,425" 
-                              fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" 
-                              class="water-current" />
+                        <path d="M 130,100 L 130,132.5 L 200,132.5" fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="water-current pipe-flow-1" />
+                        <path d="M 297.5,180 L 297.5,210 L 360,210" fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="water-current pipe-flow-2" />
+                        <path d="M 465,260 L 465,287.5 L 520,287.5" fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="water-current pipe-flow-3" />
+                        <path d="M 632.5,340 L 632.5,365 L 680,365" fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="water-current pipe-flow-4" />
+                        <path d="M 800,420 L 800,442.5 L 840,442.5" fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="water-current pipe-flow-5" />
                     </svg>
                 </div>
 
                 <!-- SDLC Card 1 -->
-                <div class="waterfall-compact-card waterfall-card-1 glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-1 glass-card tilt-3d waterfall-card-pulse-1">
+                    <div class="water-fill-overlay water-fill-1"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-clipboard-list" style="color: var(--color-primary); font-size: 0.95rem;"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">1. Requirements</h4>
@@ -770,7 +778,8 @@
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Parse DICOM metadata for low-dose radiation indices and define clinical PSNR/SSIM thresholds.</p>
                 </div>
                 <!-- SDLC Card 2 -->
-                <div class="waterfall-compact-card waterfall-card-2 glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-2 glass-card tilt-3d waterfall-card-pulse-2">
+                    <div class="water-fill-overlay water-fill-2"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-map" style="color: var(--color-primary); font-size: 0.95rem;"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">2. Planning</h4>
@@ -778,7 +787,8 @@
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Analyze Restormer's computational complexity and map PyTorch/Flask CUDA runtime environments.</p>
                 </div>
                 <!-- SDLC Card 3 -->
-                <div class="waterfall-compact-card waterfall-card-3 glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-3 glass-card tilt-3d waterfall-card-pulse-3">
+                    <div class="water-fill-overlay water-fill-3"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-diagram-project" style="color: var(--color-primary); font-size: 0.95rem;"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">3. Design</h4>
@@ -786,7 +796,8 @@
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Architect REST APIs for image uploads, MONAI pipeline maps, and PACS visualization panels.</p>
                 </div>
                 <!-- SDLC Card 4 -->
-                <div class="waterfall-compact-card waterfall-card-4 glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-4 glass-card tilt-3d waterfall-card-pulse-4">
+                    <div class="water-fill-overlay water-fill-4"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-code" style="color: var(--color-primary); font-size: 0.95rem;"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">4. Coding</h4>
@@ -794,7 +805,8 @@
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Implement Restormer self-attention layers, noise simulation models, and Flask inference routing.</p>
                 </div>
                 <!-- SDLC Card 5 -->
-                <div class="waterfall-compact-card waterfall-card-5 glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-5 glass-card tilt-3d waterfall-card-pulse-5">
+                    <div class="water-fill-overlay water-fill-5"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-vial" style="font-size: 0.95rem; color: var(--color-primary);"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">5. Testing</h4>
@@ -802,12 +814,13 @@
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Verify model weight parameters via unit tests and validate image output dimension shapes.</p>
                 </div>
                 <!-- SDLC Card 6 -->
-                <div class="waterfall-compact-card waterfall-card-6 glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-6 glass-card tilt-3d waterfall-card-pulse-6">
+                    <div class="water-fill-overlay water-fill-6"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-server" style="color: var(--color-primary); font-size: 0.95rem;"></i>
-                        <h4 style="font-size: 0.8rem; font-weight: 700;">6. Operations</h4>
+                        <h4 style="font-size: 0.8rem; font-weight: 700;">6. Vercel Deployment</h4>
                     </div>
-                    <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Host Flask backend on port 5001, optimize Vercel cloud serverless deployment, and setup cache.</p>
+                    <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Deploy static interfaces onto Vercel global CDN, establish serverless endpoints, and set cache policies.</p>
                 </div>
             </div>
         </div>

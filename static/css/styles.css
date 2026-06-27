@@ -1807,28 +1807,26 @@ h1, h2, h3, h4 {
 .waterfall-desktop-canvas {
     position: relative;
     width: 100%;
-    height: 480px;
+    height: 520px;
     margin-top: 40px;
     display: block;
 }
 
 .waterfall-compact-card {
     position: absolute;
-    width: 220px;
-    height: 100px;
-    padding: 12px 16px;
     z-index: 10;
+    overflow: hidden; /* Clips the rising water fill */
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Diagonal staircase coordinate mapping */
+/* Diagonal staircase coordinate mapping with progressive growing sizes */
 @media (min-width: 1024px) {
-    .waterfall-card-1 { left: 4%; top: 10px; }
-    .waterfall-card-2 { left: 20%; top: 85px; }
-    .waterfall-card-3 { left: 36%; top: 160px; }
-    .waterfall-card-4 { left: 52%; top: 235px; }
-    .waterfall-card-5 { left: 68%; top: 310px; }
-    .waterfall-card-6 { left: 84%; top: 385px; }
+    .waterfall-card-1 { left: 4%; top: 10px; width: 180px; height: 90px; }
+    .waterfall-card-2 { left: 20%; top: 85px; width: 195px; height: 95px; }
+    .waterfall-card-3 { left: 36%; top: 160px; width: 210px; height: 100px; }
+    .waterfall-card-4 { left: 52%; top: 235px; width: 225px; height: 105px; }
+    .waterfall-card-5 { left: 68%; top: 310px; width: 240px; height: 110px; }
+    .waterfall-card-6 { left: 84%; top: 385px; width: 255px; height: 115px; }
     
     .waterfall-mobile-drop-line {
         display: none !important;
@@ -1849,8 +1847,8 @@ h1, h2, h3, h4 {
         position: relative;
         left: 0 !important;
         top: 0 !important;
-        width: 100%;
-        height: auto;
+        width: 100% !important;
+        height: auto !important;
         min-height: 90px;
     }
     
@@ -1895,41 +1893,101 @@ h1, h2, h3, h4 {
     }
 }
 
-/* Stepped Waterfall Highlight Cascading Wave */
-@keyframes waterfallHighlight {
-    0%, 100% {
-        border-color: var(--color-card-border);
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
-        transform: translateY(0);
-    }
-    10% {
-        border-color: var(--color-primary);
-        box-shadow: 0 16px 30px var(--glow-primary);
-        transform: translateY(-6px) scale(1.03);
-    }
-    20% {
-        border-color: var(--color-secondary);
-        box-shadow: 0 16px 30px var(--glow-secondary);
-        transform: translateY(-3px);
-    }
-    30% {
-        border-color: var(--color-card-border);
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
-        transform: translateY(0);
-    }
+/* Synchronized Waterfall Liquid Filling Overlays */
+.water-fill-overlay {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(180deg, rgba(0, 191, 255, 0.04) 0%, rgba(2, 132, 199, 0.12) 100%);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+    border-top: 1.5px dashed var(--color-primary);
+    box-shadow: inset 0 -15px 30px rgba(0, 191, 255, 0.05);
 }
 
-.waterfall-card-pulse {
-    animation: waterfallHighlight 6s infinite ease-in-out;
+/* Card 1 Water Fill (0s to 1.2s fill, holds, drains at 11s) */
+@keyframes fillCard1 {
+    0%, 93% { height: 0%; opacity: 0; }
+    10%, 88% { height: 100%; opacity: 1; }
+}
+/* Card 2 Water Fill (2.0s to 3.2s) */
+@keyframes fillCard2 {
+    0%, 16.6%, 93% { height: 0%; opacity: 0; }
+    26.6%, 88% { height: 100%; opacity: 1; }
+}
+/* Card 3 Water Fill (4.0s to 5.2s) */
+@keyframes fillCard3 {
+    0%, 33.3%, 93% { height: 0%; opacity: 0; }
+    43.3%, 88% { height: 100%; opacity: 1; }
+}
+/* Card 4 Water Fill (6.0s to 7.2s) */
+@keyframes fillCard4 {
+    0%, 50%, 93% { height: 0%; opacity: 0; }
+    60%, 88% { height: 100%; opacity: 1; }
+}
+/* Card 5 Water Fill (8.0s to 9.2s) */
+@keyframes fillCard5 {
+    0%, 66.6%, 93% { height: 0%; opacity: 0; }
+    76.6%, 88% { height: 100%; opacity: 1; }
+}
+/* Card 6 Water Fill (10.0s to 11.2s) */
+@keyframes fillCard6 {
+    0%, 83.3%, 93% { height: 0%; opacity: 0; }
+    91.6%, 88% { height: 100%; opacity: 1; }
 }
 
-.waterfall-card-pulse:nth-child(1) { animation-delay: 0s; }
-.waterfall-card-pulse:nth-child(2) { animation-delay: 1s; }
-.waterfall-card-pulse:nth-child(3) { animation-delay: 2s; }
-.waterfall-card-pulse:nth-child(4) { animation-delay: 3s; }
-.waterfall-card-pulse:nth-child(5) { animation-delay: 4s; }
-.waterfall-card-pulse:nth-child(6) { animation-delay: 5s; }
+.water-fill-1 { animation: fillCard1 12s infinite ease-in-out; }
+.water-fill-2 { animation: fillCard2 12s infinite ease-in-out; }
+.water-fill-3 { animation: fillCard3 12s infinite ease-in-out; }
+.water-fill-4 { animation: fillCard4 12s infinite ease-in-out; }
+.water-fill-5 { animation: fillCard5 12s infinite ease-in-out; }
+.water-fill-6 { animation: fillCard6 12s infinite ease-in-out; }
 
-.waterfall-card-pulse:hover {
-    animation-play-state: paused !important;
+/* Synchronized pipe flow currents (hiding flow when inactive) */
+@keyframes flowPipe1 {
+    0%, 10%, 25%, 100% { opacity: 0; }
+    12.5%, 22% { opacity: 1; }
+}
+@keyframes flowPipe2 {
+    0%, 26.6%, 42%, 100% { opacity: 0; }
+    29.1%, 39% { opacity: 1; }
+}
+@keyframes flowPipe3 {
+    0%, 43.3%, 58%, 100% { opacity: 0; }
+    45.8%, 55% { opacity: 1; }
+}
+@keyframes flowPipe4 {
+    0%, 60%, 75%, 100% { opacity: 0; }
+    62.5%, 72% { opacity: 1; }
+}
+@keyframes flowPipe5 {
+    0%, 76.6%, 91.6%, 100% { opacity: 0; }
+    79.1%, 89% { opacity: 1; }
+}
+
+.pipe-flow-1 { animation: flowPipe1 12s infinite ease-in-out; }
+.pipe-flow-2 { animation: flowPipe2 12s infinite ease-in-out; }
+.pipe-flow-3 { animation: flowPipe3 12s infinite ease-in-out; }
+.pipe-flow-4 { animation: flowPipe4 12s infinite ease-in-out; }
+.pipe-flow-5 { animation: flowPipe5 12s infinite ease-in-out; }
+
+/* Pulse background border as water enters */
+@keyframes borderPulse {
+    0%, 93% { border-color: var(--color-card-border); box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04); }
+    10%, 88% { border-color: var(--color-primary); box-shadow: 0 12px 30px var(--glow-primary); }
+}
+
+.waterfall-card-pulse-1 { animation: borderPulse 12s infinite ease-in-out; }
+.waterfall-card-pulse-2 { animation: borderPulse 12s infinite ease-in-out; animation-delay: 2s; }
+.waterfall-card-pulse-3 { animation: borderPulse 12s infinite ease-in-out; animation-delay: 4s; }
+.waterfall-card-pulse-4 { animation: borderPulse 12s infinite ease-in-out; animation-delay: 6s; }
+.waterfall-card-pulse-5 { animation: borderPulse 12s infinite ease-in-out; animation-delay: 8s; }
+.waterfall-card-pulse-6 { animation: borderPulse 12s infinite ease-in-out; animation-delay: 10s; }
+
+.waterfall-compact-card:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 15px 35px var(--glow-primary);
 }
