@@ -2017,33 +2017,24 @@ h1, h2, h3, h4 {
    PETRestore Premium Print Report CSS
    ========================================================================== */
 #clinicalReportContainer {
-    position: absolute;
-    left: -9999px;
-    top: -9999px;
-    width: 800px;
-    opacity: 0;
-    pointer-events: none;
+    display: none;
 }
 
 @media print {
-    /* Hide all body elements visually during print */
-    body > * {
-        visibility: hidden !important;
+    /* Completely collapse and hide web app elements to eliminate extra blank pages */
+    body > *:not(#clinicalReportContainer) {
+        display: none !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
     }
     
-    /* Re-enable visibility specifically for report container and its nested children */
-    #clinicalReportContainer, #clinicalReportContainer * {
-        visibility: visible !important;
-    }
-    
+    /* Place the report container statically in the document flow at full width */
     #clinicalReportContainer {
         display: block !important;
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
+        position: static !important;
         width: 100% !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
         background-color: #fff !important;
         color: #0f172a !important;
         font-family: 'Inter', sans-serif !important;
