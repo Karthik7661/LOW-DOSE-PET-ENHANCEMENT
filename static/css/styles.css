@@ -2021,6 +2021,12 @@ h1, h2, h3, h4 {
 }
 
 @media print {
+    /* Disable pseudo-elements like holographic scanner scanlines from printing */
+    body::before, body::after {
+        display: none !important;
+        content: none !important;
+    }
+
     /* Completely collapse and hide web app elements to eliminate extra blank pages */
     body > *:not(#clinicalReportContainer) {
         display: none !important;

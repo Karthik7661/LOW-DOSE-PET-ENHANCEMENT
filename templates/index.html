@@ -15,6 +15,187 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body class="theme-ice">
+    <!-- Hidden Print Report Container -->
+    <div id="clinicalReportContainer" class="print-only-report">
+        <!-- Report Page Wrapper -->
+        <div class="report-wrapper">
+            <!-- Header -->
+            <div class="report-header">
+                <div class="logo-area">
+                    <i class="fa-solid fa-microscope" style="font-size: 2.2rem; color: #0284c7; vertical-align: middle;"></i>
+                    <span style="font-size: 2.2rem; font-weight: 800; color: #0f172a; margin-left: 8px; font-family: 'Poppins', sans-serif;">PET<span style="color: #10b981;">Restore</span></span>
+                </div>
+                <div class="title-area">
+                    <h1 style="font-size: 1.5rem; font-weight: 700; color: #0f172a; margin: 0; font-family: 'Poppins', sans-serif; text-align: right;">Low-Dose PET Image Enhancement Report</h1>
+                    <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 6px; font-size: 0.8rem; color: #64748b;">
+                        <span><strong>Report ID:</strong> <span id="repReportId">REP-2026-000000</span></span>
+                        <span><strong>Date:</strong> <span id="repDate">June 27, 2026</span></span>
+                        <span><strong>Time:</strong> <span id="repTime">12:00:00 PM</span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="border-bottom: 2px solid #e2e8f0; margin: 20px 0 15px 0;"></div>
+            
+            <!-- Scan Information -->
+            <div class="report-section-card">
+                <h3 class="section-card-title"><i class="fa-solid fa-circle-info"></i> Scan Information</h3>
+                <div class="scan-info-grid">
+                    <div class="info-item">
+                        <i class="fa-solid fa-hospital-user icon"></i>
+                        <div>
+                            <span class="label">Patient / Scan ID</span>
+                            <span class="value" id="repScanId">--</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-file-medical icon"></i>
+                        <div>
+                            <span class="label">Image Name</span>
+                            <span class="value" id="repImgName">--</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-database icon"></i>
+                        <div>
+                            <span class="label">Image Format</span>
+                            <span class="value" id="repFormat">--</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-maximize icon"></i>
+                        <div>
+                            <span class="label">Resolution</span>
+                            <span class="value" id="repResolution">200 x 200 px</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-gauge-high icon"></i>
+                        <div>
+                            <span class="label">Dose Reduction</span>
+                            <span class="value" id="repDoseFactor">--</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-clock icon"></i>
+                        <div>
+                            <span class="label">Processing Time</span>
+                            <span class="value" id="repProcTime">1.24 seconds</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-circle-check icon" style="color: #10b981;"></i>
+                        <div>
+                            <span class="label">Status</span>
+                            <span class="value" style="color: #10b981; font-weight: 700;">Completed Successfully</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image Comparison -->
+            <div class="report-section-card" style="margin-top: 15px;">
+                <h3 class="section-card-title"><i class="fa-solid fa-images"></i> Image Comparison</h3>
+                <div class="report-image-comparison">
+                    <div class="img-card">
+                        <h4>Low-Dose PET Image</h4>
+                        <div class="img-wrapper">
+                            <img id="repInputImg" src="" alt="Low-Dose Input">
+                        </div>
+                    </div>
+                    <div class="img-card">
+                        <h4>Enhanced PET Image</h4>
+                        <div class="img-wrapper">
+                            <img id="repOutputImg" src="" alt="Enhanced Output">
+                        </div>
+                    </div>
+                </div>
+                <p class="image-caption">"The enhanced image was automatically generated using the PETRestore image enhancement system."</p>
+            </div>
+            
+            <!-- Image Quality Metrics Table -->
+            <div class="report-section-card" style="margin-top: 15px;">
+                <h3 class="section-card-title"><i class="fa-solid fa-chart-simple"></i> Image Quality Metrics</h3>
+                <table class="report-metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Low-Dose Input</th>
+                            <th>Enhanced Output</th>
+                            <th>Improvement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Peak Signal-to-Noise Ratio (PSNR)</strong></td>
+                            <td id="repInputPsnr">--</td>
+                            <td id="repEnhancedPsnr" style="font-weight: 700; color: #0284c7;">--</td>
+                            <td id="repPsnrImprovement" style="font-weight: 700; color: #10b981;">--</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Structural Similarity (SSIM)</strong></td>
+                            <td id="repInputSsim">--</td>
+                            <td id="repEnhancedSsim" style="font-weight: 700; color: #0284c7;">--</td>
+                            <td id="repSsimImprovement" style="font-weight: 700; color: #10b981;">--</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Root Mean Squared Error (RMSE)</strong></td>
+                            <td id="repInputRmse">--</td>
+                            <td id="repEnhancedRmse" style="font-weight: 700; color: #0284c7;">--</td>
+                            <td id="repRmseImprovement" style="font-weight: 700; color: #10b981;">--</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Normalized RMSE (NRMSE)</strong></td>
+                            <td id="repInputNrmse">--</td>
+                            <td id="repEnhancedNrmse" style="font-weight: 700; color: #0284c7;">--</td>
+                            <td id="repNrmseImprovement" style="font-weight: 700; color: #10b981;">--</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Grid for Enhancement Summary and Clinical Note -->
+            <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 15px; margin-top: 15px;">
+                <!-- Enhancement Summary Card -->
+                <div class="summary-success-card">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 1.3rem; color: #10b981;"></i>
+                        <h4 style="margin: 0; font-size: 0.95rem; font-weight: 700; color: #065f46; font-family: 'Poppins', sans-serif;">Enhancement Summary</h4>
+                    </div>
+                    <ul class="summary-bullets">
+                        <li>Image enhancement completed successfully.</li>
+                        <li>Image noise has been reduced.</li>
+                        <li>Important image details have been preserved.</li>
+                        <li>Overall image quality has improved.</li>
+                        <li>Enhanced image is ready for visualization and download.</li>
+                    </ul>
+                </div>
+                
+                <!-- Clinical Note -->
+                <div class="clinical-note-box">
+                    <div style="display: flex; gap: 8px;">
+                        <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.1rem; color: #0369a1; margin-top: 2px;"></i>
+                        <p style="margin: 0; font-size: 0.76rem; font-weight: 500; color: #0c4a6e; line-height: 1.45;">
+                            <strong>CLINICAL NOTE:</strong> This enhanced image is generated using AI-assisted image enhancement to improve visualization. It is intended to support image review and should always be interpreted by a qualified medical professional.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="report-footer">
+                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #64748b; margin-bottom: 6px;">
+                    <span>Generated by <strong>PETRestore</strong></span>
+                    <span><strong>Report ID:</strong> <span id="repReportIdFooter">REP-2026-000000</span></span>
+                    <span><strong>Date:</strong> <span id="repDateFooter">June 27, 2026</span></span>
+                    <span><strong>Time:</strong> <span id="repTimeFooter">12:00:00 PM</span></span>
+                </div>
+                <div style="border-top: 1px solid #e2e8f0; padding-top: 6px; font-size: 0.7rem; color: #94a3b8; text-align: center;">
+                    &copy; 2026 PETRestore | Web-Based Low-Dose PET Image Enhancement System
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Glow Blobs -->
     <div class="glow-blob glow-blob-1"></div>
     <div class="glow-blob glow-blob-2"></div>
@@ -1108,189 +1289,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Hidden Print Report Container -->
-    <div id="clinicalReportContainer" class="print-only-report">
-        <!-- Report Page Wrapper -->
-        <div class="report-wrapper">
-            <!-- Header -->
-            <div class="report-header">
-                <div class="logo-area">
-                    <i class="fa-solid fa-microscope" style="font-size: 2.2rem; color: #0284c7; vertical-align: middle;"></i>
-                    <span style="font-size: 2.2rem; font-weight: 800; color: #0f172a; margin-left: 8px; font-family: 'Poppins', sans-serif;">PET<span style="color: #10b981;">Restore</span></span>
-                </div>
-                <div class="title-area">
-                    <h1 style="font-size: 1.5rem; font-weight: 700; color: #0f172a; margin: 0; font-family: 'Poppins', sans-serif; text-align: right;">Low-Dose PET Image Enhancement Report</h1>
-                    <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 6px; font-size: 0.8rem; color: #64748b;">
-                        <span><strong>Report ID:</strong> <span id="repReportId">REP-2026-000000</span></span>
-                        <span><strong>Date:</strong> <span id="repDate">June 27, 2026</span></span>
-                        <span><strong>Time:</strong> <span id="repTime">12:00:00 PM</span></span>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="border-bottom: 2px solid #e2e8f0; margin: 20px 0 15px 0;"></div>
-            
-            <!-- Scan Information -->
-            <div class="report-section-card">
-                <h3 class="section-card-title"><i class="fa-solid fa-circle-info"></i> Scan Information</h3>
-                <div class="scan-info-grid">
-                    <div class="info-item">
-                        <i class="fa-solid fa-hospital-user icon"></i>
-                        <div>
-                            <span class="label">Patient / Scan ID</span>
-                            <span class="value" id="repScanId">--</span>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-file-medical icon"></i>
-                        <div>
-                            <span class="label">Image Name</span>
-                            <span class="value" id="repImgName">--</span>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-database icon"></i>
-                        <div>
-                            <span class="label">Image Format</span>
-                            <span class="value" id="repFormat">--</span>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-maximize icon"></i>
-                        <div>
-                            <span class="label">Resolution</span>
-                            <span class="value" id="repResolution">200 x 200 px</span>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-gauge-high icon"></i>
-                        <div>
-                            <span class="label">Dose Reduction</span>
-                            <span class="value" id="repDoseFactor">--</span>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-clock icon"></i>
-                        <div>
-                            <span class="label">Processing Time</span>
-                            <span class="value" id="repProcTime">1.24 seconds</span>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-circle-check icon" style="color: #10b981;"></i>
-                        <div>
-                            <span class="label">Status</span>
-                            <span class="value" style="color: #10b981; font-weight: 700;">Completed Successfully</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Image Comparison -->
-            <div class="report-section-card" style="margin-top: 15px;">
-                <h3 class="section-card-title"><i class="fa-solid fa-images"></i> Image Comparison</h3>
-                <div class="report-image-comparison">
-                    <div class="img-card">
-                        <h4>Low-Dose PET Image</h4>
-                        <div class="img-wrapper">
-                            <img id="repInputImg" src="" alt="Low-Dose Input">
-                        </div>
-                    </div>
-                    <div class="img-card">
-                        <h4>Enhanced PET Image</h4>
-                        <div class="img-wrapper">
-                            <img id="repOutputImg" src="" alt="Enhanced Output">
-                        </div>
-                    </div>
-                </div>
-                <p class="image-caption">"The enhanced image was automatically generated using the PETRestore image enhancement system."</p>
-            </div>
-            
-            <!-- Image Quality Metrics Table -->
-            <div class="report-section-card" style="margin-top: 15px;">
-                <h3 class="section-card-title"><i class="fa-solid fa-chart-simple"></i> Image Quality Metrics</h3>
-                <table class="report-metrics-table">
-                    <thead>
-                        <tr>
-                            <th>Metric</th>
-                            <th>Low-Dose Input</th>
-                            <th>Enhanced Output</th>
-                            <th>Improvement</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Peak Signal-to-Noise Ratio (PSNR)</strong></td>
-                            <td id="repInputPsnr">--</td>
-                            <td id="repEnhancedPsnr" style="font-weight: 700; color: #0284c7;">--</td>
-                            <td id="repPsnrImprovement" style="font-weight: 700; color: #10b981;">--</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Structural Similarity (SSIM)</strong></td>
-                            <td id="repInputSsim">--</td>
-                            <td id="repEnhancedSsim" style="font-weight: 700; color: #0284c7;">--</td>
-                            <td id="repSsimImprovement" style="font-weight: 700; color: #10b981;">--</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Root Mean Squared Error (RMSE)</strong></td>
-                            <td id="repInputRmse">--</td>
-                            <td id="repEnhancedRmse" style="font-weight: 700; color: #0284c7;">--</td>
-                            <td id="repRmseImprovement" style="font-weight: 700; color: #10b981;">--</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Normalized RMSE (NRMSE)</strong></td>
-                            <td id="repInputNrmse">--</td>
-                            <td id="repEnhancedNrmse" style="font-weight: 700; color: #0284c7;">--</td>
-                            <td id="repNrmseImprovement" style="font-weight: 700; color: #10b981;">--</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- Grid for Enhancement Summary and Clinical Note -->
-            <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 15px; margin-top: 15px;">
-                <!-- Enhancement Summary Card -->
-                <div class="summary-success-card">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                        <i class="fa-solid fa-circle-check" style="font-size: 1.3rem; color: #10b981;"></i>
-                        <h4 style="margin: 0; font-size: 0.95rem; font-weight: 700; color: #065f46; font-family: 'Poppins', sans-serif;">Enhancement Summary</h4>
-                    </div>
-                    <ul class="summary-bullets">
-                        <li>Image enhancement completed successfully.</li>
-                        <li>Image noise has been reduced.</li>
-                        <li>Important image details have been preserved.</li>
-                        <li>Overall image quality has improved.</li>
-                        <li>Enhanced image is ready for visualization and download.</li>
-                    </ul>
-                </div>
-                
-                <!-- Clinical Note -->
-                <div class="clinical-note-box">
-                    <div style="display: flex; gap: 8px;">
-                        <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.1rem; color: #0369a1; margin-top: 2px;"></i>
-                        <p style="margin: 0; font-size: 0.76rem; font-weight: 500; color: #0c4a6e; line-height: 1.45;">
-                            <strong>CLINICAL NOTE:</strong> This enhanced image is generated using AI-assisted image enhancement to improve visualization. It is intended to support image review and should always be interpreted by a qualified medical professional.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Footer -->
-            <div class="report-footer">
-                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #64748b; margin-bottom: 6px;">
-                    <span>Generated by <strong>PETRestore</strong></span>
-                    <span><strong>Report ID:</strong> <span id="repReportIdFooter">REP-2026-000000</span></span>
-                    <span><strong>Date:</strong> <span id="repDateFooter">June 27, 2026</span></span>
-                    <span><strong>Time:</strong> <span id="repTimeFooter">12:00:00 PM</span></span>
-                </div>
-                <div style="border-top: 1px solid #e2e8f0; padding-top: 6px; font-size: 0.7rem; color: #94a3b8; text-align: center;">
-                    &copy; 2026 PETRestore | Web-Based Low-Dose PET Image Enhancement System
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Scripts -->
     <script src="/static/js/main.js"></script>
 </body>
