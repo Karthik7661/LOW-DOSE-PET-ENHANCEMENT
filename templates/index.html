@@ -746,6 +746,7 @@
                             </filter>
                         </defs>
                         <!-- Layer 1: Outer glowing transparent glass pipe -->
+                        <path d="M 130,-20 L 130,10" fill="none" stroke="rgba(2, 132, 199, 0.12)" stroke-width="8" stroke-linecap="round" />
                         <path d="M 130,100 L 130,132.5 L 200,132.5" fill="none" stroke="rgba(2, 132, 199, 0.12)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M 297.5,180 L 297.5,210 L 360,210" fill="none" stroke="rgba(2, 132, 199, 0.12)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
                         <path d="M 465,260 L 465,287.5 L 520,287.5" fill="none" stroke="rgba(2, 132, 199, 0.12)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
@@ -753,6 +754,7 @@
                         <path d="M 800,420 L 800,442.5 L 840,442.5" fill="none" stroke="rgba(2, 132, 199, 0.12)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
                         
                         <!-- Layer 2: Inner glowing liquid core -->
+                        <path d="M 130,-20 L 130,10" fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" class="water-core" />
                         <path d="M 130,100 L 130,132.5 L 200,132.5" fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" class="water-core" />
                         <path d="M 297.5,180 L 297.5,210 L 360,210" fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" class="water-core" />
                         <path d="M 465,260 L 465,287.5 L 520,287.5" fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" class="water-core" />
@@ -760,6 +762,7 @@
                         <path d="M 800,420 L 800,442.5 L 840,442.5" fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" class="water-core" />
 
                         <!-- Layer 3: Rushing liquid currents (Bubble stream animation) -->
+                        <path d="M 130,-20 L 130,10" fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" class="water-current pipe-flow-0" />
                         <path d="M 130,100 L 130,132.5 L 200,132.5" fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="water-current pipe-flow-1" />
                         <path d="M 297.5,180 L 297.5,210 L 360,210" fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="water-current pipe-flow-2" />
                         <path d="M 465,260 L 465,287.5 L 520,287.5" fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="water-current pipe-flow-3" />
@@ -772,7 +775,14 @@
                 <div class="waterfall-compact-card waterfall-card-1 glass-card tilt-3d waterfall-card-pulse-1">
                     <div class="water-fill-overlay water-fill-1"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                        <i class="fa-solid fa-clipboard-list" style="color: var(--color-primary); font-size: 0.95rem;"></i>
+                        <div class="waterfall-icon-wrapper">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="9" y1="9" x2="15" y2="9" />
+                                <line x1="9" y1="13" x2="15" y2="13" />
+                                <line x1="9" y1="17" x2="15" y2="17" />
+                            </svg>
+                        </div>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">1. Requirements</h4>
                     </div>
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Parse DICOM metadata for low-dose radiation indices and define clinical PSNR/SSIM thresholds.</p>
@@ -781,7 +791,13 @@
                 <div class="waterfall-compact-card waterfall-card-2 glass-card tilt-3d waterfall-card-pulse-2">
                     <div class="water-fill-overlay water-fill-2"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                        <i class="fa-solid fa-map" style="color: var(--color-primary); font-size: 0.95rem;"></i>
+                        <div class="waterfall-icon-wrapper">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 3v18h18" />
+                                <rect x="7" y="5" width="10" height="3" rx="1" fill="rgba(2, 132, 199, 0.2)" />
+                                <rect x="11" y="10" width="8" height="3" rx="1" fill="rgba(2, 132, 199, 0.2)" />
+                            </svg>
+                        </div>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">2. Planning</h4>
                     </div>
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Analyze Restormer's computational complexity and map PyTorch/Flask CUDA runtime environments.</p>
@@ -790,7 +806,15 @@
                 <div class="waterfall-compact-card waterfall-card-3 glass-card tilt-3d waterfall-card-pulse-3">
                     <div class="water-fill-overlay water-fill-3"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                        <i class="fa-solid fa-diagram-project" style="color: var(--color-primary); font-size: 0.95rem;"></i>
+                        <div class="waterfall-icon-wrapper">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="6" height="6" rx="1" />
+                                <rect x="16" y="3" width="6" height="6" rx="1" />
+                                <rect x="9" y="15" width="6" height="6" rx="1" />
+                                <path d="M5 9v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9" />
+                                <path d="M12 14v1" />
+                            </svg>
+                        </div>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">3. Design</h4>
                     </div>
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Architect REST APIs for image uploads, MONAI pipeline maps, and PACS visualization panels.</p>
@@ -799,7 +823,13 @@
                 <div class="waterfall-compact-card waterfall-card-4 glass-card tilt-3d waterfall-card-pulse-4">
                     <div class="water-fill-overlay water-fill-4"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                        <i class="fa-solid fa-code" style="color: var(--color-primary); font-size: 0.95rem;"></i>
+                        <div class="waterfall-icon-wrapper">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6" />
+                                <polyline points="8 6 2 12 8 18" />
+                                <line x1="14" y1="4" x2="10" y2="20" />
+                            </svg>
+                        </div>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">4. Coding</h4>
                     </div>
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Implement Restormer self-attention layers, noise simulation models, and Flask inference routing.</p>
@@ -808,7 +838,13 @@
                 <div class="waterfall-compact-card waterfall-card-5 glass-card tilt-3d waterfall-card-pulse-5">
                     <div class="water-fill-overlay water-fill-5"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                        <i class="fa-solid fa-vial" style="font-size: 0.95rem; color: var(--color-primary);"></i>
+                        <div class="waterfall-icon-wrapper">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 3h12" />
+                                <path d="M9 3v4.3a4 4 0 0 1-1.3 3L4.7 17a3 3 0 0 0 2.2 4h10.2a3 3 0 0 0 2.2-4l-3-6.7a4 4 0 0 1-1.3-3V3" />
+                                <line x1="7" y1="14" x2="17" y2="14" />
+                            </svg>
+                        </div>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">5. Testing</h4>
                     </div>
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Verify model weight parameters via unit tests and validate image output dimension shapes.</p>
@@ -817,7 +853,12 @@
                 <div class="waterfall-compact-card waterfall-card-6 glass-card tilt-3d waterfall-card-pulse-6">
                     <div class="water-fill-overlay water-fill-6"></div>
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                        <i class="fa-solid fa-server" style="color: var(--color-primary); font-size: 0.95rem;"></i>
+                        <div class="waterfall-icon-wrapper">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.5 19A3.5 3.5 0 0 0 21 15.5c0-2.79-2.54-4.5-5-4.5-.42-1.04-1.37-3.5-4-3.5-3 0-5 2.5-5 5.5A4.5 4.5 0 0 0 7.5 22h10" stroke="rgba(2, 132, 199, 0.3)"/>
+                                <polygon points="12,10 7,18 17,18" fill="var(--color-primary)" />
+                            </svg>
+                        </div>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">6. Vercel Deployment</h4>
                     </div>
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Deploy static interfaces onto Vercel global CDN, establish serverless endpoints, and set cache policies.</p>

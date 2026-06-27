@@ -1947,6 +1947,10 @@ h1, h2, h3, h4 {
 .water-fill-6 { animation: fillCard6 12s infinite ease-in-out; }
 
 /* Synchronized pipe flow currents (hiding flow when inactive) */
+@keyframes flowPipe0 {
+    0%, 91.6%, 100% { opacity: 0; }
+    1.5%, 8.3% { opacity: 1; }
+}
 @keyframes flowPipe1 {
     0%, 10%, 25%, 100% { opacity: 0; }
     12.5%, 22% { opacity: 1; }
@@ -1968,6 +1972,7 @@ h1, h2, h3, h4 {
     79.1%, 89% { opacity: 1; }
 }
 
+.pipe-flow-0 { animation: flowPipe0 12s infinite ease-in-out; }
 .pipe-flow-1 { animation: flowPipe1 12s infinite ease-in-out; }
 .pipe-flow-2 { animation: flowPipe2 12s infinite ease-in-out; }
 .pipe-flow-3 { animation: flowPipe3 12s infinite ease-in-out; }
@@ -1990,4 +1995,18 @@ h1, h2, h3, h4 {
 .waterfall-compact-card:hover {
     transform: translateY(-5px) scale(1.03);
     box-shadow: 0 15px 35px var(--glow-primary);
+}
+
+/* Custom visual icon frames inside compact cards */
+.waterfall-icon-wrapper {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    flex-shrink: 0;
 }
