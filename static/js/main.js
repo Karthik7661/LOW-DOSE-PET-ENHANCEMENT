@@ -1490,9 +1490,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create a temporary container for rendering in the main DOM tree (scoped style safety)
             const container = document.createElement('div');
             container.className = 'pdf-report-container';
-            container.style.position = 'absolute';
+            container.style.position = 'fixed';
             container.style.left = '0';
-            container.style.top = '-9999px'; // off-screen but fully rendered
+            container.style.top = '0';
+            container.style.zIndex = '-99999';
             container.style.width = '800px';
             container.style.background = '#fff';
             container.innerHTML = reportHtml;
