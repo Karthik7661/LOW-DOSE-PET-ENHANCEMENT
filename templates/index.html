@@ -411,24 +411,24 @@
                     <div class="metadata-viewport active" id="metaQuality">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
                             <div>
-                                <h3 style="color: var(--color-secondary); margin-bottom: 15px;"><i class="fa-solid fa-gauge-high"></i> Signal-to-Noise Ratio (SNR) Analysis</h3>
+                                <h3 style="color: var(--color-secondary); margin-bottom: 15px;"><i class="fa-solid fa-gauge-high"></i> Peak Signal-to-Noise Ratio (PSNR) Analysis</h3>
                                 <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 15px;">
-                                    Signal-to-Noise Ratio is calculated as the mean voxel intensity divided by voxel standard deviation: 
-                                    <span style="display: inline-block; margin: 8px 0; padding: 4px 10px; background: rgba(2, 132, 199, 0.06); border-radius: 6px; font-weight: 700; color: var(--color-primary); font-family: monospace;">SNR = &mu; / &sigma;</span>
-                                    A higher value indicates cleaner, more reliable diagnostic details.
+                                    Peak Signal-to-Noise Ratio calculates image reconstruction quality compared to the high-dose ground truth reference scan: 
+                                    <span style="display: inline-block; margin: 8px 0; padding: 4px 10px; background: rgba(2, 132, 199, 0.06); border-radius: 6px; font-weight: 700; color: var(--color-primary); font-family: monospace;">PSNR = 10 * log10(1 / MSE)</span>
+                                    A higher decibel (dB) value indicates closer correlation to the reference scan.
                                 </p>
                                 <div class="spec-table">
                                     <div class="spec-row">
-                                        <span class="spec-label">Noisy Input SNR</span>
-                                        <span class="spec-value" id="lblInputSnr">--</span>
+                                        <span class="spec-label">Noisy Input PSNR</span>
+                                        <span class="spec-value" id="lblInputPsnr">--</span>
                                     </div>
                                     <div class="spec-row">
-                                        <span class="spec-label">Enhanced Restormer SNR</span>
-                                        <span class="spec-value" id="lblEnhancedSnr" style="color: var(--color-success);">--</span>
+                                        <span class="spec-label">Enhanced Restormer PSNR</span>
+                                        <span class="spec-value" id="lblEnhancedPsnr" style="color: var(--color-success);">--</span>
                                     </div>
                                     <div class="spec-row">
-                                        <span class="spec-label">Reconstruction SNR Gain</span>
-                                        <span class="spec-value" id="lblSnrImprovement" style="color: var(--color-secondary);">--</span>
+                                        <span class="spec-label">Reconstruction PSNR Gain</span>
+                                        <span class="spec-value" id="lblPsnrImprovement" style="color: var(--color-secondary);">--</span>
                                     </div>
                                 </div>
                             </div>
@@ -440,7 +440,7 @@
                                 <div style="background-color: rgba(0, 245, 212, 0.05); border: 1px solid rgba(0, 245, 212, 0.15); border-radius: var(--border-radius-sm); padding: 20px;">
                                     <h4 style="color: var(--color-success); margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Quality Verification: Passed</h4>
                                     <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5;">
-                                        The enhanced scan conforms to structural integrity thresholds. The enhancement process shows a significant increase in SNR, revealing hidden detail structures without introducing artifacts.
+                                        The enhanced scan conforms to structural integrity thresholds. The enhancement process shows a significant increase in PSNR, revealing hidden detail structures without introducing artifacts.
                                     </p>
                                 </div>
                             </div>

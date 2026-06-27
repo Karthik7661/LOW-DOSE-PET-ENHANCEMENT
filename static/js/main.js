@@ -67,9 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const metaApi = document.getElementById('metaApi');
 
     // Dynamic Text Fields
-    const lblInputSnr = document.getElementById('lblInputSnr');
-    const lblEnhancedSnr = document.getElementById('lblEnhancedSnr');
-    const lblSnrImprovement = document.getElementById('lblSnrImprovement');
+    const lblInputPsnr = document.getElementById('lblInputPsnr');
+    const lblEnhancedPsnr = document.getElementById('lblEnhancedPsnr');
+    const lblPsnrImprovement = document.getElementById('lblPsnrImprovement');
     
     const lblPatientId = document.getElementById('lblPatientId');
     const lblStudyDate = document.getElementById('lblStudyDate');
@@ -280,9 +280,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 workbenchSliderInput.value = 50;
                 
                 // Populate Metrics
-                lblInputSnr.textContent = data.metrics.input_snr;
-                lblEnhancedSnr.textContent = data.metrics.enhanced_snr;
-                lblSnrImprovement.textContent = "+" + data.metrics.snr_improvement + " Gain";
+                lblInputPsnr.textContent = data.metrics.input_psnr + " dB";
+                lblEnhancedPsnr.textContent = data.metrics.enhanced_psnr + " dB";
+                lblPsnrImprovement.textContent = "+" + data.metrics.psnr_improvement;
                 
                 // Populate DICOM Headers
                 lblPatientId.textContent = data.metadata.PatientID;

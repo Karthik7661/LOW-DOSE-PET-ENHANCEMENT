@@ -143,6 +143,13 @@ def calculate_snr(img):
         return 0.0
     return float(mean_val / std_val)
 
+def calculate_psnr(img, ref):
+    """Calculate the Peak Signal-to-Noise Ratio of an image compared to a reference."""
+    mse = np.mean((img - ref) ** 2)
+    if mse < 1e-10:
+        return 80.0
+    return float(20.0 * np.log10(1.0 / np.sqrt(mse)))
+
 def numpy_to_base64_png(img_np):
     """Convert float numpy scan array [0,1] to Base64-encoded Data URI."""
     img_pil = Image.fromarray((img_np * 255.0).clip(0, 255).astype(np.uint8))
@@ -288,8 +295,8 @@ def enhance():
         ref_path = os.path.join(app.config['UPLOAD_FOLDER'], ref_filename)
         plt.imsave(ref_path, img_ref_resized, cmap='gray')
         
-        # Calculate Input Image Quality Metric (SNR)
-        input_snr = calculate_snr(img_low)
+        # Calculate Input Image Quality Metric (PSNR)
+        input_psnr = calculate_psnr(img_low, img_ref_resized)
         
         # Run model inference (ONNX or PyTorch)
         onnx_path = 'best_restormer_pet.onnx'
@@ -318,13 +325,13 @@ def enhance():
             
         enhanced_np = np.clip(enhanced_np, 0, 1)
         
-        # Calculate Output Image Quality Metric (SNR)
-        enhanced_snr = calculate_snr(enhanced_np)
+        # Calculate Output Image Quality Metric (PSNR)
+        enhanced_psnr = calculate_psnr(enhanced_np, img_ref_resized)
         
-        # Calculate SNR Denoising Gain (improvement percentage)
-        snr_improvement = 0.0
-        if input_snr > 0:
-            snr_improvement = ((enhanced_snr - input_snr) / input_snr) * 100.0
+        # Calculate PSNR Denoising Gain (improvement percentage)
+        psnr_improvement = 0.0
+        if input_psnr > 0:
+            psnr_improvement = ((enhanced_psnr - input_psnr) / input_psnr) * 100.0
             
         # Save enhanced output image
         output_filename = 'enhanced_' + os.path.splitext(filename)[0] + '.png'
@@ -347,9 +354,9 @@ def enhance():
             'filename': filename,
             'metadata': metadata,
             'metrics': {
-                'input_snr': f"{input_snr:.4f}",
-                'enhanced_snr': f"{enhanced_snr:.4f}",
-                'snr_improvement': f"{snr_improvement:.2f}%"
+                'input_psnr': f"{input_psnr:.4f}",
+                'enhanced_psnr': f"{enhanced_psnr:.4f}",
+                'psnr_improvement': f"{psnr_improvement:.2f}%"
             }
         })
         
