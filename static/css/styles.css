@@ -1879,17 +1879,20 @@ h1, h2, h3, h4 {
 
 /* Real-time multi-layer flowing water core & currents */
 .water-core {
-    filter: drop-shadow(0 0 5px rgba(0, 191, 255, 0.6));
+    opacity: 0.15;
 }
 
 .water-current {
-    stroke-dasharray: 8 16;
-    animation: realWaterFlow 1.6s linear infinite;
+    stroke: #00d2ff !important;
+    stroke-width: 5px !important;
+    filter: drop-shadow(0 0 6px #00d2ff) drop-shadow(0 0 2px #00d2ff);
+    stroke-dasharray: 12 24;
+    animation: realWaterFlow 1.4s linear infinite;
 }
 
 @keyframes realWaterFlow {
     to {
-        stroke-dashoffset: -48;
+        stroke-dashoffset: -72;
     }
 }
 
