@@ -1024,488 +1024,462 @@ document.addEventListener('DOMContentLoaded', () => {
             const nGain = parseFloat(rData.metrics.nrmse_improvement);
             
             const reportHtml = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>PETRestore Enhancement Report - ${reportId}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        .pdf-report-container {
+            font-family: 'Poppins', sans-serif !important;
+            color: #1e293b !important;
+            background: #fff !important;
+            padding: 35px !important;
+            font-size: 13px !important;
+            line-height: 1.5 !important;
+            width: 800px !important;
+            box-sizing: border-box !important;
         }
-        body {
-            font-family: 'Poppins', sans-serif;
-            color: #1e293b;
-            background: #fff;
-            padding: 40px;
-            font-size: 13px;
-            line-height: 1.5;
+        .pdf-report-container * {
+            box-sizing: border-box !important;
+            font-family: 'Poppins', sans-serif !important;
         }
-        @page {
-            size: A4;
-            margin: 0;
+        .pdf-report-container .header {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: flex-start !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+            padding-bottom: 15px !important;
+            margin-bottom: 20px !important;
         }
-        .report-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
+        .pdf-report-container .header-logo {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
         }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+        .pdf-report-container .logo-icon {
+            font-size: 26px !important;
+            color: #0284c7 !important;
         }
-        .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .pdf-report-container .logo-text {
+            font-size: 24px !important;
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            letter-spacing: -0.5px !important;
         }
-        .logo-icon {
-            font-size: 26px;
-            color: #0284c7;
+        .pdf-report-container .logo-text span {
+            color: #10b981 !important;
         }
-        .logo-text {
-            font-size: 24px;
-            font-weight: 700;
-            color: #0f172a;
-            letter-spacing: -0.5px;
+        .pdf-report-container .header-title-container {
+            text-align: right !important;
         }
-        .logo-text span {
-            color: #10b981;
+        .pdf-report-container .report-title {
+            font-size: 17px !important;
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            margin-bottom: 5px !important;
         }
-        .header-title-container {
-            text-align: right;
+        .pdf-report-container .header-meta {
+            display: flex !important;
+            justify-content: flex-end !important;
+            gap: 15px !important;
+            font-size: 11px !important;
+            color: #64748b !important;
         }
-        .report-title {
-            font-size: 17px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 5px;
+        .pdf-report-container .card {
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            padding: 20px !important;
+            margin-bottom: 20px !important;
+            background: #fff !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02) !important;
         }
-        .header-meta {
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-            font-size: 11px;
-            color: #64748b;
+        .pdf-report-container .card-title {
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            color: #0f172a !important;
+            margin-bottom: 15px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            border-bottom: 1px solid #f1f5f9 !important;
+            padding-bottom: 8px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
         }
-        .card {
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background: #fff;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        .pdf-report-container .card-title i {
+            color: #0284c7 !important;
         }
-        .card-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #0f172a;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .pdf-report-container .info-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 15px !important;
         }
-        .card-title i {
-            color: #0284c7;
+        .pdf-report-container .info-item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
         }
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+        .pdf-report-container .info-icon {
+            font-size: 16px !important;
+            color: #0284c7 !important;
+            background: #f0f9ff !important;
+            width: 32px !important;
+            height: 32px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 8px !important;
         }
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .pdf-report-container .info-content {
+            display: flex !important;
+            flex-direction: column !important;
         }
-        .info-icon {
-            font-size: 16px;
-            color: #0284c7;
-            background: #f0f9ff;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
+        .pdf-report-container .info-label {
+            font-size: 10px !important;
+            color: #64748b !important;
+            text-transform: uppercase !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.5px !important;
         }
-        .info-content {
-            display: flex;
-            flex-direction: column;
+        .pdf-report-container .info-val {
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            color: #1e293b !important;
         }
-        .info-label {
-            font-size: 10px;
-            color: #64748b;
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+        .pdf-report-container .image-comparison {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 20px !important;
+            margin-bottom: 8px !important;
         }
-        .info-val {
-            font-size: 12px;
-            font-weight: 600;
-            color: #1e293b;
+        .pdf-report-container .image-card {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 10px !important;
+            padding: 12px !important;
+            background: #f8fafc !important;
         }
-        .image-comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 8px;
+        .pdf-report-container .image-label {
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+            margin-bottom: 10px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
         }
-        .image-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 12px;
-            background: #f8fafc;
+        .pdf-report-container .image-wrapper {
+            background: #000 !important;
+            border-radius: 6px !important;
+            padding: 6px !important;
+            width: 100% !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
         }
-        .image-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #475569;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .pdf-report-container .image-wrapper img {
+            max-width: 100% !important;
+            max-height: 180px !important;
+            object-fit: contain !important;
+            border-radius: 4px !important;
         }
-        .image-wrapper {
-            background: #000;
-            border-radius: 6px;
-            padding: 6px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .pdf-report-container .image-caption {
+            font-size: 11px !important;
+            color: #64748b !important;
+            font-style: italic !important;
+            text-align: center !important;
+            margin-top: 5px !important;
         }
-        .image-wrapper img {
-            max-width: 100%;
-            max-height: 200px;
-            object-fit: contain;
-            border-radius: 4px;
+        .pdf-report-container .metrics-table {
+            width: 100% !important;
+            border-collapse: collapse !important;
         }
-        .image-caption {
-            font-size: 11px;
-            color: #64748b;
-            font-style: italic;
-            text-align: center;
-            margin-top: 5px;
+        .pdf-report-container .metrics-table th {
+            text-align: left !important;
+            padding: 10px 12px !important;
+            background: #f8fafc !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+            text-transform: uppercase !important;
+            border-bottom: 2px solid #e2e8f0 !important;
         }
-        .metrics-table {
-            width: 100%;
-            border-collapse: collapse;
+        .pdf-report-container .metrics-table td {
+            padding: 10px 12px !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            font-size: 12px !important;
         }
-        .metrics-table th {
-            text-align: left;
-            padding: 10px 12px;
-            background: #f8fafc;
-            font-size: 11px;
-            font-weight: 600;
-            color: #475569;
-            text-transform: uppercase;
-            border-bottom: 2px solid #e2e8f0;
+        .pdf-report-container .metrics-table tr:last-child td {
+            border-bottom: none !important;
         }
-        .metrics-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 12px;
+        .pdf-report-container .metric-name {
+            font-weight: 600 !important;
+            color: #1e293b !important;
         }
-        .metrics-table tr:last-child td {
-            border-bottom: none;
+        .pdf-report-container .metric-gain {
+            font-weight: 600 !important;
+            color: #10b981 !important;
+            background: #ecfdf5 !important;
+            padding: 2px 8px !important;
+            border-radius: 20px !important;
+            display: inline-block !important;
+            font-size: 11px !important;
         }
-        .metric-name {
-            font-weight: 600;
-            color: #1e293b;
+        .pdf-report-container .summary-card {
+            border: 1px solid #bbf7d0 !important;
+            background: #f0fdf4 !important;
+            border-radius: 12px !important;
+            padding: 20px !important;
+            margin-bottom: 20px !important;
         }
-        .metric-gain {
-            font-weight: 600;
-            color: #10b981;
-            background: #ecfdf5;
-            padding: 2px 8px;
-            border-radius: 20px;
-            display: inline-block;
-            font-size: 11px;
+        .pdf-report-container .summary-title {
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            color: #166534 !important;
+            margin-bottom: 12px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
         }
-        .summary-card {
-            border: 1px solid #bbf7d0;
-            background: #f0fdf4;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
+        .pdf-report-container .summary-title i {
+            color: #15803d !important;
+            font-size: 16px !important;
         }
-        .summary-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #166534;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .pdf-report-container .summary-list {
+            list-style: none !important;
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 8px 20px !important;
         }
-        .summary-title i {
-            color: #15803d;
-            font-size: 16px;
+        .pdf-report-container .summary-list li {
+            font-size: 12px !important;
+            color: #1e3a1e !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
         }
-        .summary-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 20px;
+        .pdf-report-container .summary-list li::before {
+            content: "✓ " !important;
+            color: #15803d !important;
+            font-weight: bold !important;
+            margin-right: 5px !important;
         }
-        .summary-list li {
-            font-size: 12px;
-            color: #1e3a1e;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .pdf-report-container .clinical-note {
+            background: #fffbeb !important;
+            border: 1px solid #fef3c7 !important;
+            border-radius: 8px !important;
+            padding: 12px 16px !important;
+            margin-bottom: 20px !important;
+            display: flex !important;
+            gap: 10px !important;
+            align-items: flex-start !important;
         }
-        .summary-list li::before {
-            content: "✓ ";
-            color: #15803d;
-            font-weight: bold;
-            margin-right: 5px;
+        .pdf-report-container .clinical-note i {
+            color: #d97706 !important;
+            margin-top: 2px !important;
+            font-size: 14px !important;
         }
-        .clinical-note {
-            background: #fffbeb;
-            border: 1px solid #fef3c7;
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
+        .pdf-report-container .clinical-text {
+            font-size: 11px !important;
+            color: #78350f !important;
+            line-height: 1.4 !important;
         }
-        .clinical-note i {
-            color: #d97706;
-            margin-top: 2px;
-            font-size: 14px;
+        .pdf-report-container .footer {
+            border-top: 1px solid #e2e8f0 !important;
+            padding-top: 15px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            font-size: 10px !important;
+            color: #94a3b8 !important;
         }
-        .clinical-text {
-            font-size: 11px;
-            color: #78350f;
-            line-height: 1.4;
+        .pdf-report-container .footer-left {
+            display: flex !important;
+            gap: 15px !important;
         }
-        .footer {
-            border-top: 1px solid #e2e8f0;
-            padding-top: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 10px;
-            color: #94a3b8;
+        .pdf-report-container .footer-left span {
+            font-weight: 500 !important;
+            color: #475569 !important;
         }
-        .footer-left {
-            display: flex;
-            gap: 15px;
-        }
-        .footer-left span {
-            font-weight: 500;
-            color: #475569;
-        }
-        .footer-right {
-            text-align: right;
-        }
-        @media print {
-            body {
-                padding: 30px;
-            }
+        .pdf-report-container .footer-right {
+            text-align: right !important;
         }
     </style>
-</head>
-<body>
-    <div class="report-container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-logo">
-                <i class="fa-solid fa-brain logo-icon"></i>
-                <div class="logo-text">PET<span>Restore</span></div>
-            </div>
-            <div class="header-title-container">
-                <div class="report-title">Low-Dose PET Image Enhancement Report</div>
-                <div class="header-meta">
-                    <div><strong>Report ID:</strong> ${reportId}</div>
-                    <div><strong>Date:</strong> ${formattedDate}</div>
-                    <div><strong>Time:</strong> ${formattedTime}</div>
-                </div>
-            </div>
+    
+    <!-- Header -->
+    <div class="header">
+        <div class="header-logo">
+            <i class="fa-solid fa-brain logo-icon"></i>
+            <div class="logo-text">PET<span>Restore</span></div>
         </div>
-
-        <!-- Scan Information -->
-        <div class="card">
-            <div class="card-title">
-                <i class="fa-solid fa-file-medical"></i> Scan Information
-            </div>
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-fingerprint"></i></div>
-                    <div class="info-content">
-                        <span class="info-label">Scan ID</span>
-                        <span class="info-val">${rData.metadata.PatientID || "PET-SCAN-5021"}</span>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-file-image"></i></div>
-                    <div class="info-content">
-                        <span class="info-label">Image Name</span>
-                        <span class="info-val">${rData.filename}</span>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-bezier-curve"></i></div>
-                    <div class="info-content">
-                        <span class="info-label">Image Format</span>
-                        <span class="info-val">${rData.filename.toLowerCase().endsWith('.dcm') ? 'DICOM (Medical)' : 'PNG (Standard)'}</span>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-expand"></i></div>
-                    <div class="info-content">
-                        <span class="info-label">Resolution</span>
-                        <span class="info-val">${resolution}</span>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-arrow-down-wide-narrow"></i></div>
-                    <div class="info-content">
-                        <span class="info-label">Dose Reduction</span>
-                        <span class="info-val">${doseReduction} Factor</span>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon"><i class="fa-solid fa-stopwatch"></i></div>
-                    <div class="info-content">
-                        <span class="info-label">Processing Time</span>
-                        <span class="info-val">${procTime}</span>
-                    </div>
-                </div>
-                <div class="info-item" style="grid-column: span 3; margin-top: 5px;">
-                    <div class="info-icon" style="color: #10b981; background: #ecfdf5;"><i class="fa-solid fa-circle-check"></i></div>
-                    <div class="info-content">
-                        <span class="info-label">Enhancement Status</span>
-                        <span class="info-val" style="color: #10b981;">Completed Successfully</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Image Comparison -->
-        <div class="card">
-            <div class="card-title">
-                <i class="fa-solid fa-images"></i> Image Comparison
-            </div>
-            <div class="image-comparison">
-                <div class="image-card">
-                    <div class="image-label">Low-Dose PET Image</div>
-                    <div class="image-wrapper">
-                        <img src="${rData.preview_url}" alt="Low Dose Input">
-                    </div>
-                </div>
-                <div class="image-card">
-                    <div class="image-label">Enhanced PET Image</div>
-                    <div class="image-wrapper">
-                        <img src="${rData.enhanced_url}" alt="Enhanced Output">
-                    </div>
-                </div>
-            </div>
-            <div class="image-caption">
-                "The enhanced image was automatically generated using the PETRestore image enhancement system."
-            </div>
-        </div>
-
-        <!-- Image Quality Metrics -->
-        <div class="card">
-            <div class="card-title">
-                <i class="fa-solid fa-chart-simple"></i> Image Quality Metrics
-            </div>
-            <table class="metrics-table">
-                <thead>
-                    <tr>
-                        <th style="width: 40%;">Metric</th>
-                        <th style="width: 20%;">Low-Dose Input</th>
-                        <th style="width: 20%;">Enhanced Output</th>
-                        <th style="width: 20%;">Improvement</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="metric-name">PSNR (dB)</td>
-                        <td>${parseFloat(rData.metrics.input_psnr).toFixed(2)} dB</td>
-                        <td>${parseFloat(rData.metrics.enhanced_psnr).toFixed(2)} dB</td>
-                        <td><span class="metric-gain">+${pGain.toFixed(2)}% Improvement</span></td>
-                    </tr>
-                    <tr>
-                        <td class="metric-name">SSIM</td>
-                        <td>${parseFloat(rData.metrics.input_ssim).toFixed(4)}</td>
-                        <td>${parseFloat(rData.metrics.enhanced_ssim).toFixed(4)}</td>
-                        <td><span class="metric-gain">+${sGain.toFixed(2)}% Improvement</span></td>
-                    </tr>
-                    <tr>
-                        <td class="metric-name">RMSE</td>
-                        <td>${parseFloat(rData.metrics.input_rmse).toFixed(4)}</td>
-                        <td>${parseFloat(rData.metrics.enhanced_rmse).toFixed(4)}</td>
-                        <td><span class="metric-gain">${rGain.toFixed(2)}% Error Reduction</span></td>
-                    </tr>
-                    <tr>
-                        <td class="metric-name">NRMSE</td>
-                        <td>${parseFloat(rData.metrics.input_nrmse).toFixed(4)}</td>
-                        <td>${parseFloat(rData.metrics.enhanced_nrmse).toFixed(4)}</td>
-                        <td><span class="metric-gain">${nGain.toFixed(2)}% Error Reduction</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Enhancement Summary -->
-        <div class="summary-card">
-            <div class="summary-title">
-                <i class="fa-solid fa-circle-check"></i> Enhancement Summary
-            </div>
-            <ul class="summary-list">
-                <li>Image enhancement completed successfully.</li>
-                <li>Image noise has been reduced.</li>
-                <li>Important image details have been preserved.</li>
-                <li>Overall image quality has improved.</li>
-                <li>Enhanced image is ready for visualization and download.</li>
-            </ul>
-        </div>
-
-        <!-- Clinical Note -->
-        <div class="clinical-note">
-            <i class="fa-solid fa-circle-info"></i>
-            <div class="clinical-text">
-                <strong>CLINICAL NOTE:</strong> This enhanced image is generated using AI-assisted image enhancement to improve visualization. It is intended to support image review and should always be interpreted by a qualified medical professional.
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-left">
-                <span>Generated by <strong>PETRestore</strong></span>
-                <span>Report ID: ${reportId}</span>
-                <span>Date: ${formattedDate}</span>
-                <span>Time: ${formattedTime}</span>
-            </div>
-            <div class="footer-right">
-                © 2026 PETRestore | Web-Based Low-Dose PET Image Enhancement System
+        <div class="header-title-container">
+            <div class="report-title">Low-Dose PET Image Enhancement Report</div>
+            <div class="header-meta">
+                <div><strong>Report ID:</strong> ${reportId}</div>
+                <div><strong>Date:</strong> ${formattedDate}</div>
+                <div><strong>Time:</strong> ${formattedTime}</div>
             </div>
         </div>
     </div>
+
+    <!-- Scan Information -->
+    <div class="card">
+        <div class="card-title">
+            <i class="fa-solid fa-file-medical"></i> Scan Information
+        </div>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-icon"><i class="fa-solid fa-fingerprint"></i></div>
+                <div class="info-content">
+                    <span class="info-label">Scan ID</span>
+                    <span class="info-val">${rData.metadata.PatientID || "PET-SCAN-5021"}</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon"><i class="fa-solid fa-file-image"></i></div>
+                <div class="info-content">
+                    <span class="info-label">Image Name</span>
+                    <span class="info-val">${rData.filename}</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon"><i class="fa-solid fa-bezier-curve"></i></div>
+                <div class="info-content">
+                    <span class="info-label">Image Format</span>
+                    <span class="info-val">${rData.filename.toLowerCase().endsWith('.dcm') ? 'DICOM (Medical)' : 'PNG (Standard)'}</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon"><i class="fa-solid fa-expand"></i></div>
+                <div class="info-content">
+                    <span class="info-label">Resolution</span>
+                    <span class="info-val">${resolution}</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon"><i class="fa-solid fa-arrow-down-wide-narrow"></i></div>
+                <div class="info-content">
+                    <span class="info-label">Dose Reduction</span>
+                    <span class="info-val">${doseReduction} Factor</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon"><i class="fa-solid fa-stopwatch"></i></div>
+                <div class="info-content">
+                    <span class="info-label">Processing Time</span>
+                    <span class="info-val">${procTime}</span>
+                </div>
+            </div>
+            <div class="info-item" style="grid-column: span 3; margin-top: 5px;">
+                <div class="info-icon" style="color: #10b981; background: #ecfdf5;"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="info-content">
+                    <span class="info-label">Enhancement Status</span>
+                    <span class="info-val" style="color: #10b981;">Completed Successfully</span>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+
+    <!-- Image Comparison -->
+    <div class="card">
+        <div class="card-title">
+            <i class="fa-solid fa-images"></i> Image Comparison
+        </div>
+        <div class="image-comparison">
+            <div class="image-card">
+                <div class="image-label">Low-Dose PET Image</div>
+                <div class="image-wrapper">
+                    <img src="${rData.preview_url}" alt="Low Dose Input">
+                </div>
+            </div>
+            <div class="image-card">
+                <div class="image-label">Enhanced PET Image</div>
+                <div class="image-wrapper">
+                    <img src="${rData.enhanced_url}" alt="Enhanced Output">
+                </div>
+            </div>
+        </div>
+        <div class="image-caption">
+            "The enhanced image was automatically generated using the PETRestore image enhancement system."
+        </div>
+    </div>
+
+    <!-- Image Quality Metrics -->
+    <div class="card">
+        <div class="card-title">
+            <i class="fa-solid fa-chart-simple"></i> Image Quality Metrics
+        </div>
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">Metric</th>
+                    <th style="width: 20%;">Low-Dose Input</th>
+                    <th style="width: 20%;">Enhanced Output</th>
+                    <th style="width: 20%;">Improvement</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="metric-name">PSNR (dB)</td>
+                    <td>${parseFloat(rData.metrics.input_psnr).toFixed(2)} dB</td>
+                    <td>${parseFloat(rData.metrics.enhanced_psnr).toFixed(2)} dB</td>
+                    <td><span class="metric-gain">+${pGain.toFixed(2)}% Improvement</span></td>
+                </tr>
+                <tr>
+                    <td class="metric-name">SSIM</td>
+                    <td>${parseFloat(rData.metrics.input_ssim).toFixed(4)}</td>
+                    <td>${parseFloat(rData.metrics.enhanced_ssim).toFixed(4)}</td>
+                    <td><span class="metric-gain">+${sGain.toFixed(2)}% Improvement</span></td>
+                </tr>
+                <tr>
+                    <td class="metric-name">RMSE</td>
+                    <td>${parseFloat(rData.metrics.input_rmse).toFixed(4)}</td>
+                    <td>${parseFloat(rData.metrics.enhanced_rmse).toFixed(4)}</td>
+                    <td><span class="metric-gain">${rGain.toFixed(2)}% Error Reduction</span></td>
+                </tr>
+                <tr>
+                    <td class="metric-name">NRMSE</td>
+                    <td>${parseFloat(rData.metrics.input_nrmse).toFixed(4)}</td>
+                    <td>${parseFloat(rData.metrics.enhanced_nrmse).toFixed(4)}</td>
+                    <td><span class="metric-gain">${nGain.toFixed(2)}% Error Reduction</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Enhancement Summary -->
+    <div class="summary-card">
+        <div class="summary-title">
+            <i class="fa-solid fa-circle-check"></i> Enhancement Summary
+        </div>
+        <ul class="summary-list">
+            <li>Image enhancement completed successfully.</li>
+            <li>Image noise has been reduced.</li>
+            <li>Important image details have been preserved.</li>
+            <li>Overall image quality has improved.</li>
+            <li>Enhanced image is ready for visualization and download.</li>
+        </ul>
+    </div>
+
+    <!-- Clinical Note -->
+    <div class="clinical-note">
+        <i class="fa-solid fa-circle-info"></i>
+        <div class="clinical-text">
+            <strong>CLINICAL NOTE:</strong> This enhanced image is generated using AI-assisted image enhancement to improve visualization. It is intended to support image review and should always be interpreted by a qualified medical professional.
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-left">
+            <span>Generated by <strong>PETRestore</strong></span>
+            <span>Report ID: ${reportId}</span>
+            <span>Date: ${formattedDate}</span>
+            <span>Time: ${formattedTime}</span>
+        </div>
+        <div class="footer-right">
+            © 2026 PETRestore | Web-Based Low-Dose PET Image Enhancement System
+        </div>
+    </div>
             `;
             
             // Set loading state on button
@@ -1513,24 +1487,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const originalText = btnGenerateReport.innerHTML;
             btnGenerateReport.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Generating...`;
             
-            // Create a temporary hidden iframe for isolated rendering context
-            const iframe = document.createElement('iframe');
-            iframe.style.position = 'fixed';
-            iframe.style.left = '0';
-            iframe.style.top = '0';
-            iframe.style.width = '800px';
-            iframe.style.height = '1130px';
-            iframe.style.zIndex = '-9999';
-            iframe.style.border = 'none';
-            document.body.appendChild(iframe);
+            // Create a temporary container for rendering in the main DOM tree (scoped style safety)
+            const container = document.createElement('div');
+            container.className = 'pdf-report-container';
+            container.style.position = 'absolute';
+            container.style.left = '0';
+            container.style.top = '-9999px'; // off-screen but fully rendered
+            container.style.width = '800px';
+            container.style.background = '#fff';
+            container.innerHTML = reportHtml;
+            document.body.appendChild(container);
             
-            // Populate iframe document
-            const iframeDoc = iframe.contentWindow.document;
-            iframeDoc.open();
-            iframeDoc.write(reportHtml);
-            iframeDoc.close();
-            
-            // Wait for isolated document resources (fonts/base64 images) to settle
+            // Wait for images and layouts to settle
             setTimeout(() => {
                 // Configure html2pdf options
                 const opt = {
@@ -1540,26 +1508,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     html2canvas:  { 
                         scale: 2, 
                         useCORS: true,
-                        logging: false
+                        logging: false,
+                        allowTaint: true
                     },
                     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
                 
-                // Save from the iframe body context
-                html2pdf().set(opt).from(iframeDoc.body).save().then(() => {
-                    document.body.removeChild(iframe);
+                // Compile the PDF using the visible DOM container
+                html2pdf().set(opt).from(container).save().then(() => {
+                    document.body.removeChild(container);
                     btnGenerateReport.disabled = false;
                     btnGenerateReport.innerHTML = originalText;
                 }).catch(err => {
                     console.error(err);
-                    if (document.body.contains(iframe)) {
-                        document.body.removeChild(iframe);
+                    if (document.body.contains(container)) {
+                        document.body.removeChild(container);
                     }
                     btnGenerateReport.disabled = false;
                     btnGenerateReport.innerHTML = originalText;
                     alert("Failed to generate PDF. Please try again.");
                 });
-            }, 800);
+            }, 600);
         });
     }
 });
