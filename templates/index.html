@@ -745,19 +745,24 @@
                                 </feMerge>
                             </filter>
                         </defs>
-                        <!-- Staircase connecting vector lines representing waterfall pipeline -->
+                        <!-- Layer 1: Outer glowing transparent glass pipe -->
                         <path d="M 100,50 L 250,50 L 250,125 L 410,125 L 410,200 L 570,200 L 570,275 L 730,275 L 730,350 L 890,350 L 890,425" 
-                              fill="none" stroke="rgba(15, 23, 42, 0.04)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+                              fill="none" stroke="rgba(2, 132, 199, 0.15)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
                         
-                        <!-- Flowing Water neon layer -->
+                        <!-- Layer 2: Inner glowing liquid core -->
                         <path d="M 100,50 L 250,50 L 250,125 L 410,125 L 410,200 L 570,200 L 570,275 L 730,275 L 730,350 L 890,350 L 890,425" 
-                              fill="none" stroke="url(#waterGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" 
-                              class="water-stream-stepped" filter="url(#waterGlow)" />
+                              fill="none" stroke="url(#waterGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" 
+                              class="water-core" />
+
+                        <!-- Layer 3: Rushing liquid currents (Bubble stream animation) -->
+                        <path d="M 100,50 L 250,50 L 250,125 L 410,125 L 410,200 L 570,200 L 570,275 L 730,275 L 730,350 L 890,350 L 890,425" 
+                              fill="none" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" 
+                              class="water-current" />
                     </svg>
                 </div>
 
                 <!-- SDLC Card 1 -->
-                <div class="waterfall-compact-card glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-1 glass-card tilt-3d waterfall-card-pulse">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-clipboard-list" style="color: var(--color-primary); font-size: 0.95rem;"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">1. Requirements</h4>
@@ -765,7 +770,7 @@
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">DICOM parsing clinical radiation specifications.</p>
                 </div>
                 <!-- SDLC Card 2 -->
-                <div class="waterfall-compact-card glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-2 glass-card tilt-3d waterfall-card-pulse">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-map" style="color: var(--color-primary); font-size: 0.95rem;"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">2. Planning</h4>
@@ -773,7 +778,7 @@
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Architectural choice of Flask, PyTorch & MONAI.</p>
                 </div>
                 <!-- SDLC Card 3 -->
-                <div class="waterfall-compact-card glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-3 glass-card tilt-3d waterfall-card-pulse">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-diagram-project" style="color: var(--color-primary); font-size: 0.95rem;"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">3. Design</h4>
@@ -781,7 +786,7 @@
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Structured REST APIs & DataLoader pipelines.</p>
                 </div>
                 <!-- SDLC Card 4 -->
-                <div class="waterfall-compact-card glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-4 glass-card tilt-3d waterfall-card-pulse">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-code" style="color: var(--color-primary); font-size: 0.95rem;"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">4. Coding</h4>
@@ -789,7 +794,7 @@
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">Model Restormer execution code & route configs.</p>
                 </div>
                 <!-- SDLC Card 5 -->
-                <div class="waterfall-compact-card glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-5 glass-card tilt-3d waterfall-card-pulse">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-vial" style="font-size: 0.95rem; color: var(--color-primary);"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">5. Testing</h4>
@@ -797,7 +802,7 @@
                     <p style="font-size: 0.65rem; color: var(--color-text-muted); line-height: 1.35;">verify_model.py check scripts for weights mapping.</p>
                 </div>
                 <!-- SDLC Card 6 -->
-                <div class="waterfall-compact-card glass-card tilt-3d waterfall-card-pulse">
+                <div class="waterfall-compact-card waterfall-card-6 glass-card tilt-3d waterfall-card-pulse">
                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                         <i class="fa-solid fa-server" style="color: var(--color-primary); font-size: 0.95rem;"></i>
                         <h4 style="font-size: 0.8rem; font-weight: 700;">6. Operations</h4>

@@ -1823,12 +1823,12 @@ h1, h2, h3, h4 {
 
 /* Diagonal staircase coordinate mapping */
 @media (min-width: 1024px) {
-    .waterfall-compact-card:nth-child(1) { left: 4%; top: 10px; }
-    .waterfall-compact-card:nth-child(2) { left: 20%; top: 85px; }
-    .waterfall-compact-card:nth-child(3) { left: 36%; top: 160px; }
-    .waterfall-compact-card:nth-child(4) { left: 52%; top: 235px; }
-    .waterfall-compact-card:nth-child(5) { left: 68%; top: 310px; }
-    .waterfall-compact-card:nth-child(6) { left: 84%; top: 385px; }
+    .waterfall-card-1 { left: 4%; top: 10px; }
+    .waterfall-card-2 { left: 20%; top: 85px; }
+    .waterfall-card-3 { left: 36%; top: 160px; }
+    .waterfall-card-4 { left: 52%; top: 235px; }
+    .waterfall-card-5 { left: 68%; top: 310px; }
+    .waterfall-card-6 { left: 84%; top: 385px; }
     
     .waterfall-mobile-drop-line {
         display: none !important;
@@ -1879,15 +1879,19 @@ h1, h2, h3, h4 {
     100% { background-position: 0% 250%; }
 }
 
-/* Stepped SVG Flowing Water Laser animation */
-.water-stream-stepped {
-    stroke-dasharray: 15 35;
-    animation: steppedWaterAnim 4.5s linear infinite;
+/* Real-time multi-layer flowing water core & currents */
+.water-core {
+    filter: drop-shadow(0 0 5px rgba(0, 191, 255, 0.6));
 }
 
-@keyframes steppedWaterAnim {
+.water-current {
+    stroke-dasharray: 8 16;
+    animation: realWaterFlow 1.6s linear infinite;
+}
+
+@keyframes realWaterFlow {
     to {
-        stroke-dashoffset: -150;
+        stroke-dashoffset: -48;
     }
 }
 
