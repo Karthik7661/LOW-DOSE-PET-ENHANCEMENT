@@ -283,10 +283,10 @@
                     <div class="visual-card">
                         <div class="scanning-lines"></div>
                         <!-- Floating HUD Telemetry -->
-                        <div class="hud-telem hud-telem-1" id="hudTelem1">SYS: ACTIVE</div>
-                        <div class="hud-telem hud-telem-2" id="hudTelem2">SCAN: STANDBY</div>
-                        <div class="hud-telem hud-telem-3" id="hudTelem3">LOAD: 14%</div>
-                        <div class="hud-telem hud-telem-4" id="hudTelem4">FPS: 59.9</div>
+                        <div class="hud-telem hud-telem-1" id="hudTelem1"></div>
+                        <div class="hud-telem hud-telem-2" id="hudTelem2"></div>
+                        <div class="hud-telem hud-telem-3" id="hudTelem3"></div>
+                        <div class="hud-telem hud-telem-4" id="hudTelem4"></div>
                         
                         <!-- Floating 3D Telemetry Coordinates Particles -->
                         <div class="floating-particle p-1">X: 41.28</div>
@@ -306,39 +306,60 @@
                             <!-- Custom Medical Animation Graphic -->
                             <svg class="brain-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
-                                    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-                                        <stop offset="0%" stop-color="var(--color-primary-light)" stop-opacity="0.6"/>
-                                        <stop offset="100%" stop-color="var(--color-primary)" stop-opacity="0"/>
+                                    <radialGradient id="glow-noisy" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.5"/>
+                                        <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
                                     </radialGradient>
-                                    <linearGradient id="laser" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <radialGradient id="glow-clean" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="#10b981" stop-opacity="0.5"/>
+                                        <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+                                    </radialGradient>
+                                    <linearGradient id="laser-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                                         <stop offset="0%" stop-color="rgba(0, 245, 212, 0)"/>
-                                        <stop offset="50%" stop-color="var(--color-secondary)" stop-opacity="1"/>
+                                        <stop offset="50%" stop-color="#00f5d4" stop-opacity="1"/>
                                         <stop offset="100%" stop-color="rgba(0, 245, 212, 0)"/>
                                     </linearGradient>
+                                    <filter id="pet-noise" x="0%" y="0%" width="100%" height="100%">
+                                        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
+                                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
+                                    </filter>
                                 </defs>
                                 
                                 <!-- Rotating Circular Grids -->
-                                <circle class="radar-ring-outer" cx="50%" cy="50%" r="48" fill="none" stroke="rgba(0, 180, 216, 0.15)" stroke-width="1" stroke-dasharray="150 10 30 10"/>
-                                <circle class="radar-ring-inner" cx="50%" cy="50%" r="42" fill="none" stroke="rgba(0, 245, 212, 0.2)" stroke-dasharray="5 15" stroke-width="1.5"/>
-                                <circle class="radar-ring-dot" cx="50%" cy="50%" r="45" fill="none" stroke="rgba(0, 180, 216, 0.3)" stroke-dasharray="1 8" stroke-width="2"/>
+                                <circle class="radar-ring-outer" cx="50%" cy="50%" r="48" fill="none" stroke="rgba(0, 180, 216, 0.12)" stroke-width="1" stroke-dasharray="150 10 30 10"/>
+                                <circle class="radar-ring-inner" cx="50%" cy="50%" r="42" fill="none" stroke="rgba(0, 245, 212, 0.15)" stroke-dasharray="5 15" stroke-width="1.2"/>
+                                <circle class="radar-ring-dot" cx="50%" cy="50%" r="45" fill="none" stroke="rgba(0, 180, 216, 0.25)" stroke-dasharray="1 8" stroke-width="1.5"/>
                                 
-                                <!-- Detailed medical brain slice outline -->
-                                <path class="brain-path" d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="url(#glow)"/>
-                                <path class="brain-path-outline" d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="none" stroke="var(--color-primary)" stroke-width="1.5"/>
+                                <!-- Group 1: Noisy Raw Low-Dose Scan -->
+                                <g class="scanner-noisy-group" filter="url(#pet-noise)">
+                                    <path d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="url(#glow-noisy)"/>
+                                    <path d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="none" stroke="#f59e0b" stroke-width="2"/>
+                                    <!-- Noisy internal ventricles -->
+                                    <path d="M 45,48 C 45,38 38,43 38,48 C 38,53 45,58 45,48 Z" fill="none" stroke="#ef4444" stroke-opacity="0.6" stroke-width="1.8"/>
+                                    <path d="M 55,48 C 55,38 62,43 62,48 C 62,53 55,58 55,48 Z" fill="none" stroke="#ef4444" stroke-opacity="0.6" stroke-width="1.8"/>
+                                    <!-- Noisy nodes -->
+                                    <circle cx="34" cy="38" r="3" fill="#ef4444"/>
+                                    <circle cx="66" cy="38" r="3" fill="#ef4444"/>
+                                    <circle cx="44" cy="68" r="3.5" fill="#f59e0b"/>
+                                    <circle cx="56" cy="68" r="3.5" fill="#f59e0b"/>
+                                </g>
                                 
-                                <!-- Ventricles inside brain cross-section -->
-                                <path class="brain-ventricle" d="M 45,48 C 45,38 38,43 38,48 C 38,53 45,58 45,48 Z" fill="none" stroke="var(--color-secondary)" stroke-opacity="0.4" stroke-width="1.5"/>
-                                <path class="brain-ventricle" d="M 55,48 C 55,38 62,43 62,48 C 62,53 55,58 55,48 Z" fill="none" stroke="var(--color-secondary)" stroke-opacity="0.4" stroke-width="1.5"/>
+                                <!-- Group 2: Crisp Enhanced Restormer Output -->
+                                <g class="scanner-clean-group">
+                                    <path d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="url(#glow-clean)"/>
+                                    <path class="brain-path-outline" d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="none" stroke="#10b981" stroke-width="1.5"/>
+                                    <!-- Clean internal ventricles -->
+                                    <path d="M 45,48 C 45,38 38,43 38,48 C 38,53 45,58 45,48 Z" fill="none" stroke="#00f5d4" stroke-opacity="0.8" stroke-width="1.5"/>
+                                    <path d="M 55,48 C 55,38 62,43 62,48 C 62,53 55,58 55,48 Z" fill="none" stroke="#00f5d4" stroke-opacity="0.8" stroke-width="1.5"/>
+                                    <!-- Clean pulsing nodes -->
+                                    <circle class="neural-node node-1" cx="34" cy="38" r="2.5" fill="#00f5d4"/>
+                                    <circle class="neural-node node-2" cx="66" cy="38" r="2.5" fill="#00f5d4"/>
+                                    <circle class="neural-node node-3" cx="44" cy="68" r="3" fill="#10b981"/>
+                                    <circle class="neural-node node-4" cx="56" cy="68" r="3" fill="#10b981"/>
+                                </g>
                                 
-                                <!-- Neural nodes / Hotspots -->
-                                <circle class="neural-node node-1" cx="34" cy="38" r="2.5" fill="var(--color-secondary)"/>
-                                <circle class="neural-node node-2" cx="66" cy="38" r="2.5" fill="var(--color-secondary)"/>
-                                <circle class="neural-node node-3" cx="44" cy="68" r="3" fill="var(--color-primary)"/>
-                                <circle class="neural-node node-4" cx="56" cy="68" r="3" fill="var(--color-primary)"/>
-                                <circle class="neural-node node-5" cx="50" cy="30" r="2" fill="var(--color-secondary)"/>
-                                
-                                <!-- Glowing sweep laser line -->
-                                <line class="scanner-sweep" x1="10" y1="20" x2="90" y2="20" stroke="url(#laser)" stroke-width="2.5"/>
+                                <!-- Glowing horizontal sweep laser line -->
+                                <line class="scanner-laser-sweep" x1="10" y1="0" x2="90" y2="0" stroke="url(#laser-gradient)" stroke-width="2.5"/>
                             </svg>
                         </div>
                     </div>
