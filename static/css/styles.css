@@ -1808,7 +1808,7 @@ h1, h2, h3, h4 {
     position: relative;
     width: 1000px;
     margin: 40px auto 0 auto;
-    height: 520px;
+    height: 580px;
     display: block;
 }
 
@@ -1821,12 +1821,12 @@ h1, h2, h3, h4 {
 
 /* Diagonal staircase coordinate mapping with uniform sizes and gaps */
 @media (min-width: 1024px) {
-    .waterfall-card-1 { left: 40px; top: 10px; width: 140px; height: 110px; }
-    .waterfall-card-2 { left: 200px; top: 90px; width: 140px; height: 110px; }
-    .waterfall-card-3 { left: 360px; top: 170px; width: 140px; height: 110px; }
-    .waterfall-card-4 { left: 520px; top: 250px; width: 140px; height: 110px; }
-    .waterfall-card-5 { left: 680px; top: 330px; width: 140px; height: 110px; }
-    .waterfall-card-6 { left: 840px; top: 410px; width: 140px; height: 110px; }
+    .waterfall-card-1 { left: 20px; top: 10px; width: 150px; height: 145px; }
+    .waterfall-card-2 { left: 180px; top: 90px; width: 150px; height: 145px; }
+    .waterfall-card-3 { left: 340px; top: 170px; width: 150px; height: 145px; }
+    .waterfall-card-4 { left: 500px; top: 250px; width: 150px; height: 145px; }
+    .waterfall-card-5 { left: 660px; top: 330px; width: 150px; height: 145px; }
+    .waterfall-card-6 { left: 820px; top: 410px; width: 150px; height: 145px; }
     
     .waterfall-mobile-drop-line {
         display: none !important;
