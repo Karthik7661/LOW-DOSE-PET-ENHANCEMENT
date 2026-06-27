@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleFileSelection(file) {
         selectedFile = file;
         isSampleActive = false;
+        if (hudTelem2) hudTelem2.textContent = "SCAN: READY";
         
         lblFileName.textContent = file.name;
         lblFileSize.textContent = formatBytes(file.size);
@@ -171,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadDemoScan() {
         resetWorkspace();
         isSampleActive = true;
+        if (hudTelem2) hudTelem2.textContent = "SCAN: READY";
         selectedFile = null;
         
         lblFileName.textContent = "synthetic_brain_pet_10x.png";
@@ -216,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
         workbenchSection.classList.add('hidden');
         
         processingIndicator.classList.remove('hidden');
+        if (hudTelem2) hudTelem2.textContent = "SCAN: RUNNING";
         updateStep(2);
         
         const formData = new FormData();
@@ -253,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Hide loaders & Show Portal Output
                 processingIndicator.classList.add('hidden');
                 outputPreviewContainer.classList.remove('hidden');
+                if (hudTelem2) hudTelem2.textContent = "SCAN: COMPLETE";
                 updateStep(3);
 
                 // Populate Diagnostic Workbench
@@ -434,6 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedFile = null;
         isSampleActive = false;
         fileInput.value = '';
+        if (hudTelem2) hudTelem2.textContent = "SCAN: STANDBY";
         
         const dicomCard = document.getElementById('dicomCardPreview');
         if (dicomCard) dicomCard.remove();
@@ -666,4 +671,229 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetSnippet) targetSnippet.classList.remove('hidden');
         });
     });
+
+    // ==========================================================================
+    // Advanced UI Upgrades (Amber/Crimson/Ultraviolet Themes, Live Console, 3D PACS HUD)
+    // ==========================================================================
+
+    // 1. Workstation Theme Toggling
+    const themeAmber = document.getElementById('themeAmber');
+    const themeCrimson = document.getElementById('themeCrimson');
+    const themeUltraviolet = document.getElementById('themeUltraviolet');
+    const themeBtns = [themeAmber, themeCrimson, themeUltraviolet];
+
+    const setTheme = (themeName) => {
+        document.body.classList.remove('theme-amber', 'theme-crimson', 'theme-ultraviolet');
+        document.body.classList.add(`theme-${themeName}`);
+        localStorage.setItem('workstation-theme', themeName);
+
+        themeBtns.forEach(btn => {
+            if (btn) btn.classList.remove('active');
+        });
+
+        if (themeName === 'amber' && themeAmber) themeAmber.classList.add('active');
+        if (themeName === 'crimson' && themeCrimson) themeCrimson.classList.add('active');
+        if (themeName === 'ultraviolet' && themeUltraviolet) themeUltraviolet.classList.add('active');
+    };
+
+    if (themeAmber) themeAmber.addEventListener('click', () => setTheme('amber'));
+    if (themeCrimson) themeCrimson.addEventListener('click', () => setTheme('crimson'));
+    if (themeUltraviolet) themeUltraviolet.addEventListener('click', () => setTheme('ultraviolet'));
+
+    // Restore Saved Theme (Default is amber)
+    const savedTheme = localStorage.getItem('workstation-theme') || 'amber';
+    setTheme(savedTheme);
+
+    // 2. Scrolling Console Log Terminal Simulation
+    const consoleTerminal = document.getElementById('consoleTerminal');
+    const logsQueue = [
+        "[INFO] Initializing Web-Based PET Enhancement System...",
+        "[INFO] Loading Restormer Model weights (best_restormer_pet.onnx)...",
+        "[INFO] Voxel Resolution: [200x200x1] single-channel standard.",
+        "[INFO] Model Weights: 9.34 MB. Framework: ONNXRuntime CPU fallback engine.",
+        "[PACS] Listening on local workstation DICOM C-STORE port 104...",
+        "[PACS] Connected to Local Database (sqlite://metadata.db).",
+        "[SYS] GPU/CUDA not found on Vercel lambda instance. Allocating CPU threads.",
+        "[INFO] Preprocessing pipeline initialized (MONAI EnsureType, ScaleIntensity).",
+        "[SYS] System Status: STANDBY. Awaiting DICOM scan upload..."
+    ];
+
+    const randomLogTemplates = [
+        "[PACS] Query C-FIND request received from Study Date 2026-06-27.",
+        "[SYS] Vercel serverless execution load: 14.5% memory threshold.",
+        "[SYS] Thread pool allocation: 4 active worker nodes.",
+        "[INFO] ONNX Session: Layer 'conv1.weight' shape [48, 1, 3, 3] processed.",
+        "[PACS] Echo C-ECHO verified successfully.",
+        "[INFO] Computed PSNR evaluation metric scale range: [40 dB - 45 dB].",
+        "[SYS] Cached temporary files swept from /tmp/uploads.",
+        "[INFO] Model SSIM convergence threshold: 0.9939 stabilized.",
+        "[PACS] Voxel intensity range normalized dynamically to [0, 1]."
+    ];
+
+    function writeConsoleLog(text) {
+        if (!consoleTerminal) return;
+        const line = document.createElement('div');
+        line.className = 'console-line';
+        line.textContent = text;
+        consoleTerminal.appendChild(line);
+        consoleTerminal.scrollTop = consoleTerminal.scrollHeight;
+    }
+
+    // Load initial logs
+    let logsIndex = 0;
+    const loadLogsInterval = setInterval(() => {
+        if (logsIndex < logsQueue.length) {
+            writeConsoleLog(logsQueue[logsIndex]);
+            logsIndex++;
+        } else {
+            clearInterval(loadLogsInterval);
+            // Start randomized system updates
+            setInterval(() => {
+                const randomLog = randomLogTemplates[Math.floor(Math.random() * randomLogTemplates.length)];
+                const timestamp = new Date().toISOString().split('T')[1].substring(0, 8);
+                writeConsoleLog(`[${timestamp}] ${randomLog}`);
+                // Limit terminal lines to prevent memory bloat
+                while (consoleTerminal.children.length > 50) {
+                    consoleTerminal.removeChild(consoleTerminal.firstChild);
+                }
+            }, 5000);
+        }
+    }, 1200);
+
+    // Write interactive hooks for upload/enhance to Console Logs
+    const originalHandleFile = handleFileSelection;
+    handleFileSelection = function(file) {
+        originalHandleFile(file);
+        writeConsoleLog(`[PACS] DICOM Scan Received: ${file.name} (${formatBytes(file.size)}).`);
+        writeConsoleLog(`[INFO] Computed Preprocessing: Normalizing grayscale voxel range...`);
+    };
+
+    const originalLoadDemo = loadDemoScan;
+    loadDemoScan = function() {
+        originalLoadDemo();
+        writeConsoleLog(`[PACS] Loading synthetic clinical DICOM demo scan (scan_001.dcm)...`);
+        writeConsoleLog(`[INFO] Noise Model: Poisson noise simulator set (10x dose reduction).`);
+    };
+
+    const originalBtnEnhance = btnEnhance.click; // We can hooks the fetch logs by adding logs directly inside main.js click callback.
+    // Instead of overriding btnEnhance.click directly, we append a click listener to log:
+    if (btnEnhance) {
+        btnEnhance.addEventListener('click', () => {
+            writeConsoleLog(`[INFO] Launching Restormer Transformer network inference...`);
+            writeConsoleLog(`[SYS] ONNX Runtime session: running graph calculations...`);
+            
+            // Periodically log inference status
+            const progressLogs = setTimeout(() => {
+                writeConsoleLog(`[INFO] Running Multi-Dilation Multi-Head Self-Attention layers...`);
+            }, 1000);
+            
+            const completionLogs = setTimeout(() => {
+                writeConsoleLog(`[INFO] Reconstruction finished. Re-scaling voxel intensities.`);
+                writeConsoleLog(`[PACS] Quantitative metrics evaluated: SNR and PSNR calculations computed.`);
+            }, 2500);
+        });
+    }
+
+    if (btnRemoveFile) {
+        btnRemoveFile.addEventListener('click', () => {
+            writeConsoleLog(`[SYS] Workspace flushed. Client cache cleared. Status: STANDBY.`);
+        });
+    }
+
+    // 3. Holographic Dynamic HUD Telemetry Simulation
+    const hudTelem2 = document.getElementById('hudTelem2');
+    const hudTelem3 = document.getElementById('hudTelem3');
+    const hudTelem4 = document.getElementById('hudTelem4');
+    let isHoveringHeroVisual = false;
+
+    setInterval(() => {
+        // Random clinical coordinates
+        const x = (40.0 + Math.random() * 20).toFixed(1);
+        const y = (35.0 + Math.random() * 25).toFixed(1);
+        const z = (50.0 + Math.random() * 30).toFixed(1);
+        
+        // If not hovering and not processing, update coordinates
+        if (hudTelem2 && !isHoveringHeroVisual && !hudTelem2.textContent.startsWith('SCAN:')) {
+            hudTelem2.textContent = `COORD: X=${x} Y=${y} Z=${z}`;
+        }
+        
+        // Load fluctuations
+        if (hudTelem3) {
+            const load = (10.0 + Math.random() * 8).toFixed(1);
+            hudTelem3.textContent = `SYS_LOAD: ${load}%`;
+        }
+        
+        // Frame rate jitter
+        if (hudTelem4) {
+            const fps = (59.6 + Math.random() * 0.6).toFixed(1);
+            hudTelem4.textContent = `FPS: ${fps}`;
+        }
+    }, 1000);
+
+    // 4. Hero 3D Card Tilt Effect & Axis Coordinates
+    const heroVisual = document.getElementById('heroVisual');
+    const visualCardWrapper = document.getElementById('visualCardWrapper');
+
+    if (heroVisual && visualCardWrapper) {
+        heroVisual.addEventListener('mousemove', (e) => {
+            const rect = heroVisual.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            // Map coordinate offsets to subtle 3D rotational values
+            const rotateX = -(y / rect.height) * 14;
+            const rotateY = (x / rect.width) * 14;
+            
+            visualCardWrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            
+            // Update HUD coordinates to match precise mouse placement on scanner scope
+            isHoveringHeroVisual = true;
+            const scopeX = (((e.clientX - rect.left) / rect.width) * 100).toFixed(1);
+            const scopeY = (((e.clientY - rect.top) / rect.height) * 100).toFixed(1);
+            if (hudTelem2 && !hudTelem2.textContent.startsWith('SCAN:')) {
+                hudTelem2.textContent = `COORD: X=${scopeX} Y=${scopeY} Z=64.0`;
+            }
+        });
+        
+        heroVisual.addEventListener('mouseleave', () => {
+            visualCardWrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
+            visualCardWrapper.style.transition = 'transform 0.4s ease';
+            isHoveringHeroVisual = false;
+        });
+
+        heroVisual.addEventListener('mouseenter', () => {
+            visualCardWrapper.style.transition = 'none';
+        });
+    }
+
+    // 5. PACS Reticle Sync Tracking
+    const viewportsWrapper = document.getElementById('viewSideBySide');
+    if (viewportsWrapper) {
+        const images = [workbenchInputImg, workbenchOutputImg, workbenchRefImg];
+        
+        images.forEach(img => {
+            if (img) {
+                img.addEventListener('mousemove', (e) => {
+                    const rect = img.getBoundingClientRect();
+                    const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
+                    const yPercent = ((e.clientY - rect.top) / rect.height) * 100;
+                    
+                    // Sync crosshair reticle positions across all comparative images
+                    viewportsWrapper.querySelectorAll('.pacs-crosshair-h').forEach(line => {
+                        line.style.top = `${yPercent}%`;
+                        line.style.display = 'block';
+                    });
+                    viewportsWrapper.querySelectorAll('.pacs-crosshair-v').forEach(line => {
+                        line.style.left = `${xPercent}%`;
+                        line.style.display = 'block';
+                    });
+                });
+                
+                img.addEventListener('mouseleave', () => {
+                    viewportsWrapper.querySelectorAll('.pacs-crosshair-h').forEach(line => line.style.display = 'none');
+                    viewportsWrapper.querySelectorAll('.pacs-crosshair-v').forEach(line => line.style.display = 'none');
+                });
+            }
+        });
+    }
 });

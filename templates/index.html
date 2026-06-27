@@ -14,7 +14,11 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
-<body>
+<body class="theme-amber">
+    <!-- Glow Blobs -->
+    <div class="glow-blob glow-blob-1"></div>
+    <div class="glow-blob glow-blob-2"></div>
+    <div class="glow-blob glow-blob-3"></div>
 
     <!-- Header & Navigation -->
     <header class="main-header" id="mainHeader">
@@ -31,6 +35,11 @@
                 <a href="#sdlc" class="nav-link">SDLC</a>
                 <a href="#model-details" class="nav-link">Specifications</a>
             </nav>
+            <div class="theme-selector-hud">
+                <button class="theme-hud-btn theme-btn-amber active" id="themeAmber" title="Steel Amber Theme"></button>
+                <button class="theme-hud-btn theme-btn-crimson" id="themeCrimson" title="Toxic Crimson Theme"></button>
+                <button class="theme-hud-btn theme-btn-ultraviolet" id="themeUltraviolet" title="Deep Ultraviolet Theme"></button>
+            </div>
         </div>
     </header>
 
@@ -84,48 +93,67 @@
                     <a href="#enhance-section" class="btn btn-primary btn-lg"><i class="fa-solid fa-upload"></i> Upload PET Scan</a>
                     <button class="btn btn-secondary btn-lg" id="btnHeroDemo"><i class="fa-solid fa-play"></i> Run Demo Scan</button>
                 </div>
+
+                <!-- Diagnostic Workstation scrolling console -->
+                <div class="console-terminal" id="consoleTerminal"></div>
             </div>
             <div class="hero-visual" id="heroVisual">
-                <div class="visual-card">
-                    <div class="scanning-lines"></div>
-                    <div class="brain-svg-container">
-                        <!-- Custom Medical Animation Graphic -->
-                        <svg class="brain-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-                                    <stop offset="0%" stop-color="var(--color-primary-light)" stop-opacity="0.6"/>
-                                    <stop offset="100%" stop-color="var(--color-primary)" stop-opacity="0"/>
-                                </radialGradient>
-                                <linearGradient id="laser" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stop-color="rgba(0, 245, 212, 0)"/>
-                                    <stop offset="50%" stop-color="var(--color-secondary)" stop-opacity="1"/>
-                                    <stop offset="100%" stop-color="rgba(0, 245, 212, 0)"/>
-                                </linearGradient>
-                            </defs>
-                            
-                            <!-- Rotating Circular Grids -->
-                            <circle class="radar-ring-outer" cx="50%" cy="50%" r="48" fill="none" stroke="rgba(0, 180, 216, 0.15)" stroke-width="1" stroke-dasharray="150 10 30 10"/>
-                            <circle class="radar-ring-inner" cx="50%" cy="50%" r="42" fill="none" stroke="rgba(0, 245, 212, 0.2)" stroke-dasharray="5 15" stroke-width="1.5"/>
-                            <circle class="radar-ring-dot" cx="50%" cy="50%" r="45" fill="none" stroke="rgba(0, 180, 216, 0.3)" stroke-dasharray="1 8" stroke-width="2"/>
-                            
-                            <!-- Detailed medical brain slice outline -->
-                            <path class="brain-path" d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="url(#glow)"/>
-                            <path class="brain-path-outline" d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="none" stroke="var(--color-primary)" stroke-width="1.5"/>
-                            
-                            <!-- Ventricles inside brain cross-section -->
-                            <path class="brain-ventricle" d="M 45,48 C 45,38 38,43 38,48 C 38,53 45,58 45,48 Z" fill="none" stroke="var(--color-secondary)" stroke-opacity="0.4" stroke-width="1.5"/>
-                            <path class="brain-ventricle" d="M 55,48 C 55,38 62,43 62,48 C 62,53 55,58 55,48 Z" fill="none" stroke="var(--color-secondary)" stroke-opacity="0.4" stroke-width="1.5"/>
-                            
-                            <!-- Neural nodes / Hotspots -->
-                            <circle class="neural-node node-1" cx="34" cy="38" r="2.5" fill="var(--color-secondary)"/>
-                            <circle class="neural-node node-2" cx="66" cy="38" r="2.5" fill="var(--color-secondary)"/>
-                            <circle class="neural-node node-3" cx="44" cy="68" r="3" fill="var(--color-primary)"/>
-                            <circle class="neural-node node-4" cx="56" cy="68" r="3" fill="var(--color-primary)"/>
-                            <circle class="neural-node node-5" cx="50" cy="30" r="2" fill="var(--color-secondary)"/>
-                            
-                            <!-- Glowing sweep laser line -->
-                            <line class="scanner-sweep" x1="10" y1="20" x2="90" y2="20" stroke="url(#laser)" stroke-width="2.5"/>
-                        </svg>
+                <div class="visual-card-3d-wrapper" id="visualCardWrapper">
+                    <div class="visual-card">
+                        <div class="scanning-lines"></div>
+                        <!-- Floating HUD Telemetry -->
+                        <div class="hud-telem hud-telem-1" id="hudTelem1">SYS: ACTIVE</div>
+                        <div class="hud-telem hud-telem-2" id="hudTelem2">SCAN: STANDBY</div>
+                        <div class="hud-telem hud-telem-3" id="hudTelem3">LOAD: 14%</div>
+                        <div class="hud-telem hud-telem-4" id="hudTelem4">FPS: 59.9</div>
+                        
+                        <!-- PACS Precision Scope Rulers -->
+                        <div class="precision-scope-box">
+                            <div class="precision-ruler-h ruler-t"></div>
+                            <div class="precision-ruler-h ruler-b"></div>
+                            <div class="precision-ruler-v ruler-l"></div>
+                            <div class="precision-ruler-v ruler-r"></div>
+                        </div>
+                        
+                        <div class="brain-svg-container">
+                            <!-- Custom Medical Animation Graphic -->
+                            <svg class="brain-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="var(--color-primary-light)" stop-opacity="0.6"/>
+                                        <stop offset="100%" stop-color="var(--color-primary)" stop-opacity="0"/>
+                                    </radialGradient>
+                                    <linearGradient id="laser" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="rgba(0, 245, 212, 0)"/>
+                                        <stop offset="50%" stop-color="var(--color-secondary)" stop-opacity="1"/>
+                                        <stop offset="100%" stop-color="rgba(0, 245, 212, 0)"/>
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Rotating Circular Grids -->
+                                <circle class="radar-ring-outer" cx="50%" cy="50%" r="48" fill="none" stroke="rgba(0, 180, 216, 0.15)" stroke-width="1" stroke-dasharray="150 10 30 10"/>
+                                <circle class="radar-ring-inner" cx="50%" cy="50%" r="42" fill="none" stroke="rgba(0, 245, 212, 0.2)" stroke-dasharray="5 15" stroke-width="1.5"/>
+                                <circle class="radar-ring-dot" cx="50%" cy="50%" r="45" fill="none" stroke="rgba(0, 180, 216, 0.3)" stroke-dasharray="1 8" stroke-width="2"/>
+                                
+                                <!-- Detailed medical brain slice outline -->
+                                <path class="brain-path" d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="url(#glow)"/>
+                                <path class="brain-path-outline" d="M 50,18 C 66,18 78,25 80,40 C 82,52 78,60 75,64 C 72,68 74,74 70,80 C 66,86 56,87 50,87 C 44,87 34,86 30,80 C 26,74 28,68 25,64 C 22,60 18,52 20,40 C 22,25 34,18 50,18 Z" fill="none" stroke="var(--color-primary)" stroke-width="1.5"/>
+                                
+                                <!-- Ventricles inside brain cross-section -->
+                                <path class="brain-ventricle" d="M 45,48 C 45,38 38,43 38,48 C 38,53 45,58 45,48 Z" fill="none" stroke="var(--color-secondary)" stroke-opacity="0.4" stroke-width="1.5"/>
+                                <path class="brain-ventricle" d="M 55,48 C 55,38 62,43 62,48 C 62,53 55,58 55,48 Z" fill="none" stroke="var(--color-secondary)" stroke-opacity="0.4" stroke-width="1.5"/>
+                                
+                                <!-- Neural nodes / Hotspots -->
+                                <circle class="neural-node node-1" cx="34" cy="38" r="2.5" fill="var(--color-secondary)"/>
+                                <circle class="neural-node node-2" cx="66" cy="38" r="2.5" fill="var(--color-secondary)"/>
+                                <circle class="neural-node node-3" cx="44" cy="68" r="3" fill="var(--color-primary)"/>
+                                <circle class="neural-node node-4" cx="56" cy="68" r="3" fill="var(--color-primary)"/>
+                                <circle class="neural-node node-5" cx="50" cy="30" r="2" fill="var(--color-secondary)"/>
+                                
+                                <!-- Glowing sweep laser line -->
+                                <line class="scanner-sweep" x1="10" y1="20" x2="90" y2="20" stroke="url(#laser)" stroke-width="2.5"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -300,21 +328,33 @@
                     <div class="view-side-by-side" id="viewSideBySide" style="display: flex; width: 100%; gap: 20px; flex-wrap: wrap;">
                         <div style="flex: 1; min-width: 200px; text-align: center;">
                             <h4 style="margin-bottom: 10px; color: var(--color-secondary); font-size: 0.95rem;">Low-Dose PET</h4>
-                            <div style="background-color: #000; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 12px; display: inline-block;">
+                            <div style="background-color: #000; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 12px; display: inline-block; position: relative; overflow: hidden;">
                                 <img src="" id="workbenchInputImg" alt="Input" style="max-width: 100%; max-height: 250px; object-fit: contain;">
+                                <div class="pacs-reticle-overlay">
+                                    <div class="pacs-crosshair-h"></div>
+                                    <div class="pacs-crosshair-v"></div>
+                                </div>
                             </div>
                         </div>
                         <div style="flex: 1; min-width: 200px; text-align: center;">
                             <h4 style="margin-bottom: 10px; color: var(--color-success); font-size: 0.95rem;">Restormer Enhanced</h4>
-                            <div style="background-color: #000; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 12px; display: inline-block; position: relative;">
+                            <div style="background-color: #000; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 12px; display: inline-block; position: relative; overflow: hidden;">
                                 <img src="" id="workbenchOutputImg" alt="Output" style="max-width: 100%; max-height: 250px; object-fit: contain;">
                                 <div class="reconstruction-glow"></div>
+                                <div class="pacs-reticle-overlay">
+                                    <div class="pacs-crosshair-h"></div>
+                                    <div class="pacs-crosshair-v"></div>
+                                </div>
                             </div>
                         </div>
                         <div style="flex: 1; min-width: 200px; text-align: center;">
                             <h4 style="margin-bottom: 10px; color: var(--color-text-main); font-size: 0.95rem;">Reference PET (GT)</h4>
-                            <div style="background-color: #000; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 12px; display: inline-block;">
+                            <div style="background-color: #000; border: 1px solid var(--color-card-border); border-radius: var(--border-radius-sm); padding: 12px; display: inline-block; position: relative; overflow: hidden;">
                                 <img src="" id="workbenchRefImg" alt="Reference" style="max-width: 100%; max-height: 250px; object-fit: contain;">
+                                <div class="pacs-reticle-overlay">
+                                    <div class="pacs-crosshair-h"></div>
+                                    <div class="pacs-crosshair-v"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -606,43 +646,61 @@
             
             <!-- Flowchart Timeline (7 steps) -->
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-top: 40px; padding: 20px 0;">
-                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: rgba(0, 180, 216, 0.2);">
+                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: var(--color-card-border);">
                     <i class="fa-solid fa-database" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
                     <h4 style="font-size: 0.85rem; margin-bottom: 4px;">1. Dataset</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">Lung Cancer PET Slices</p>
                 </div>
-                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
+                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
+                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
+                </svg>
                 <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
                     <i class="fa-solid fa-toolbox" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
                     <h4 style="font-size: 0.85rem; margin-bottom: 4px;">2. Preprocessing</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">Load DICOM & Normalize</p>
                 </div>
-                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
+                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
+                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
+                </svg>
                 <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
                     <i class="fa-solid fa-wave-square" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
                     <h4 style="font-size: 0.85rem; margin-bottom: 4px;">3. Noise Sim</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">Poisson Simulation</p>
                 </div>
-                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
+                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
+                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
+                </svg>
                 <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
                     <i class="fa-solid fa-laptop-medical" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
                     <h4 style="font-size: 0.85rem; margin-bottom: 4px;">4. MONAI</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">Scale & Type transforms</p>
                 </div>
-                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
+                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
+                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
+                </svg>
                 <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
                     <i class="fa-solid fa-brain" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
                     <h4 style="font-size: 0.85rem; margin-bottom: 4px;">5. Restormer</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">Denoising network run</p>
                 </div>
-                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
+                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
+                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
+                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
+                </svg>
                 <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
                     <i class="fa-solid fa-circle-check" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
                     <h4 style="font-size: 0.85rem; margin-bottom: 4px;">6. Enhancement</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">High-dose restoration</p>
                 </div>
-                <i class="fa-solid fa-chevron-right" style="color: var(--color-primary); font-size: 1rem;"></i>
-                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: rgba(0, 245, 212, 0.2);">
+                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
+                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
+                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
+                </svg>
+                <div class="glass-card" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: var(--color-card-border);">
                     <i class="fa-solid fa-square-poll-vertical" style="font-size: 1.5rem; color: var(--color-success); margin-bottom: 8px;"></i>
                     <h4 style="font-size: 0.85rem; margin-bottom: 4px;">7. Evaluation</h4>
                     <p style="font-size: 0.7rem; color: var(--color-text-muted);">PSNR & SSIM metrics</p>
