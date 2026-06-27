@@ -812,8 +812,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('repEnhancedNrmse').textContent = document.getElementById('lblEnhancedNrmse').textContent;
             document.getElementById('repNrmseImprovement').textContent = document.getElementById('lblNrmseImprovement').textContent;
             
-            // Trigger browser print/pdf print view
-            window.print();
+            // Trigger browser print/pdf print view with a slight paint delay to prevent race conditions
+            setTimeout(() => {
+                window.print();
+            }, 250);
         });
     }
 
