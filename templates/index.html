@@ -411,24 +411,44 @@
                     <div class="metadata-viewport active" id="metaQuality">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
                             <div>
-                                <h3 style="color: var(--color-secondary); margin-bottom: 15px;"><i class="fa-solid fa-gauge-high"></i> Peak Signal-to-Noise Ratio (PSNR) Analysis</h3>
+                                <h3 style="color: var(--color-secondary); margin-bottom: 15px;"><i class="fa-solid fa-gauge-high"></i> Clinical Quality Metrics Evaluation</h3>
                                 <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 15px;">
-                                    Peak Signal-to-Noise Ratio calculates image reconstruction quality compared to the high-dose ground truth reference scan: 
-                                    <span style="display: inline-block; margin: 8px 0; padding: 4px 10px; background: rgba(2, 132, 199, 0.06); border-radius: 6px; font-weight: 700; color: var(--color-primary); font-family: monospace;">PSNR = 10 * log10(1 / MSE)</span>
-                                    A higher decibel (dB) value indicates closer correlation to the reference scan.
+                                    Statistical measurements calculated on the reconstructed scan compared to the high-dose ground truth reference scan:
                                 </p>
                                 <div class="spec-table">
-                                    <div class="spec-row">
-                                        <span class="spec-label">Noisy Input PSNR</span>
-                                        <span class="spec-value" id="lblInputPsnr">--</span>
+                                    <div class="spec-row" style="border-bottom: 2px solid var(--color-card-border); font-weight: 700; padding-bottom: 8px; font-size: 0.85rem; display: flex; justify-content: space-between;">
+                                        <span class="spec-label" style="flex: 2;">Metric</span>
+                                        <span class="spec-value" style="flex: 1.2; text-align: right; margin-right: 15px;">Noisy Input</span>
+                                        <span class="spec-value" style="flex: 1.2; text-align: right; margin-right: 15px; color: var(--color-success);">Restormer</span>
+                                        <span class="spec-value" style="flex: 1.2; text-align: right; color: var(--color-secondary);">Gain / Diff</span>
                                     </div>
-                                    <div class="spec-row">
-                                        <span class="spec-label">Enhanced Restormer PSNR</span>
-                                        <span class="spec-value" id="lblEnhancedPsnr" style="color: var(--color-success);">--</span>
+                                    
+                                    <div class="spec-row" style="padding: 10px 0; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <span class="spec-label" style="flex: 2; font-weight: 600;">PSNR (dB)</span>
+                                        <span class="spec-value" id="lblInputPsnr" style="flex: 1.2; text-align: right; margin-right: 15px;">--</span>
+                                        <span class="spec-value" id="lblEnhancedPsnr" style="flex: 1.2; text-align: right; margin-right: 15px; font-weight: 600; color: var(--color-success);">--</span>
+                                        <span class="spec-value" id="lblPsnrImprovement" style="flex: 1.2; text-align: right; font-weight: 600;">--</span>
                                     </div>
-                                    <div class="spec-row">
-                                        <span class="spec-label">Reconstruction PSNR Gain</span>
-                                        <span class="spec-value" id="lblPsnrImprovement" style="color: var(--color-secondary);">--</span>
+                                    
+                                    <div class="spec-row" style="padding: 10px 0; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <span class="spec-label" style="flex: 2; font-weight: 600;">SSIM</span>
+                                        <span class="spec-value" id="lblInputSsim" style="flex: 1.2; text-align: right; margin-right: 15px;">--</span>
+                                        <span class="spec-value" id="lblEnhancedSsim" style="flex: 1.2; text-align: right; margin-right: 15px; font-weight: 600; color: var(--color-success);">--</span>
+                                        <span class="spec-value" id="lblSsimImprovement" style="flex: 1.2; text-align: right; font-weight: 600;">--</span>
+                                    </div>
+                                    
+                                    <div class="spec-row" style="padding: 10px 0; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <span class="spec-label" style="flex: 2; font-weight: 600;">RMSE</span>
+                                        <span class="spec-value" id="lblInputRmse" style="flex: 1.2; text-align: right; margin-right: 15px;">--</span>
+                                        <span class="spec-value" id="lblEnhancedRmse" style="flex: 1.2; text-align: right; margin-right: 15px; font-weight: 600; color: var(--color-success);">--</span>
+                                        <span class="spec-value" id="lblRmseImprovement" style="flex: 1.2; text-align: right; font-weight: 600;">--</span>
+                                    </div>
+                                    
+                                    <div class="spec-row" style="padding: 10px 0; display: flex; justify-content: space-between;">
+                                        <span class="spec-label" style="flex: 2; font-weight: 600;">NRMSE</span>
+                                        <span class="spec-value" id="lblInputNrmse" style="flex: 1.2; text-align: right; margin-right: 15px;">--</span>
+                                        <span class="spec-value" id="lblEnhancedNrmse" style="flex: 1.2; text-align: right; margin-right: 15px; font-weight: 600; color: var(--color-success);">--</span>
+                                        <span class="spec-value" id="lblNrmseImprovement" style="flex: 1.2; text-align: right; font-weight: 600;">--</span>
                                     </div>
                                 </div>
                             </div>

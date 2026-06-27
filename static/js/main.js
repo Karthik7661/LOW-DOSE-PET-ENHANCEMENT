@@ -71,6 +71,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const lblEnhancedPsnr = document.getElementById('lblEnhancedPsnr');
     const lblPsnrImprovement = document.getElementById('lblPsnrImprovement');
     
+    const lblInputSsim = document.getElementById('lblInputSsim');
+    const lblEnhancedSsim = document.getElementById('lblEnhancedSsim');
+    const lblSsimImprovement = document.getElementById('lblSsimImprovement');
+    
+    const lblInputRmse = document.getElementById('lblInputRmse');
+    const lblEnhancedRmse = document.getElementById('lblEnhancedRmse');
+    const lblRmseImprovement = document.getElementById('lblRmseImprovement');
+    
+    const lblInputNrmse = document.getElementById('lblInputNrmse');
+    const lblEnhancedNrmse = document.getElementById('lblEnhancedNrmse');
+    const lblNrmseImprovement = document.getElementById('lblNrmseImprovement');
+    
     const lblPatientId = document.getElementById('lblPatientId');
     const lblStudyDate = document.getElementById('lblStudyDate');
     const lblModality = document.getElementById('lblModality');
@@ -280,9 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 workbenchSliderInput.value = 50;
                 
                 // Populate Metrics
-                lblInputPsnr.textContent = data.metrics.input_psnr + " dB";
-                lblEnhancedPsnr.textContent = data.metrics.enhanced_psnr + " dB";
-                
+                lblInputPsnr.textContent = parseFloat(data.metrics.input_psnr).toFixed(2) + " dB";
+                lblEnhancedPsnr.textContent = parseFloat(data.metrics.enhanced_psnr).toFixed(2) + " dB";
                 const psnrGain = parseFloat(data.metrics.psnr_improvement);
                 if (psnrGain >= 0) {
                     lblPsnrImprovement.textContent = "+" + psnrGain.toFixed(2) + "% Gain";
@@ -290,6 +301,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     lblPsnrImprovement.textContent = psnrGain.toFixed(2) + "% Loss";
                     lblPsnrImprovement.style.color = "#ef4444";
+                }
+                
+                lblInputSsim.textContent = parseFloat(data.metrics.input_ssim).toFixed(4);
+                lblEnhancedSsim.textContent = parseFloat(data.metrics.enhanced_ssim).toFixed(4);
+                const ssimGain = parseFloat(data.metrics.ssim_improvement);
+                if (ssimGain >= 0) {
+                    lblSsimImprovement.textContent = "+" + ssimGain.toFixed(2) + "% Gain";
+                    lblSsimImprovement.style.color = "var(--color-success)";
+                } else {
+                    lblSsimImprovement.textContent = ssimGain.toFixed(2) + "% Loss";
+                    lblSsimImprovement.style.color = "#ef4444";
+                }
+                
+                lblInputRmse.textContent = parseFloat(data.metrics.input_rmse).toFixed(4);
+                lblEnhancedRmse.textContent = parseFloat(data.metrics.enhanced_rmse).toFixed(4);
+                const rmseGain = parseFloat(data.metrics.rmse_improvement);
+                if (rmseGain >= 0) {
+                    lblRmseImprovement.textContent = "-" + rmseGain.toFixed(2) + "% Error";
+                    lblRmseImprovement.style.color = "var(--color-success)";
+                } else {
+                    lblRmseImprovement.textContent = "+" + Math.abs(rmseGain).toFixed(2) + "% Error";
+                    lblRmseImprovement.style.color = "#ef4444";
+                }
+                
+                lblInputNrmse.textContent = parseFloat(data.metrics.input_nrmse).toFixed(4);
+                lblEnhancedNrmse.textContent = parseFloat(data.metrics.enhanced_nrmse).toFixed(4);
+                const nrmseGain = parseFloat(data.metrics.nrmse_improvement);
+                if (nrmseGain >= 0) {
+                    lblNrmseImprovement.textContent = "-" + nrmseGain.toFixed(2) + "% Error";
+                    lblNrmseImprovement.style.color = "var(--color-success)";
+                } else {
+                    lblNrmseImprovement.textContent = "+" + Math.abs(nrmseGain).toFixed(2) + "% Error";
+                    lblNrmseImprovement.style.color = "#ef4444";
                 }
                 
                 // Populate DICOM Headers
