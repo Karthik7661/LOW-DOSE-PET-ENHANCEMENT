@@ -2,7 +2,6 @@ onnxruntime>=1.19.0
 numpy==1.26.4
 pydicom==2.4.4
 Flask==3.0.0
-scikit-image==0.22.0
 matplotlib==3.8.2
 Pillow==10.2.0
 Werkzeug==3.0.1

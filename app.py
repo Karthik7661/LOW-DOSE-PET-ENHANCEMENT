@@ -3,7 +3,6 @@ import io
 import base64
 import numpy as np
 import pydicom
-from skimage.metrics import structural_similarity as ssim_func
 import matplotlib
 matplotlib.use('Agg')  # Non-interactive backend
 import matplotlib.pyplot as plt
@@ -160,6 +159,33 @@ def calculate_psnr(img, ref):
         return 80.0
     return float(20.0 * np.log10(1.0 / np.sqrt(mse)))
 
+def calculate_ssim(img, ref):
+    """Calculate Structural Similarity Index (SSIM) between two float images using pure numpy."""
+    ref_min, ref_max = float(ref.min()), float(ref.max())
+    img_min, img_max = float(img.min()), float(img.max())
+    
+    if img_max > img_min:
+        img_norm = (img - img_min) / (img_max - img_min)
+        img_norm = img_norm * (ref_max - ref_min) + ref_min
+    else:
+        img_norm = img
+
+    c1 = (0.01 * 1.0) ** 2
+    c2 = (0.03 * 1.0) ** 2
+    
+    mu1 = img_norm.mean()
+    mu2 = ref.mean()
+    
+    var1 = img_norm.var()
+    var2 = ref.var()
+    
+    cov = np.mean((img_norm - mu1) * (ref - mu2))
+    
+    num = (2 * mu1 * mu2 + c1) * (2 * cov + c2)
+    den = (mu1**2 + mu2**2 + c1) * (var1 + var2 + c2)
+    
+    return float(num / den)
+
 def numpy_to_base64_png(img_np):
     """Convert float numpy scan array [0,1] to Base64-encoded Data URI."""
     img_pil = Image.fromarray((img_np * 255.0).clip(0, 255).astype(np.uint8))
@@ -307,7 +333,7 @@ def enhance():
         
         # Calculate Input Image Quality Metrics
         input_psnr = calculate_psnr(img_low, img_ref_resized)
-        input_ssim = float(ssim_func(img_low, img_ref_resized, data_range=1.0))
+        input_ssim = float(calculate_ssim(img_low, img_ref_resized))
         input_rmse = float(np.sqrt(np.mean((img_low - img_ref_resized) ** 2)))
         input_nrmse = float(input_rmse / (img_ref_resized.max() - img_ref_resized.min() + 1e-8))
         
@@ -340,7 +366,7 @@ def enhance():
         
         # Calculate Output Image Quality Metrics
         enhanced_psnr = calculate_psnr(enhanced_np, img_ref_resized)
-        enhanced_ssim = float(ssim_func(enhanced_np, img_ref_resized, data_range=1.0))
+        enhanced_ssim = float(calculate_ssim(enhanced_np, img_ref_resized))
         enhanced_rmse = float(np.sqrt(np.mean((enhanced_np - img_ref_resized) ** 2)))
         enhanced_nrmse = float(enhanced_rmse / (img_ref_resized.max() - img_ref_resized.min() + 1e-8))
         
