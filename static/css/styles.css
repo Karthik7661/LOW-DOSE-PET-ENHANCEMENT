@@ -2017,7 +2017,12 @@ h1, h2, h3, h4 {
    PETRestore Premium Print Report CSS
    ========================================================================== */
 #clinicalReportContainer {
-    display: none;
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    width: 800px;
+    opacity: 0;
+    pointer-events: none;
 }
 
 @media print {
@@ -2032,10 +2037,12 @@ h1, h2, h3, h4 {
     
     #clinicalReportContainer {
         display: block !important;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
+        position: relative !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
         background-color: #fff !important;
         color: #0f172a !important;
         font-family: 'Inter', sans-serif !important;
