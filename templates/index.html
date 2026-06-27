@@ -293,9 +293,14 @@
                                     <img src="" id="outputPreview" alt="Enhanced PET Output">
                                     <div class="reconstruction-glow"></div>
                                 </div>
-                                <a href="" id="btnDownload" class="btn btn-primary btn-success w-full mt-4" download="enhanced_pet.png">
-                                    <i class="fa-solid fa-circle-down"></i> Download Enhanced Image
-                                </a>
+                                <div style="display: flex; gap: 15px; margin-top: 15px; width: 100%;">
+                                    <a href="" id="btnDownload" class="btn btn-primary btn-success" style="flex: 1; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px;" download="enhanced_pet.png">
+                                        <i class="fa-solid fa-circle-down"></i> Download Image
+                                    </a>
+                                    <button id="btnGenerateReport" class="btn btn-primary" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); border: none; color: #fff; cursor: pointer;">
+                                        <i class="fa-solid fa-file-pdf"></i> Generate Report
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
