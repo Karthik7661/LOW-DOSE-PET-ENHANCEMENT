@@ -650,66 +650,65 @@
                 <p class="section-description">The step-by-step data processing and enhancement pipeline.</p>
             </div>
             
-            <!-- Flowchart Timeline (7 steps) -->
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-top: 40px; padding: 20px 0;">
-                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: var(--color-card-border);">
-                    <i class="fa-solid fa-database" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">1. Dataset</h4>
-                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">Lung Cancer PET Slices</p>
+            <!-- Continuous animated laser track behind the cards -->
+            <div style="position: relative; margin-top: 40px; padding: 20px 0;">
+                <div style="position: absolute; top: 50%; left: 0; width: 100%; height: 20px; transform: translateY(-50%); z-index: 1; pointer-events: none;">
+                    <svg width="100%" height="100%" style="overflow: visible;">
+                        <defs>
+                            <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="4" result="blur" />
+                                <feMerge>
+                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <!-- Dash background track line -->
+                        <line x1="5%" y1="10" x2="95%" y2="10" stroke="rgba(15, 23, 42, 0.05)" stroke-width="4" stroke-dasharray="8 5" />
+                        <!-- Travelling neon laser particle -->
+                        <circle r="6" fill="var(--color-primary)" filter="url(#neonGlow)">
+                            <animate attributeName="cx" from="5%" to="95%" dur="7.7s" repeatCount="indefinite" />
+                        </circle>
+                    </svg>
                 </div>
-                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
-                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
-                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
-                </svg>
-                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
-                    <i class="fa-solid fa-toolbox" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">2. Preprocessing</h4>
-                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">Load DICOM & Normalize</p>
-                </div>
-                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
-                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
-                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
-                </svg>
-                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
-                    <i class="fa-solid fa-wave-square" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">3. Noise Sim</h4>
-                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">Poisson Simulation</p>
-                </div>
-                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
-                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
-                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
-                </svg>
-                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
-                    <i class="fa-solid fa-laptop-medical" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">4. MONAI</h4>
-                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">Scale & Type transforms</p>
-                </div>
-                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
-                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
-                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
-                </svg>
-                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
-                    <i class="fa-solid fa-brain" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">5. Restormer</h4>
-                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">Denoising network run</p>
-                </div>
-                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
-                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
-                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
-                </svg>
-                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
-                    <i class="fa-solid fa-circle-check" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">6. Enhancement</h4>
-                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">High-dose restoration</p>
-                </div>
-                <svg class="timeline-pulse-arrow" width="30" height="20" viewBox="0 0 30 20" style="display:inline-block; overflow:visible;">
-                    <path d="M 0,10 L 25,10" fill="none" stroke="var(--color-primary)" stroke-width="2.5" class="timeline-pulse-path" />
-                    <polygon points="20,6 28,10 20,14" fill="var(--color-primary)" />
-                </svg>
-                <div class="glass-card tilt-3d" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: var(--color-card-border);">
-                    <i class="fa-solid fa-square-poll-vertical" style="font-size: 1.5rem; color: var(--color-success); margin-bottom: 8px;"></i>
-                    <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">7. Evaluation</h4>
-                    <p style="font-size: 0.7rem; color: var(--color-text-muted);">PSNR & SSIM metrics</p>
+                
+                <!-- Staggered Workflow Cards Grid -->
+                <div style="position: relative; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; z-index: 2;">
+                    <div class="glass-card tilt-3d workflow-card-pulse" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: var(--color-card-border);">
+                        <i class="fa-solid fa-database" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                        <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">1. Dataset</h4>
+                        <p style="font-size: 0.7rem; color: var(--color-text-muted);">Lung Cancer PET Slices</p>
+                    </div>
+                    <div class="glass-card tilt-3d workflow-card-pulse" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                        <i class="fa-solid fa-toolbox" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                        <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">2. Preprocessing</h4>
+                        <p style="font-size: 0.7rem; color: var(--color-text-muted);">Load DICOM & Normalize</p>
+                    </div>
+                    <div class="glass-card tilt-3d workflow-card-pulse" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                        <i class="fa-solid fa-wave-square" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                        <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">3. Noise Sim</h4>
+                        <p style="font-size: 0.7rem; color: var(--color-text-muted);">Poisson Simulation</p>
+                    </div>
+                    <div class="glass-card tilt-3d workflow-card-pulse" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                        <i class="fa-solid fa-laptop-medical" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                        <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">4. MONAI</h4>
+                        <p style="font-size: 0.7rem; color: var(--color-text-muted);">Scale & Type transforms</p>
+                    </div>
+                    <div class="glass-card tilt-3d workflow-card-pulse" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                        <i class="fa-solid fa-brain" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                        <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">5. Restormer</h4>
+                        <p style="font-size: 0.7rem; color: var(--color-text-muted);">Denoising network run</p>
+                    </div>
+                    <div class="glass-card tilt-3d workflow-card-pulse" style="flex: 1; min-width: 130px; padding: 15px; text-align: center;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 8px;"></i>
+                        <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">6. Enhancement</h4>
+                        <p style="font-size: 0.7rem; color: var(--color-text-muted);">High-dose restoration</p>
+                    </div>
+                    <div class="glass-card tilt-3d workflow-card-pulse" style="flex: 1; min-width: 130px; padding: 15px; text-align: center; border-color: var(--color-card-border);">
+                        <i class="fa-solid fa-square-poll-vertical" style="font-size: 1.5rem; color: var(--color-success); margin-bottom: 8px;"></i>
+                        <h4 style="font-size: 0.85rem; margin-bottom: 4px;" class="tilt-3d-child">7. Evaluation</h4>
+                        <p style="font-size: 0.7rem; color: var(--color-text-muted);">PSNR & SSIM metrics</p>
+                    </div>
                 </div>
             </div>
         </div>
