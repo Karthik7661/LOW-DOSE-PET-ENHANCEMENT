@@ -677,13 +677,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================================
 
     // 1. Workstation Theme Toggling
-    const themeAmber = document.getElementById('themeAmber');
-    const themeCrimson = document.getElementById('themeCrimson');
-    const themeUltraviolet = document.getElementById('themeUltraviolet');
-    const themeBtns = [themeAmber, themeCrimson, themeUltraviolet];
+    const themeIce = document.getElementById('themeIce');
+    const themeChampagne = document.getElementById('themeChampagne');
+    const themeMint = document.getElementById('themeMint');
+    const themeBtns = [themeIce, themeChampagne, themeMint];
 
     const setTheme = (themeName) => {
-        document.body.classList.remove('theme-amber', 'theme-crimson', 'theme-ultraviolet');
+        document.body.classList.remove('theme-ice', 'theme-champagne', 'theme-mint');
         document.body.classList.add(`theme-${themeName}`);
         localStorage.setItem('workstation-theme', themeName);
 
@@ -691,17 +691,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (btn) btn.classList.remove('active');
         });
 
-        if (themeName === 'amber' && themeAmber) themeAmber.classList.add('active');
-        if (themeName === 'crimson' && themeCrimson) themeCrimson.classList.add('active');
-        if (themeName === 'ultraviolet' && themeUltraviolet) themeUltraviolet.classList.add('active');
+        if (themeName === 'ice' && themeIce) themeIce.classList.add('active');
+        if (themeName === 'champagne' && themeChampagne) themeChampagne.classList.add('active');
+        if (themeName === 'mint' && themeMint) themeMint.classList.add('active');
     };
 
-    if (themeAmber) themeAmber.addEventListener('click', () => setTheme('amber'));
-    if (themeCrimson) themeCrimson.addEventListener('click', () => setTheme('crimson'));
-    if (themeUltraviolet) themeUltraviolet.addEventListener('click', () => setTheme('ultraviolet'));
+    if (themeIce) themeIce.addEventListener('click', () => setTheme('ice'));
+    if (themeChampagne) themeChampagne.addEventListener('click', () => setTheme('champagne'));
+    if (themeMint) themeMint.addEventListener('click', () => setTheme('mint'));
 
-    // Restore Saved Theme (Default is amber)
-    const savedTheme = localStorage.getItem('workstation-theme') || 'amber';
+    // Restore Saved Theme (Default is ice)
+    const savedTheme = localStorage.getItem('workstation-theme') || 'ice';
     setTheme(savedTheme);
 
     // 2. Scrolling Console Log Terminal Simulation
