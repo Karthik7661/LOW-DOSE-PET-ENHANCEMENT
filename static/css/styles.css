@@ -1806,9 +1806,9 @@ h1, h2, h3, h4 {
 /* Waterfall SDLC Model Cascade */
 .waterfall-desktop-canvas {
     position: relative;
-    width: 100%;
+    width: 1000px;
+    margin: 40px auto 0 auto;
     height: 520px;
-    margin-top: 40px;
     display: block;
 }
 
@@ -1819,14 +1819,14 @@ h1, h2, h3, h4 {
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Diagonal staircase coordinate mapping with progressive growing sizes */
+/* Diagonal staircase coordinate mapping with uniform sizes and gaps */
 @media (min-width: 1024px) {
-    .waterfall-card-1 { left: 4%; top: 10px; width: 180px; height: 90px; }
-    .waterfall-card-2 { left: 20%; top: 85px; width: 195px; height: 95px; }
-    .waterfall-card-3 { left: 36%; top: 160px; width: 210px; height: 100px; }
-    .waterfall-card-4 { left: 52%; top: 235px; width: 225px; height: 105px; }
-    .waterfall-card-5 { left: 68%; top: 310px; width: 240px; height: 110px; }
-    .waterfall-card-6 { left: 84%; top: 385px; width: 255px; height: 115px; }
+    .waterfall-card-1 { left: 40px; top: 10px; width: 140px; height: 110px; }
+    .waterfall-card-2 { left: 200px; top: 90px; width: 140px; height: 110px; }
+    .waterfall-card-3 { left: 360px; top: 170px; width: 140px; height: 110px; }
+    .waterfall-card-4 { left: 520px; top: 250px; width: 140px; height: 110px; }
+    .waterfall-card-5 { left: 680px; top: 330px; width: 140px; height: 110px; }
+    .waterfall-card-6 { left: 840px; top: 410px; width: 140px; height: 110px; }
     
     .waterfall-mobile-drop-line {
         display: none !important;
